@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global CNC Hardware | Precision CNC Spare Parts & Services</title>
+  <link rel="icon" href="\images\logo.jpg" type="image/x-icon">
+  <meta name="description" content="Global CNC Hardware delivers precision spare parts and components for Fanuc, Siemens, and Mitsubishi CNC machinery across India. Fast delivery and expert services." />
+  
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#F4F4F4',
+            surface: '#FFFFFF',
+            ink: '#0B1C2D',
+            steel: '#6B7280',
+            steelLight: '#9CA3AF',
+            line: '#E5E7EB',
+            lineDark: '#D1D5DB',
+            navy: '#0B1C2D',
+            navyLight: '#132438',
+            signal: '#10B981',
+            signalDark: '#059669',
+            accent: '#14B8A6',
+          },
+          fontFamily: {
+            display: ['Archivo', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          maxWidth: {
+            content: '1240px',
+          },
+          boxShadow: {
+            glow: '0 0 30px rgba(16, 185, 129, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="min-h-screen flex flex-col bg-white text-navy font-body">
+
+  <!-- ── HEADER / NAVIGATION ─────────────────────────────────── -->
+  <header class="fixed top-0 w-full z-50">
+    <!-- Top Bar -->
+    <div class="bg-navy hidden md:block border-b border-white/10">
+      <div class="max-w-content mx-auto px-5 md:px-8 py-2 flex items-center justify-end gap-6 text-xs text-white/70">
+        <a href="mailto:globalcnchardware@gmail.com" class="flex items-center gap-1.5 hover:text-signal transition-colors">
+          <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          globalcnchardware@gmail.com
+        </a>
+        <a href="tel:+919865292092" class="flex items-center gap-1.5 hover:text-signal transition-colors">
+          <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +91 8489892092
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <div class="bg-white shadow-md border-b border-line">
+      <div class="max-w-content mx-auto px-5 md:px-8 flex items-center justify-between h-24">
+        <a href="index.html" class="flex items-center group py-1 shrink-0">
+          <img src="images/logo.jpg" alt="GLOBAL CNC Hardware Logo" class="h-16 md:h-20 lg:h-22 w-auto object-contain bg-white transition-transform group-hover:scale-105" />
+        </a>
+
+        <!-- Desktop Links -->
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="index.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">
+            Home
+            <div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div>
+          </a>
+          <a href="about.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">
+            About Us
+            <div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div>
+          </a>
+          <a href="services.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">
+            Services
+            <div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div>
+          </a>
+          <a href="products.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">
+            Products
+            <div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div>
+          </a>
+          <a href="contact.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">
+            Contact
+            <div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div>
+          </a>
+        </nav>
+
+        <a href="contact.html" class="hidden md:inline-flex bg-signal text-white px-6 py-2.5 text-sm font-bold hover:bg-signalDark transition-all uppercase tracking-wide">
+          Learn More
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-navy" aria-label="Toggle navigation menu">
+          <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-line shadow-lg">
+      <div class="flex flex-col py-3">
+        <a href="index.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Home</a>
+        <a href="about.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">About Us</a>
+        <a href="services.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Services</a>
+        <a href="products.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Products</a>
+        <a href="contact.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Contact</a>
+        <div class="px-5 pt-3 pb-2 mt-2 border-t border-line space-y-2">
+          <a href="tel:+919865292092" class="flex items-center gap-2 text-sm text-navy font-semibold">
+            <svg class="w-4 h-4 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            +91 8489892092
+          </a>
+          <a href="mailto:globalcnchardware@gmail.com" class="flex items-center gap-2 text-sm text-steel">
+            <svg class="w-4 h-4 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            globalcnchardware@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ────────────────────────────────────────── -->
+  <main class="flex-1 pt-24">
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center bg-navy overflow-hidden">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&w=1800&q=80')"></div>
+      <div class="absolute inset-0 bg-navy/75"></div>
+      <div class="relative max-w-content mx-auto px-5 md:px-8 pt-32 pb-20 w-full">
+        <p class="animate-fade-in text-signal font-bold uppercase tracking-widest text-sm mb-4">
+          One Stop Solution for CNC Industry
+        </p>
+        <h1 class="animate-slide-up font-display font-extrabold text-4xl md:text-6xl lg:text-7xl text-white leading-tight max-w-3xl mb-6">
+          Quality Parts.<br />
+          <span class="text-signal">Scale Smarter.</span>
+        </h1>
+        <p class="animate-slide-up text-white/70 text-lg max-w-xl mb-10 leading-relaxed">
+          Global CNC Hardware delivers precision spare parts and components for all types of CNC machinery. Nobody delivers faster.
+        </p>
+        <div class="animate-slide-up flex flex-wrap gap-4">
+          <a href="products.html" class="bg-signal text-white px-8 py-3.5 font-bold text-sm hover:bg-signalDark hover:shadow-glow transition-all flex items-center gap-2 uppercase tracking-wide">
+            Discover More 
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="contact.html" class="border-2 border-white/40 text-white px-8 py-3.5 font-bold text-sm hover:border-signal hover:text-signal transition-all uppercase tracking-wide">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / WELCOME SECTION -->
+    <section class="bg-navy py-20 overflow-hidden">
+      <div class="max-w-content mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-signal font-bold uppercase tracking-widest text-xs mb-4">Welcome to Global CNC Hardware</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mb-6 leading-tight">
+            Your One-Stop CNC<br />Hardware Partner
+          </h2>
+          <p class="text-white/70 leading-relaxed mb-4">
+            Global CNC Hardware is a leading supplier of precision spare parts and components for all types of CNC machines. We specialize in Fanuc, Siemens, and Mitsubishi compatible parts with fast delivery across India.
+          </p>
+          <p class="text-white/70 leading-relaxed mb-8">
+            From servo motors to tool holders, hydraulic systems to electrical components — we stock what your production line actually runs on. Our deep inventory and expert team ensure you minimize downtime and maximize productivity.
+          </p>
+          <a href="about.html" class="inline-flex items-center gap-2 border border-white/30 text-white px-6 py-3 text-sm font-semibold hover:border-signal hover:text-signal transition-colors uppercase tracking-wide">
+            Explore More 
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=800&q=80" alt="CNC Machine" class="w-full h-[450px] object-cover border-2 border-navyLight" />
+          <div class="absolute bottom-0 left-0 right-0 grid grid-cols-2 gap-3 p-4">
+            <div class="bg-signal p-4 flex items-center gap-3">
+              <svg class="w-8 h-8 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <div>
+                <div class="font-display font-extrabold text-white text-2xl">15+</div>
+                <div class="text-white/80 text-xs">Years of Experience</div>
+              </div>
+            </div>
+            <div class="bg-signal p-4 flex items-center gap-3">
+              <svg class="w-8 h-8 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              <div>
+                <div class="font-display font-extrabold text-white text-2xl">100+</div>
+                <div class="text-white/80 text-xs">Clients Served</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES HIGHLIGHT -->
+    <section class="py-20 bg-paper watermark-bg">
+      <div class="max-w-content mx-auto px-5 md:px-8">
+        <div class="text-center mb-12">
+          <p class="text-signal font-bold uppercase tracking-widest text-xs mb-3">What We Do</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-navy mb-4">What Service We Provide</h2>
+          <p class="text-steel max-w-xl mx-auto text-sm leading-relaxed">
+            We are committed to delivering high-quality solutions in CNC machine service, retrofitment, reconditioning, industrial automation, machine sales, and spare parts support.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="group overflow-hidden shadow-sm hover:shadow-xl transition-shadow cursor-pointer border border-line bg-white">
+            <div class="relative h-56 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1565034946487-077786996e27?auto=format&fit=crop&w=600&q=80" alt="Spindle Reconditioning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+            </div>
+            <div class="bg-white px-5 py-4 border-t border-line">
+              <h3 class="font-display font-bold text-navy text-sm">Spindle Reconditioning</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden shadow-sm hover:shadow-xl transition-shadow cursor-pointer border border-line bg-white">
+            <div class="relative h-56 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1537724326059-2ea20251b9c8?auto=format&fit=crop&w=600&q=80" alt="Ball Screw Reconditioning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+            </div>
+            <div class="bg-white px-5 py-4 border-t border-line">
+              <h3 class="font-display font-bold text-navy text-sm">Ball Screw Reconditioning</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden shadow-sm hover:shadow-xl transition-shadow cursor-pointer border border-line bg-white">
+            <div class="relative h-56 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80" alt="CNC Electrical Panel Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+            </div>
+            <div class="bg-white px-5 py-4 border-t border-line">
+              <h3 class="font-display font-bold text-navy text-sm">CNC Electrical Panel Service</h3>
+            </div>
+          </div>
+          <div class="group overflow-hidden shadow-sm hover:shadow-xl transition-shadow cursor-pointer border border-line bg-white">
+            <div class="relative h-56 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80" alt="CNC Machine Repair Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+            </div>
+            <div class="bg-white px-5 py-4 border-t border-line">
+              <h3 class="font-display font-bold text-navy text-sm">CNC Machine Repair Service</h3>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-10">
+          <a href="services.html" class="inline-flex items-center gap-2 bg-signal text-white px-8 py-3 font-bold text-sm hover:bg-signalDark transition-all uppercase tracking-wide">
+            View All Services 
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="py-20 bg-white watermark-bg">
+      <div class="max-w-content mx-auto px-5 md:px-8">
+        <div class="text-center mb-12">
+          <p class="text-signal font-bold uppercase tracking-widest text-xs mb-3">Our Products</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-navy">Featured Hardware</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <a href="product-details.html?id=cnc-001" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
+            <div class="relative overflow-hidden">
+              <div class="aspect-square w-full bg-paper relative flex items-center justify-center border-b border-line">
+                <img src="images/servo-motor-pulsecoder.jpg" alt="Servo Motor Pulsecoder" class="aspect-square w-full object-cover border-b border-line" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
+                  <span class="text-xs text-steel">Machinery Parts</span>
+                </div>
+              </div>
+              <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-10">Machinery Parts</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-display font-bold text-navy text-base leading-tight mb-2 group-hover:text-signal transition-colors">Servo Motor Pulsecoder</h3>
+                <p class="text-xs text-steel leading-relaxed mb-4 line-clamp-2">High-precision pulsecoder for servo motors.</p>
+              </div>
+              <div class="pt-3 border-t border-line flex items-center justify-between">
+                <span class="font-display font-extrabold text-signal text-lg">₹145.00</span>
+                <span class="bg-paper px-2 py-0.5 text-steel font-mono text-[11px] font-semibold">CMC-SMP-001</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="product-details.html?id=cnc-002" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
+            <div class="relative overflow-hidden">
+              <div class="aspect-square w-full bg-paper relative flex items-center justify-center border-b border-line">
+                <img src="images/atc-tool-changer-arm.jpg" alt="ATC Tool Changer Arm" class="aspect-square w-full object-cover border-b border-line" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
+                  <span class="text-xs text-steel">Machinery Parts</span>
+                </div>
+              </div>
+              <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-10">Machinery Parts</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-display font-bold text-navy text-base leading-tight mb-2 group-hover:text-signal transition-colors">ATC Tool Changer Arm</h3>
+                <p class="text-xs text-steel leading-relaxed mb-4 line-clamp-2">Automatic Tool Changer Arm for CNC mills.</p>
+              </div>
+              <div class="pt-3 border-t border-line flex items-center justify-between">
+                <span class="font-display font-extrabold text-signal text-lg">₹320.00</span>
+                <span class="bg-paper px-2 py-0.5 text-steel font-mono text-[11px] font-semibold">CMC-ATC-ARM</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="product-details.html?id=cnc-003" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
+            <div class="relative overflow-hidden">
+              <div class="aspect-square w-full bg-paper relative flex items-center justify-center border-b border-line">
+                <img src="images/signal-tower-lamp-with-buzzer.jpg" alt="Signal Tower Lamp With Buzzer" class="aspect-square w-full object-cover border-b border-line" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
+                  <span class="text-xs text-steel">Electrical Hardware</span>
+                </div>
+              </div>
+              <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-10">Electrical Hardware</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-display font-bold text-navy text-base leading-tight mb-2 group-hover:text-signal transition-colors">Signal Tower Lamp With Buzzer</h3>
+                <p class="text-xs text-steel leading-relaxed mb-4 line-clamp-2">3-color LED signal tower with audible buzzer.</p>
+              </div>
+              <div class="pt-3 border-t border-line flex items-center justify-between">
+                <span class="font-display font-extrabold text-signal text-lg">₹45.00</span>
+                <span class="bg-paper px-2 py-0.5 text-steel font-mono text-[11px] font-semibold">CMC-STL-3B</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="product-details.html?id=cnc-004" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
+            <div class="relative overflow-hidden">
+              <div class="aspect-square w-full bg-paper relative flex items-center justify-center border-b border-line">
+                <img src="images/manual-pulse-generator-mpg.jpg" alt="Manual Pulse Generator (MPG)" class="aspect-square w-full object-cover border-b border-line" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
+                  <span class="text-xs text-steel">Electrical Hardware</span>
+                </div>
+              </div>
+              <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-10">Electrical Hardware</span>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-display font-bold text-navy text-base leading-tight mb-2 group-hover:text-signal transition-colors">Manual Pulse Generator (MPG)</h3>
+                <p class="text-xs text-steel leading-relaxed mb-4 line-clamp-2">Handheld MPG pendant for manual machine control.</p>
+              </div>
+              <div class="pt-3 border-t border-line flex items-center justify-between">
+                <span class="font-display font-extrabold text-signal text-lg">₹115.00</span>
+                <span class="bg-paper px-2 py-0.5 text-steel font-mono text-[11px] font-semibold">CMC-MPG-HD1</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+        <div class="text-center mt-10">
+<a href="products.html" class="inline-flex items-center gap-2 border-2 border-signal text-signal bg-white px-8 py-3 font-bold text-sm hover:bg-signal hover:text-white transition-all uppercase tracking-wide">            
+            View All Products 
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="relative py-24 bg-navy overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80'); background-size: cover; background-position: center; background-attachment: fixed;">
+      <div class="absolute inset-0 bg-navy/85"></div>
+      <div class="relative max-w-content mx-auto px-5 md:px-8">
+        <div class="text-center mb-14">
+          <p class="text-signal font-bold uppercase tracking-widest text-xs mb-3">Why Us</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mb-4">Why You Choose Global CNC Hardware</h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-sm">
+            We are committed to delivering high-quality solutions in CNC machine service, retrofitment, reconditioning, industrial automation, machine sales, and spare parts support.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">01</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Customer Focus</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We strive to understand and meet customer needs with prompt service, quality products, and reliable support.</p>
+          </div>
+
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">02</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Quality Commitment</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We ensure all our work and components meet high standards of precision, performance, and durability.</p>
+          </div>
+
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">03</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Technical Excellence</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We continuously upgrade our knowledge, tools, and methods to provide effective and innovative solutions.</p>
+          </div>
+
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">04</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Integrity & Professionalism</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We conduct our business with honesty, responsibility, and respect for our clients and partners.</p>
+          </div>
+
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">05</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Safety & Compliance</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We maintain safe working practices and follow all relevant industry and environmental standards.</p>
+          </div>
+
+          <div class="bg-white border-b-4 border-signal p-6 group hover:bg-signal transition-colors duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <svg class="w-8 h-8 text-signal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+              <span class="font-display font-extrabold text-4xl text-navy/10 group-hover:text-white/20 transition-colors">06</span>
+            </div>
+            <h3 class="font-display font-bold text-navy group-hover:text-white text-lg mb-2 transition-colors">Continuous Improvement</h3>
+            <p class="text-steel group-hover:text-white/80 text-sm leading-relaxed transition-colors">We regularly review our processes to improve efficiency, service quality, and customer satisfaction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEADQUARTERS MAP & CONTACT SECTION -->
+    <section class="py-20 bg-paper watermark-bg">
+      <div class="max-w-content mx-auto px-5 md:px-8">
+        <div class="text-center mb-12">
+          <p class="text-signal font-bold uppercase tracking-widest text-xs mb-3">Our Headquarters</p>
+          <h2 class="font-display font-extrabold text-3xl md:text-4xl text-navy mb-4">Visit Global CNC Hardware</h2>
+          <p class="text-steel max-w-xl mx-auto text-sm leading-relaxed">
+            Located in Coimbatore, Tamil Nadu. We invite you to visit our office or reach out directly for spare parts inquiries and technical machine services.
+          </p>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+          <div class="lg:col-span-8 border border-line bg-white shadow-sm min-h-[380px]">
+            <iframe title="Global CNC Hardware Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248.26241962048078!2d76.97886295148115!3d11.030476963987194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85959d68b01cd%3A0xcfe7e9c763a60298!2sGLOBAL%20CNC%20HARDWARE!5e1!3m2!1sen!2sin!4v1788510948921!5m2!1sen!2sin" width="100%" height="100%" class="min-h-[380px]" style="border: 0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="lg:col-span-4 bg-navy text-white p-8 border-b-4 border-signal flex flex-col justify-between">
+            <div>
+              <h3 class="font-display font-bold text-xl text-white mb-6 uppercase tracking-wide">Contact Details</h3>
+              <div class="space-y-6 text-sm">
+                <div class="flex items-start gap-4">
+                  <svg class="w-5 h-5 text-signal shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <div>
+                    <p class="font-bold text-white mb-1">Company Location</p>
+                    <p class="text-white/70 leading-relaxed">Coimbatore, Tamil Nadu, India - 641106</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <svg class="w-5 h-5 text-signal shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <div>
+                    <p class="font-bold text-white mb-1">Phone Numbers</p>
+                    <a href="tel:+919865292092" class="text-white/70 hover:text-signal block transition-colors">+91 8489892092</a>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <svg class="w-5 h-5 text-signal shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  <div>
+                    <p class="font-bold text-white mb-1">Email Address</p>
+                    <a href="mailto:globalcnchardware@gmail.com" class="text-white/70 hover:text-signal transition-colors break-all">globalcnchardware@gmail.com</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-8 border-t border-white/10 mt-8">
+              <a href="contact.html" class="w-full inline-flex justify-center bg-signal text-white py-3 px-6 font-bold text-sm hover:bg-signalDark transition-colors uppercase tracking-wider">
+                Get In Touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="bg-signal py-16">
+      <div class="max-w-content mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x-0 md:divide-x divide-white/20">
+        <div class="text-center py-4">
+          <div class="font-display font-extrabold text-5xl text-white mb-2">350+</div>
+          <div class="text-white/80 text-sm font-medium">Projects Completed</div>
+        </div>
+        <div class="text-center py-4">
+          <div class="font-display font-extrabold text-5xl text-white mb-2">96%</div>
+          <div class="text-white/80 text-sm font-medium">Satisfied Customers</div>
+        </div>
+        <div class="text-center py-4">
+          <div class="font-display font-extrabold text-5xl text-white mb-2">15+</div>
+          <div class="text-white/80 text-sm font-medium">Years Experience</div>
+        </div>
+        <div class="text-center py-4">
+          <div class="font-display font-extrabold text-5xl text-white mb-2">100+</div>
+          <div class="text-white/80 text-sm font-medium">Clients Served</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="bg-navy text-white">
+    <div class="max-w-content mx-auto px-5 md:px-8 pt-16 pb-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+        <div class="md:col-span-4">
+          <a href="index.html" class="flex items-center mb-6 group w-fit">
+            <img src="images/logo.jpg" alt="GLOBAL CNC Hardware Logo" class="h-24 md:h-28 w-auto object-contain bg-white p-2 border border-white/20" />
+          </a>
+          <p class="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
+            To be a leading force in India's CNC machinery and industrial automation sector, recognized for our commitment to technology, customer satisfaction, and engineering integrity.
+          </p>
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 border border-white/20 flex items-center justify-center text-xs text-white/60 hover:bg-signal hover:border-signal hover:text-white transition-all font-bold">FB</a>
+            <a href="#" class="w-9 h-9 border border-white/20 flex items-center justify-center text-xs text-white/60 hover:bg-signal hover:border-signal hover:text-white transition-all font-bold">IG</a>
+            <a href="#" class="w-9 h-9 border border-white/20 flex items-center justify-center text-xs text-white/60 hover:bg-signal hover:border-signal hover:text-white transition-all font-bold">LN</a>
+            <a href="#" class="w-9 h-9 border border-white/20 flex items-center justify-center text-xs text-white/60 hover:bg-signal hover:border-signal hover:text-white transition-all font-bold">TW</a>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Useful Links</h4>
+          <ul class="space-y-3 text-sm text-white/60">
+            <li><a href="about.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>About Us</a></li>
+            <li><a href="services.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Services</a></li>
+            <li><a href="products.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Products</a></li>
+            <li><a href="contact.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4">
+          <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Services</h4>
+          <ul class="space-y-2.5 text-sm text-white/60">
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Electrical Control Panel Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Machine Repair Services</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Machine Retrofitting Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>Spindle Reconditioning Services</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>VMC, HMC, and SPM Repair & Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>Ball Screw Reconditioning and Service</li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Contact</h4>
+          <ul class="space-y-4 text-sm text-white/60">
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <div><p>+91 8489892092</p></div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <a href="mailto:globalcnchardware@gmail.com" class="hover:text-signal transition-colors break-all">globalcnchardware@gmail.com</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <a href="https://maps.google.com/?q=Coimbatore+Tamil+Nadu+India+641106" target="_blank" rel="noopener noreferrer" class="hover:text-signal transition-colors">Coimbatore, Tamil Nadu, India - 641106</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-white/40">
+        <p>© <span id="footer-year">2026</span> Global CNC Hardware. All rights reserved.</p>
+        <p>All Types of Imported and Exported CNC Machine Spares — Sales and Services.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

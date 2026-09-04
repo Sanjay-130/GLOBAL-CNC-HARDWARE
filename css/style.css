@@ -1,0 +1,187 @@
+/* Global CNC Hardware Custom Styles & CSS3 Animations */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #f7f7f5;
+  color: #0b1c2d;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Archivo', sans-serif;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: 'Inter', sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+/* Custom Utilities & Glow Shadow */
+.shadow-glow {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.25);
+}
+
+.max-w-content {
+  max-width: 1240px;
+}
+
+/* ── GCH LOGO WATERMARK — PARENT SECTIONS ONLY ── */
+/*
+ * Applied ONLY via the .watermark-bg class added explicitly to
+ * parent <section> elements in HTML. Child divs / nested elements
+ * are NOT affected. Header, footer, and navbar are completely excluded.
+ *
+ * Logo size: 120px wide — compact and clean.
+ * Cell spacing: 300px × 220px — generous gap between each repeated logo.
+ * Opacity: 0.09 — very subtle, does not distract from content.
+ */
+
+.watermark-bg {
+  position: relative;
+  isolation: isolate; /* creates a new stacking context so children are unaffected */
+}
+
+.watermark-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+
+  /* GCH logo — white background blends naturally on white/paper sections */
+  background-image: url('../images/gch-logo.jpg');
+  background-repeat: repeat;
+
+  /*
+   * background-size controls the "cell" each logo occupies in the repeating grid.
+   * Logo is 120px wide; total cell is 300px × 220px → natural spacing all around.
+   * This gives approx. 90px gap on each side of each logo instance.
+   */
+  background-size: 300px 220px;
+  background-position: 40px 30px; /* slight offset so logo doesn't start at edge */
+
+  /* Subtle — visible but doesn't fight the page content */
+  opacity: 0.10;
+
+  /* multiply blend removes the white background of the JPG on white sections */
+  mix-blend-mode: multiply;
+
+  /* Slow, gentle drift animation */
+  animation: watermarkDrift 90s linear infinite;
+}
+
+/* All direct and indirect children stay fully clickable above the watermark */
+.watermark-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes watermarkDrift {
+  0%   { background-position: 40px 30px; }
+  50%  { background-position: 190px 140px; }
+  100% { background-position: 40px 30px; }
+}
+
+/* Responsive — slightly smaller logo on mobile */
+@media (max-width: 640px) {
+  .watermark-bg::before {
+    background-size: 220px 160px;
+    background-position: 20px 15px;
+    opacity: 0.08;
+    animation-duration: 110s;
+  }
+}
+
+/* Smooth Fade and Slide Animations */
+.animate-fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Transition Helpers */
+.transition-all-custom {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile Menu Transitions */
+#mobile-menu {
+  transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+#mobile-menu.open {
+  max-height: 400px;
+  opacity: 1;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .watermark-bg::before {
+    animation: none !important;
+  }
+}
