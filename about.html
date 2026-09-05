@@ -4,21 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us | Global CNC Hardware</title>
+  <link rel="icon" href="images/logo.jpg" type="image/x-icon">
   <meta name="description" content="Learn about Global CNC Hardware - India's leading supplier of precision CNC spare parts, machine servicing, and retrofitting solutions." />
   
+  <!-- Google Fonts & Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            paper: '#F4F4F4', surface: '#FFFFFF', ink: '#0B1C2D', steel: '#6B7280',
-            steelLight: '#9CA3AF', line: '#E5E7EB', lineDark: '#D1D5DB', navy: '#0B1C2D',
-            navyLight: '#132438', signal: '#10B981', signalDark: '#059669', accent: '#14B8A6',
+            paper: '#F4F4F4',
+            surface: '#FFFFFF',
+            ink: '#0B1C2D',
+            steel: '#6B7280',
+            steelLight: '#9CA3AF',
+            line: '#E5E7EB',
+            lineDark: '#D1D5DB',
+            navy: '#0B1C2D',
+            navyLight: '#132438',
+            signal: '#10B981',
+            signalDark: '#059669',
+            accent: '#14B8A6',
           },
-          fontFamily: { display: ['Archivo', 'sans-serif'], body: ['Inter', 'sans-serif'] },
-          maxWidth: { content: '1240px' },
-          boxShadow: { glow: '0 0 30px rgba(16, 185, 129, 0.25)' }
+          fontFamily: {
+            display: ['Archivo', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          maxWidth: {
+            content: '1240px',
+          },
+          boxShadow: {
+            glow: '0 0 30px rgba(16, 185, 129, 0.25)',
+          }
         }
       }
     }
@@ -27,8 +45,9 @@
 </head>
 <body class="min-h-screen flex flex-col bg-white text-navy font-body">
 
-  <!-- HEADER -->
+  <!-- ── HEADER / NAVIGATION ─────────────────────────────────── -->
   <header class="fixed top-0 w-full z-50">
+    <!-- Top Bar -->
     <div class="bg-navy hidden md:block border-b border-white/10">
       <div class="max-w-content mx-auto px-5 md:px-8 py-2 flex items-center justify-end gap-6 text-xs text-white/70">
         <a href="mailto:globalcnchardware@gmail.com" class="flex items-center gap-1.5 hover:text-signal transition-colors">
@@ -41,144 +60,262 @@
         </a>
       </div>
     </div>
+
+    <!-- Main Navigation Bar -->
     <div class="bg-white shadow-md border-b border-line">
       <div class="max-w-content mx-auto px-5 md:px-8 flex items-center justify-between h-24">
         <a href="index.html" class="flex items-center group py-1 shrink-0">
           <img src="images/logo.jpg" alt="GLOBAL CNC Hardware Logo" class="h-16 md:h-20 lg:h-22 w-auto object-contain bg-white transition-transform group-hover:scale-105" />
         </a>
+        
+        <!-- Desktop Links -->
         <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-          <a href="index.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Home<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
-          <a href="about.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">About Us<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
-          <a href="services.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Services<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
-          <a href="products.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Products<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
-          <a href="contact.html" class="desktop-nav-link relative px-4 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Contact<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="index.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Home<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="about.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">About Us<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="services.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Services<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="products.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Products<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="Usedmachines.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Used Machines<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
+          <a href="Machinebackup.html" class="desktop-nav-link relative px-3.5 py-2 text-steel hover:text-navy hover:bg-gray-50 transition-colors">Machine Backup<div class="nav-indicator hidden absolute -bottom-0.5 left-3 right-3 h-0.5 bg-signal"></div></a>
         </nav>
-        <a href="contact.html" class="hidden md:inline-flex bg-signal text-white px-6 py-2.5 text-sm font-bold hover:bg-signalDark transition-all uppercase tracking-wide">Learn More</a>
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-navy">
+
+        <a href="contact.html" class="hidden lg:inline-flex bg-signal text-white px-6 py-2.5 text-sm font-bold hover:bg-signalDark transition-all uppercase tracking-wide">
+          Contact Us
+        </a>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-navy" aria-label="Toggle navigation menu">
           <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
     </div>
+
+    <!-- Mobile Drawer Menu -->
     <div id="mobile-menu" class="md:hidden bg-white border-t border-line shadow-lg">
       <div class="flex flex-col py-3">
-        <a href="index.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Home</a>
-        <a href="about.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">About Us</a>
-        <a href="services.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Services</a>
-        <a href="products.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Products</a>
-        <a href="contact.html" class="mobile-nav-link px-5 py-3 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Contact</a>
+        <a href="index.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Home</a>
+        <a href="about.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">About Us</a>
+        <a href="services.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Services</a>
+        <a href="products.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Products</a>
+        <a href="Usedmachines.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Used Machines</a>
+        <a href="Machinebackup.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Machine Backup</a>
+        <a href="contact.html" class="mobile-nav-link px-5 py-2.5 text-sm font-medium text-steel hover:bg-gray-50 transition-colors">Contact</a>
       </div>
     </div>
   </header>
 
-  <!-- MAIN -->
+  <!-- ── MAIN CONTENT ────────────────────────────────────────── -->
   <main class="flex-1 pt-24">
-    <!-- HERO -->
-    <section class="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-navy">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&w=1800&q=80');"></div>
+
+    <!-- ── HERO SECTION WITH ORGANIC WAVY SVG DIVIDER (MATCHING DESIGN STYLE) ── -->
+    <section class="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden bg-navy">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/aboutus.jpg');"></div>
       <div class="absolute inset-0 bg-navy/85 backdrop-blur-[2px]"></div>
-      <div class="relative max-w-content mx-auto px-5 md:px-8">
-        <div class="max-w-3xl animate-slide-up">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-signal/20 border border-signal/30 text-signal font-bold text-xs uppercase tracking-widest mb-5">
+      
+      <div class="relative max-w-content mx-auto px-5 md:px-8 text-center">
+        <div class="max-w-3xl mx-auto animate-slide-up">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-signal/20 border border-signal/30 text-signal font-bold text-xs uppercase tracking-widest mb-5 rounded-full">
             <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            About Global CNC Hardware
+            Engineering Excellence in Coimbatore
           </div>
-          <h1 class="font-display font-extrabold text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-6">
-            India's Trusted Partner in CNC Machinery & Spare Parts
+          <h1 class="font-display font-extrabold text-4xl md:text-6xl text-white leading-tight mb-6">
+            About Us
           </h1>
-          <p class="text-base md:text-lg text-white/80 max-w-2xl leading-relaxed mb-8">
-            Committed to technology, engineering integrity, and customer satisfaction across India's industrial automation sector.
+          <p class="text-base md:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed mb-4">
+            India's Trusted Partner in CNC Machinery, Precision Spare Parts & Engineering Automation.
           </p>
         </div>
       </div>
+
+      <!-- Organic Smooth Wavy SVG Divider at the Bottom (Matching Reference Style) -->
+      <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none z-10">
+        <svg class="relative block w-full h-12 md:h-20 text-paper fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C150,90 350,-40 500,40 C650,120 900,10 1200,50 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
     </section>
 
-    <!-- CONTENT BLOCKS -->
-    <section class="bg-paper py-20 watermark-bg">
-      <!-- Content wrapper with solid bg — watermark shows only in the section's padding margins above/below this div -->
-      <div class="max-w-content mx-auto px-5 md:px-8 space-y-20 bg-paper py-0">
+    <!-- ── FEATURE SECTION: WHY CHOOSE US / WHY WE ARE THE BEST (MATCHING REFERENCE LAYOUT) ── -->
+    <section class="bg-paper pb-20 pt-8 watermark-bg">
+      <!-- Content wrapper with solid bg — watermark shows only in section margins -->
+      <div class="max-w-content mx-auto px-5 md:px-8 bg-paper py-4 relative z-10 space-y-20">
         
-        <!-- Block 1 -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div class="relative border-4 border-navy shadow-xl overflow-hidden group">
-            <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&w=800&q=80" alt="Who We Are" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div class="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors"></div>
+        <!-- Main Feature Block (Image Left + Rounded Floating Badge, Text + 2x2 Feature Pills Right) -->
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Left Column: Rounded Main Photo with Overlapping Badge (Matching Reference Layout) -->
+          <div class="lg:col-span-6 relative">
+            <div class="relative rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl bg-navy group">
+              <img src="images/whyweare.jpg" alt="Why Choose Global CNC Hardware" class="w-full h-[400px] md:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div class="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors"></div>
+            </div>
+
+            <!-- Overlapping Sub-Badge Card (Matching bottom-right floating photo badge in reference style) -->
+            <div class="absolute -bottom-6 -right-4 md:bottom-4 md:-right-6 bg-navy text-white p-5 rounded-2xl border-2 border-signal shadow-2xl max-w-[240px] hidden sm:block z-20">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-signal/20 text-signal font-bold flex items-center justify-center text-lg shrink-0">
+                  ⚡
+                </div>
+                <div>
+                  <div class="font-display font-extrabold text-2xl text-signal">15+ Years</div>
+                  <div class="text-[11px] text-white/80 font-bold uppercase tracking-wider">Industrial Trust</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <span class="text-signal font-bold uppercase tracking-widest text-xs mb-2 block">Our Story & Mission</span>
-            <h2 class="font-display font-extrabold text-3xl text-navy mb-4">Who We Are</h2>
-            <p class="text-steel leading-relaxed text-base mb-6">
-              Global CNC Hardware is a leading supplier of precision CNC spare parts, electrical hardware, and machine repair services based in Coimbatore, Tamil Nadu. We specialize in Fanuc, Siemens, and Mitsubishi compatible systems.
-            </p>
-            <a href="services.html" class="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 font-bold text-xs uppercase tracking-wider hover:bg-signal transition-colors">
-              Explore Capabilities
-            </a>
+
+          <!-- Right Column: Header, Narrative Paragraph, and 2x2 Feature Pills (Matching Reference Right Column) -->
+          <div class="lg:col-span-6 space-y-6">
+            <div>
+              <span class="text-signal font-bold uppercase tracking-widest text-xs mb-2 block">WHY CHOOSE US</span>
+              <h2 class="font-display font-extrabold text-3xl md:text-5xl text-navy leading-tight mb-4">
+                Why We Are The Best Choice
+              </h2>
+              <p class="text-steel leading-relaxed text-base">
+                Global CNC Hardware is a leading supplier of precision CNC spare parts, electrical hardware, and machine repair services based in Ganapathy, Coimbatore. We specialize in Fanuc, Siemens, and Mitsubishi compatible systems, delivering genuine parts and fast technical support.
+              </p>
+            </div>
+
+            <!-- 2x2 Feature Pills Grid (Matching the soft rounded pill boxes in reference design) -->
+            <div class="grid sm:grid-cols-2 gap-4 pt-2">
+              
+              <!-- Pill 1 -->
+              <div class="bg-white p-4 rounded-2xl border border-line flex items-center gap-3 shadow-sm hover:border-signal transition-all group">
+                <div class="w-11 h-11 rounded-xl bg-signal/10 text-signal flex items-center justify-center font-bold shrink-0 group-hover:bg-signal group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-navy text-sm">Genuine OEM Parts</h4>
+                  <p class="text-[11px] text-steel">100% Original Spares</p>
+                </div>
+              </div>
+
+              <!-- Pill 2 -->
+              <div class="bg-white p-4 rounded-2xl border border-line flex items-center gap-3 shadow-sm hover:border-signal transition-all group">
+                <div class="w-11 h-11 rounded-xl bg-signal/10 text-signal flex items-center justify-center font-bold shrink-0 group-hover:bg-signal group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-navy text-sm">Expert Technicians</h4>
+                  <p class="text-[11px] text-steel">Certified Field Support</p>
+                </div>
+              </div>
+
+              <!-- Pill 3 -->
+              <div class="bg-white p-4 rounded-2xl border border-line flex items-center gap-3 shadow-sm hover:border-signal transition-all group">
+                <div class="w-11 h-11 rounded-xl bg-signal/10 text-signal flex items-center justify-center font-bold shrink-0 group-hover:bg-signal group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-navy text-sm">Fast Turnaround</h4>
+                  <p class="text-[11px] text-steel">Zero Machine Downtime</p>
+                </div>
+              </div>
+
+              <!-- Pill 4 -->
+              <div class="bg-white p-4 rounded-2xl border border-line flex items-center gap-3 shadow-sm hover:border-signal transition-all group">
+                <div class="w-11 h-11 rounded-xl bg-signal/10 text-signal flex items-center justify-center font-bold shrink-0 group-hover:bg-signal group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-navy text-sm">Quality Guaranteed</h4>
+                  <p class="text-[11px] text-steel">Tested & Inspected</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="pt-2">
+              <a href="services.html" class="inline-flex items-center gap-2 bg-navy text-white px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-signal transition-colors shadow-md">
+                Explore Our Capabilities <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+
           </div>
+
         </div>
 
-        <!-- Block 2 -->
-        <div class="grid md:grid-cols-2 gap-12 items-center md:[&>*:first-child]:order-2">
-          <div class="relative border-4 border-navy shadow-xl overflow-hidden group">
-            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=800&q=80" alt="Sourcing & Quality Commitment" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div class="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors"></div>
-          </div>
-          <div>
-            <span class="text-signal font-bold uppercase tracking-widest text-xs mb-2 block">Our Story & Mission</span>
-            <h2 class="font-display font-extrabold text-3xl text-navy mb-4">Our Sourcing & Quality Commitment</h2>
-            <p class="text-steel leading-relaxed text-base mb-6">
-              We source genuine imported spare parts directly from trusted manufacturers worldwide. Every component undergoes rigorous quality checks before dispatch to ensure zero breakdown time for your production line.
+        <!-- ── THREE CORE COMMITMENT CARDS ── -->
+        <div class="grid md:grid-cols-3 gap-8 pt-8">
+          
+          <div class="bg-white p-8 rounded-3xl border border-line shadow-sm hover:shadow-xl transition-all space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-navy text-signal flex items-center justify-center font-bold text-xl">
+              01
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl">Our Mission & Story</h3>
+            <p class="text-xs text-steel leading-relaxed">
+              Founded in Coimbatore, Global CNC Hardware was created to provide manufacturing units and workshops across South India with reliable, high-speed spare parts supply and expert machinery maintenance.
             </p>
-            <a href="services.html" class="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 font-bold text-xs uppercase tracking-wider hover:bg-signal transition-colors">
-              Explore Capabilities
-            </a>
           </div>
-        </div>
 
-        <!-- Block 3 -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div class="relative border-4 border-navy shadow-xl overflow-hidden group">
-            <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80" alt="Expert Engineering Support" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div class="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors"></div>
-          </div>
-          <div>
-            <span class="text-signal font-bold uppercase tracking-widest text-xs mb-2 block">Our Story & Mission</span>
-            <h2 class="font-display font-extrabold text-3xl text-navy mb-4">Expert Engineering Support</h2>
-            <p class="text-steel leading-relaxed text-base mb-6">
-              Our team of experienced engineers provides specialized spindle reconditioning, control panel troubleshooting, and CNC retrofitting services to machine shops and industrial units across India.
+          <div class="bg-white p-8 rounded-3xl border border-line shadow-sm hover:shadow-xl transition-all space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-navy text-signal flex items-center justify-center font-bold text-xl">
+              02
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl">Quality Sourcing</h3>
+            <p class="text-xs text-steel leading-relaxed">
+              We directly source genuine imported spare parts from trusted international manufacturers. Every servo drive, motor encoder, and keysheet undergoes strict testing before dispatch.
             </p>
-            <a href="services.html" class="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 font-bold text-xs uppercase tracking-wider hover:bg-signal transition-colors">
-              Explore Capabilities
-            </a>
           </div>
+
+          <div class="bg-white p-8 rounded-3xl border border-line shadow-sm hover:shadow-xl transition-all space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-navy text-signal flex items-center justify-center font-bold text-xl">
+              03
+            </div>
+            <h3 class="font-display font-bold text-navy text-xl">Engineering Support</h3>
+            <p class="text-xs text-steel leading-relaxed">
+              Our team of field service engineers provides on-site spindle reconditioning, control panel troubleshooting, CNC parameter backups, and machine retrofitting to keep your factory operating smoothly.
+            </p>
+          </div>
+
         </div>
 
       </div>
     </section>
 
-    <!-- STATS BANNER -->
+    <!-- ── STATS COUNTER BANNER ── -->
     <section class="bg-navy py-16 text-white border-t border-b border-navyLight">
       <div class="max-w-content mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="border-l-4 border-signal bg-navyLight p-6 text-center">
+        <div class="border-l-4 border-signal bg-navyLight p-6 text-center rounded-r-2xl">
           <div class="font-display font-extrabold text-4xl text-signal mb-1">15+</div>
           <div class="text-xs text-white/80 font-bold uppercase tracking-wider">Years Experience</div>
         </div>
-        <div class="border-l-4 border-signal bg-navyLight p-6 text-center">
+        <div class="border-l-4 border-signal bg-navyLight p-6 text-center rounded-r-2xl">
           <div class="font-display font-extrabold text-4xl text-signal mb-1">350+</div>
           <div class="text-xs text-white/80 font-bold uppercase tracking-wider">Projects Completed</div>
         </div>
-        <div class="border-l-4 border-signal bg-navyLight p-6 text-center">
+        <div class="border-l-4 border-signal bg-navyLight p-6 text-center rounded-r-2xl">
           <div class="font-display font-extrabold text-4xl text-signal mb-1">100+</div>
           <div class="text-xs text-white/80 font-bold uppercase tracking-wider">Clients Served</div>
         </div>
-        <div class="border-l-4 border-signal bg-navyLight p-6 text-center">
+        <div class="border-l-4 border-signal bg-navyLight p-6 text-center rounded-r-2xl">
           <div class="font-display font-extrabold text-4xl text-signal mb-1">100%</div>
-          <div class="text-xs text-white/80 font-bold uppercase tracking-wider">Genuine Parts Guarantee</div>
+          <div class="text-xs text-white/80 font-bold uppercase tracking-wider">Genuine Guarantee</div>
         </div>
       </div>
     </section>
+
+    <!-- ── CALL TO ACTION BANNER ── -->
+    <section class="bg-paper py-16 watermark-bg">
+      <div class="max-w-content mx-auto px-5 md:px-8 bg-paper relative z-10">
+        <div class="bg-signal text-white p-8 md:p-12 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+          <div>
+            <span class="bg-white/20 text-white font-bold text-xs uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 inline-block">Need Expert Technical Advice?</span>
+            <h3 class="font-display font-extrabold text-2xl md:text-4xl text-white mb-2">Speak Directly With Our Engineering Team</h3>
+            <p class="text-white/90 text-sm max-w-xl leading-relaxed">
+              Whether you need urgent CNC spare parts, machine parameter backups, or electrical control panel servicing in Coimbatore, we are here to help.
+            </p>
+          </div>
+          <a href="contact.html" class="shrink-0 bg-navy text-white px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-navyLight transition-colors shadow-lg">
+            Get In Touch Now
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER -->
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
   <footer class="bg-navy text-white">
     <div class="max-w-content mx-auto px-5 md:px-8 pt-16 pb-8">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
@@ -192,30 +329,42 @@
         </div>
         <div class="md:col-span-2">
           <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Useful Links</h4>
-          <ul class="space-y-3 text-sm text-white/60">
+          <ul class="space-y-2.5 text-sm text-white/60">
             <li><a href="about.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>About Us</a></li>
             <li><a href="services.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Services</a></li>
             <li><a href="products.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Products</a></li>
+            <li><a href="Usedmachines.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Used Machines</a></li>
+            <li><a href="Machinebackup.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Machine Backup</a></li>
             <li><a href="contact.html" class="hover:text-signal transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 bg-signal"></span>Contact</a></li>
           </ul>
         </div>
-        <div class="md:col-span-4">
+        <div class="md:col-span-3">
           <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Services</h4>
           <ul class="space-y-2.5 text-sm text-white/60">
-            <li>CNC Electrical Control Panel Service</li>
-            <li>CNC Machine Repair Services</li>
-            <li>CNC Machine Retrofitting Service</li>
-            <li>Spindle Reconditioning Services</li>
-            <li>VMC, HMC, and SPM Repair & Service</li>
-            <li>Ball Screw Reconditioning and Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Electrical Control Panel Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Machine Repair Services</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>CNC Machine Retrofitting Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>Spindle Reconditioning Services</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>VMC, HMC, and SPM Repair & Service</li>
+            <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-signal mt-1.5 shrink-0"></span>Ball Screw Reconditioning and Service</li>
           </ul>
         </div>
-        <div class="md:col-span-2">
+
+        <div class="md:col-span-3">
           <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Contact</h4>
           <ul class="space-y-4 text-sm text-white/60">
-            <li>+91 8489892092</li>
-            <li>globalcnchardware@gmail.com</li>
-            <li>Coimbatore, Tamil Nadu, India - 641106</li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <div><p>+91 9865292092</p><p>+91 9677592092</p><p>+91 9087292092</p><p>+91 8489892092</p></div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <a href="mailto:globalcnchardware@gmail.com" class="hover:text-signal transition-colors break-all">globalcnchardware@gmail.com</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-signal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <a href="https://maps.google.com/?q=Coimbatore+Tamil+Nadu+India+641106" target="_blank" rel="noopener noreferrer" class="hover:text-signal transition-colors">Coimbatore, Tamil Nadu, India - 641106</a>
+            </li>
           </ul>
         </div>
       </div>
