@@ -4,8 +4,17 @@ function getProductSlug(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
+// Use the slug from the product's own "images" field when it exists;
+// only fall back to a name-derived slug for products missing that field.
+function getImageSlug(product) {
+  if (product.images && product.images.length > 0) {
+    return product.images[0];
+  }
+  return getProductSlug(product.name);
+}
+
 function createRelatedCardHTML(product) {
-  const slug = getProductSlug(product.name);
+  const slug = getImageSlug(product);
   return `
     <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
       <div class="relative overflow-hidden">
@@ -90,9 +99,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (breadcrumbName) breadcrumbName.textContent = product.name;
 
   // Populate Product Info
-  const slug = getProductSlug(product.name);
+  const slug = getImageSlug(product);
+  const fallbackSlug = getProductSlug(product.name);
   const imgEl = document.getElementById('product-image');
   if (imgEl) {
+    imgEl.style.display = 'block';
+    if (imgEl.nextElementSibling) {
+      imgEl.nextElementSibling.style.display = 'none';
+    }
+    imgEl.onerror = function() {
+      const currentSrc = this.getAttribute('src');
+      if (currentSrc !== `images/${fallbackSlug}.jpg`) {
+        this.src = `images/${fallbackSlug}.jpg`;
+      } else {
+        this.style.display = 'none';
+        if (this.nextElementSibling) {
+          this.nextElementSibling.style.display = 'flex';
+        }
+      }
+    };
     imgEl.src = `images/${slug}.jpg`;
     imgEl.alt = product.name;
   }
