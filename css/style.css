@@ -10,13 +10,124 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── SITE BACKGROUND — layered industrial canvas ── */
 body {
   margin: 0;
-  background-color: #f7f7f5;
   color: #0b1c2d;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  min-height: 100vh;
+  background-color: #d8dfe8;
+  background-image:
+    radial-gradient(ellipse 75% 55% at 12% -8%, rgba(16, 185, 129, 0.18), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 98% 102%, rgba(11, 28, 45, 0.14), transparent 52%),
+    linear-gradient(155deg, #d4dbe4 0%, #dfe5ec 40%, #e8edf2 70%, #d9e0e8 100%);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    url('../images/gch-watermark-bg.png'),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(11, 28, 45, 0.06) 39px,
+      rgba(11, 28, 45, 0.06) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(11, 28, 45, 0.06) 39px,
+      rgba(11, 28, 45, 0.06) 40px
+    );
+  background-size: 480px 320px, 40px 40px, 40px 40px;
+  background-position: center;
+  animation: siteBgDrift 48s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 520px at 6% 14%, rgba(16, 185, 129, 0.14), transparent 72%),
+    radial-gradient(circle 460px at 94% 78%, rgba(20, 184, 166, 0.1), transparent 70%),
+    radial-gradient(circle 400px at 50% 100%, rgba(11, 28, 45, 0.08), transparent 68%);
+  animation: siteOrbFloat 32s ease-in-out infinite alternate;
+}
+
+@keyframes siteBgDrift {
+  0% {
+    background-position: center, 0 0, 0 0;
+  }
+  100% {
+    background-position: center, 20px 20px, -20px -20px;
+  }
+}
+
+@keyframes siteOrbFloat {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Content sections — tinted surfaces (not flat white) */
+main section.bg-white {
+  background: linear-gradient(
+    148deg,
+    #e2e8ef 0%,
+    #edf1f5 45%,
+    #e6ebf1 100%
+  ) !important;
+}
+
+main section.bg-paper {
+  background: linear-gradient(
+    148deg,
+    #d8e0e9 0%,
+    #e4eaf0 45%,
+    #dce4ec 100%
+  ) !important;
+}
+
+main section.watermark-bg:not(.bg-white):not(.bg-paper):not(.bg-navy) {
+  background: linear-gradient(
+    148deg,
+    #dde4ec 0%,
+    #e8edf2 50%,
+    #e0e7ee 100%
+  ) !important;
+}
+
+main.watermark-bg {
+  background: linear-gradient(
+    148deg,
+    #e0e6ed 0%,
+    #eaedf1 50%,
+    #e2e8ef 100%
+  );
+}
+
+/* Soft dividers between alternating sections */
+main section.bg-white + section.bg-paper,
+main section.bg-paper + section.bg-white {
+  box-shadow: inset 0 1px 0 rgba(11, 28, 45, 0.08);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -58,20 +169,19 @@ input, select, textarea {
   max-width: 1240px;
 }
 
-/* ── GCH LOGO WATERMARK — PARENT SECTIONS ONLY ── */
+/* ── GCH WATERMARK — PARENT SECTIONS ONLY ── */
 /*
  * Applied ONLY via the .watermark-bg class added explicitly to
  * parent <section> elements in HTML. Child divs / nested elements
  * are NOT affected. Header, footer, and navbar are completely excluded.
  *
- * Logo size: 120px wide — compact and clean.
- * Cell spacing: 300px × 220px — generous gap between each repeated logo.
- * Opacity: 0.09 — very subtle, does not distract from content.
+ * Uses the uploaded tiled watermark artwork as the repeating background.
  */
 
 .watermark-bg {
   position: relative;
-  isolation: isolate; /* creates a new stacking context so children are unaffected */
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .watermark-bg::before {
@@ -82,26 +192,53 @@ input, select, textarea {
   user-select: none;
   z-index: 0;
 
-  /* GCH logo — white background blends naturally on white/paper sections */
-  background-image: url('../images/gch-logo.jpg');
-  background-repeat: repeat;
+  background-image:
+    url('../images/gch-watermark-bg.png'),
+    linear-gradient(
+      125deg,
+      rgba(16, 185, 129, 0.1) 0%,
+      transparent 38%,
+      transparent 62%,
+      rgba(11, 28, 45, 0.08) 100%
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 72px,
+      rgba(11, 28, 45, 0.035) 72px,
+      rgba(11, 28, 45, 0.035) 73px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(11, 28, 45, 0.055) 39px,
+      rgba(11, 28, 45, 0.055) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(11, 28, 45, 0.055) 39px,
+      rgba(11, 28, 45, 0.055) 40px
+    );
+  background-repeat: repeat, no-repeat, repeat, repeat, repeat;
+  background-size: 480px 320px, 100% 100%, 100px 100px, 40px 40px, 40px 40px;
+  background-position: center;
+  animation: siteBgDrift 56s ease-in-out infinite alternate;
+}
 
-  /*
-   * background-size controls the "cell" each logo occupies in the repeating grid.
-   * Logo is 120px wide; total cell is 300px × 220px → natural spacing all around.
-   * This gives approx. 90px gap on each side of each logo instance.
-   */
-  background-size: 300px 220px;
-  background-position: 40px 30px; /* slight offset so logo doesn't start at edge */
-
-  /* Subtle — visible but doesn't fight the page content */
-  opacity: 0.10;
-
-  /* multiply blend removes the white background of the JPG on white sections */
-  mix-blend-mode: multiply;
-
-  /* Slow, gentle drift animation */
-  animation: watermarkDrift 90s linear infinite;
+.watermark-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at -5% -10%, rgba(16, 185, 129, 0.16), transparent 72%),
+    radial-gradient(ellipse 50% 40% at 105% 110%, rgba(11, 28, 45, 0.12), transparent 68%);
+  animation: siteOrbFloat 36s ease-in-out infinite alternate;
 }
 
 /* All direct and indirect children stay fully clickable above the watermark */
@@ -145,19 +282,10 @@ input, select, textarea {
   letter-spacing: 0.42em;
 }
 
-@keyframes watermarkDrift {
-  0%   { background-position: 40px 30px; }
-  50%  { background-position: 190px 140px; }
-  100% { background-position: 40px 30px; }
-}
-
-/* Responsive — slightly smaller logo on mobile */
+/* Responsive — slightly smaller watermark tile on mobile */
 @media (max-width: 640px) {
   .watermark-bg::before {
-    background-size: 220px 160px;
-    background-position: 20px 15px;
-    opacity: 0.08;
-    animation-duration: 110s;
+    background-size: 360px 240px;
   }
 }
 
@@ -215,6 +343,12 @@ input, select, textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  body::before,
+  body::after,
+  .watermark-bg::before,
+  .watermark-bg::after {
+    animation: none !important;
   }
   .watermark-bg::before {
     animation: none !important;
