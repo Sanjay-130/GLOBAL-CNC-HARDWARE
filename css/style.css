@@ -110,6 +110,41 @@ input, select, textarea {
   z-index: 1;
 }
 
+/* Dark text watermark overlay on product & catalog images */
+.watermarked-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.watermarked-image::after {
+  content: 'GLOBAL CNC HARDWARE';
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  font-family: Archivo, Arial, sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(11, 28, 45, 0.85);
+  -webkit-text-stroke: 0.4px rgba(11, 28, 45, 0.95);
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.85),
+    0 0 6px rgba(255, 255, 255, 0.55);
+  transform: rotate(-30deg);
+}
+
+.watermarked-image--detail::after {
+  font-size: 26px;
+  letter-spacing: 0.42em;
+}
+
 @keyframes watermarkDrift {
   0%   { background-position: 40px 30px; }
   50%  { background-position: 190px 140px; }

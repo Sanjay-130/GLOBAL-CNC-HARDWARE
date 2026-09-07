@@ -14,18 +14,28 @@ function getImageSlug(product) {
 }
 
 function createRelatedCardHTML(product) {
-  const slug = getImageSlug(product);
+  const nameSlug = getProductSlug(product.name);
+  const primarySlug = getImageSlug(product);
   return `
     <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
-      <div class="relative overflow-hidden">
-        <div class="aspect-square w-full bg-paper relative flex items-center justify-center overflow-hidden border-b border-line">
+      <div class="relative overflow-hidden bg-white">
+        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line watermarked-image">
           <img 
-            src="images/${slug}.jpg" 
+            src="images/${nameSlug}.jpg" 
             alt="${product.name}" 
-            class="aspect-square w-full object-cover border-b border-line" 
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            class="aspect-square w-full h-full object-contain p-3 border-b border-line transition-transform duration-300 group-hover:scale-105" 
+            onerror="
+              if (this.getAttribute('data-tried-fallback') !== 'true') {
+                this.setAttribute('data-tried-fallback', 'true');
+                this.src = 'images/${primarySlug}.jpg';
+              } else {
+                this.style.display='none';
+                this.parentElement.querySelector('.fallback-box').style.display='flex';
+              }
+            "
           />
-          <div class="aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
+          
+          <div class="fallback-box aspect-square w-full bg-paper hidden items-center justify-center border-b border-line absolute inset-0">
             <div class="text-center p-4">
               <span class="text-xs text-steel">${product.category}</span>
             </div>
@@ -99,26 +109,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (breadcrumbName) breadcrumbName.textContent = product.name;
 
   // Populate Product Info
-  const slug = getImageSlug(product);
-  const fallbackSlug = getProductSlug(product.name);
+  const nameSlug = getProductSlug(product.name);
+  const primarySlug = getImageSlug(product);
   const imgEl = document.getElementById('product-image');
+  const fallbackEl = document.getElementById('product-image-fallback');
   if (imgEl) {
     imgEl.style.display = 'block';
-    if (imgEl.nextElementSibling) {
-      imgEl.nextElementSibling.style.display = 'none';
+    if (fallbackEl) {
+      fallbackEl.style.display = 'none';
     }
     imgEl.onerror = function() {
-      const currentSrc = this.getAttribute('src');
-      if (currentSrc !== `images/${fallbackSlug}.jpg`) {
-        this.src = `images/${fallbackSlug}.jpg`;
+      if (this.getAttribute('data-tried-fallback') !== 'true') {
+        this.setAttribute('data-tried-fallback', 'true');
+        this.src = `images/${primarySlug}.jpg`;
       } else {
         this.style.display = 'none';
-        if (this.nextElementSibling) {
-          this.nextElementSibling.style.display = 'flex';
+        if (fallbackEl) {
+          fallbackEl.style.display = 'flex';
         }
       }
     };
-    imgEl.src = `images/${slug}.jpg`;
+    imgEl.src = `images/${nameSlug}.jpg`;
     imgEl.alt = product.name;
   }
 
