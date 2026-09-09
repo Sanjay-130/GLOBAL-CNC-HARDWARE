@@ -896,14 +896,14 @@ input, select, textarea {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   background: transparent;
 }
 
 .horizontal-product-track {
   display: flex;
-  gap: 2rem;
-  padding: 0 2rem;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
   animation: scrollHorizontal 150s linear infinite;
   width: max-content;
 }
@@ -914,8 +914,8 @@ input, select, textarea {
 
 .horizontal-product-card {
   position: relative;
-  width: 140px;
-  height: 180px;
+  width: 120px;
+  height: 160px;
   flex-shrink: 0;
   background: transparent;
   border: none;
@@ -933,7 +933,7 @@ input, select, textarea {
 
 .horizontal-product-card__image {
   width: 100%;
-  height: 110px;
+  height: 95px;
   background: transparent;
   display: flex;
   align-items: center;
