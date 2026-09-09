@@ -7,7 +7,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "High-precision pulsecoder for servo motors.",
     "description": "Essential component for precise position and speed feedback in CNC servo motor systems. Designed for durability in industrial environments.",
     "price": 145.00,
-    "sku": "CMC-SMP-001",
+    "sku": "CNC-SMP-001",
     "specs": { "Compatibility": "Standard Servo Motors", "Output": "Digital" },
     "images": ["servo-motor-pulsecoder"]
   },
@@ -18,7 +18,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Automatic Tool Changer Arm for CNC mills.",
     "description": "Robust ATC arm designed for rapid and reliable tool changes in machining centers. Precision machined to ensure exact tool alignment.",
     "price": 320.00,
-    "sku": "CMC-ATC-ARM",
+    "sku": "CNC-ATC-ARM",
     "specs": { "Material": "Cast Iron/Aluminum", "Type": "Swing Arm" },
     "images": ["atc-tool-changer-arm"]
   },
@@ -29,7 +29,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "3-color LED signal tower with audible buzzer.",
     "description": "Clear visual and audible status indication for CNC machinery. Red, yellow, and green LED tiers with an integrated 85dB buzzer.",
     "price": 45.00,
-    "sku": "CMC-STL-3B",
+    "sku": "CNC-STL-3B",
     "specs": { "Voltage": "24V DC", "Colors": "R/Y/G", "Buzzer": "85dB" },
     "images": ["signal-tower-lamp-with-buzzer"]
   },
@@ -40,7 +40,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Handheld MPG pendant for manual machine control.",
     "description": "Precision handwheel for manual axis positioning. Features axis selection and multiplier switches in a durable, oil-resistant housing.",
     "price": 115.00,
-    "sku": "CMC-MPG-HD1",
+    "sku": "CNC-MPG-HD1",
     "specs": { "Output": "100 PPR", "Voltage": "5V/12V", "Cable": "Coiled" },
     "images": ["manual-pulse-generator-mpg"]
   },
@@ -51,7 +51,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Industrial SSR for high-cycle load switching.",
     "description": "Reliable solid-state switching for heaters and motors. Optically isolated input and zero-cross switching for minimal electrical noise.",
     "price": 28.50,
-    "sku": "CMC-SSR-40A",
+    "sku": "CNC-SSR-40A",
     "specs": { "Current": "40A", "Control": "3-32V DC", "Load": "24-380V AC" },
     "images": ["solid-state-relay-ssr"]
   },
@@ -62,7 +62,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Micron filter bag for machine coolant systems.",
     "description": "High-capacity filter bag for removing fine swarf and particulates from CNC coolant sumps, extending pump and tool life.",
     "price": 12.00,
-    "sku": "CMC-CFB-25M",
+    "sku": "CNC-CFB-25M",
     "specs": { "Rating": "25 Micron", "Material": "Polypropylene", "Ring": "Steel" },
     "images": ["coolant-filter-bag"]
   },
@@ -73,7 +73,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Wireless manual pulse generator for CNC systems.",
     "description": "Untethered control for machine setup. Features emergency stop, axis selection, and reliable RF communication up to 40 meters.",
     "price": 285.00,
-    "sku": "CMC-MPG-WRLS",
+    "sku": "CNC-MPG-WRLS",
     "specs": { "Range": "40m", "Axes": "Up to 6", "Frequency": "433 MHz" },
     "images": ["wireless-mpg-cnc-control-pendant"]
   },
@@ -84,7 +84,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Hydraulic tool clamping cylinder.",
     "description": "High-pressure hydraulic cylinder designed for secure and rapid tool clamping in CNC spindles. Built for high-cycle endurance.",
     "price": 195.00,
-    "sku": "CMC-TCC-HYD",
+    "sku": "CNC-TCC-HYD",
     "specs": { "Pressure": "70 Bar", "Stroke": "15mm", "Type": "Hydraulic" },
     "images": ["tool-clamp-cylinder"]
   },
@@ -95,7 +95,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Adjustable leveling pads with vibration damping.",
     "description": "Heavy-duty leveling mounts that isolate machine vibrations from the shop floor, improving surface finish and tool life.",
     "price": 45.00,
-    "sku": "CMC-LMP-01",
+    "sku": "CNC-LMP-01",
     "specs": { "Load Capacity": "2000 kg/pad", "Material": "Steel & NBR Rubber", "Thread": "M16" },
     "images": ["leveling-mounts-anti-vibration-pads"]
   },
@@ -106,7 +106,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Programmable centralized oil lubrication pump.",
     "description": "Digital automatic lubrication pump for linear guides and ball screws. Features low-level alarms and adjustable interval timers.",
     "price": 135.00,
-    "sku": "CMC-ALS-2L",
+    "sku": "CNC-ALS-2L",
     "specs": { "Capacity": "2 Liters", "Voltage": "110V/220V", "Flow": "150 cc/min" },
     "images": ["automatic-lubrication-system"]
   },
@@ -117,7 +117,7 @@ window.PRODUCTS_DATA = [
     "shortDescription": "Laser tool breakage detection system.",
     "description": "Non-contact laser sensor that automatically detects broken cutting tools during machining cycles to prevent scrap and further machine damage.",
     "price": 450.00,
-    "sku": "CMC-TBS-LSR",
+    "sku": "CNC-TBS-LSR",
     "specs": { "Detection Time": "< 1 sec", "Protection": "IP67", "Type": "Laser" },
     "images": ["tool-breakage-sensor"]
   },

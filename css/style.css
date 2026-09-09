@@ -738,6 +738,30 @@ input, select, textarea {
     background-size: 360px 240px;
   }
 
+  .horizontal-product-card {
+    width: 120px;
+    height: 160px;
+  }
+
+  .horizontal-product-card__image {
+    height: 90px;
+  }
+
+  .horizontal-product-card__name {
+    font-size: 0.8rem;
+  }
+
+  .horizontal-product-card__category {
+    font-size: 0.55rem;
+  }
+
+  .horizontal-product-card__content {
+    padding: 0.5rem;
+  }
+
+  .horizontal-product-card__img {
+    padding: 8px;
+  }
 }
 
 @media (max-width: 1023px) {
@@ -764,6 +788,23 @@ input, select, textarea {
   }
 
   .train-car__name {
+    font-size: 0.6rem;
+  }
+
+  .horizontal-product-card {
+    width: 140px;
+    height: 180px;
+  }
+
+  .horizontal-product-card__image {
+    height: 110px;
+  }
+
+  .horizontal-product-card__name {
+    font-size: 0.9rem;
+  }
+
+  .horizontal-product-card__category {
     font-size: 0.6rem;
   }
 }
@@ -902,7 +943,7 @@ input, select, textarea {
 
 .horizontal-product-track {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   padding: 0 1.5rem;
   animation: scrollHorizontal 150s linear infinite;
   width: max-content;
@@ -914,8 +955,8 @@ input, select, textarea {
 
 .horizontal-product-card {
   position: relative;
-  width: 120px;
-  height: 160px;
+  width: 180px;
+  height: 220px;
   flex-shrink: 0;
   background: transparent;
   border: none;
@@ -927,13 +968,13 @@ input, select, textarea {
 }
 
 .horizontal-product-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-8px) scale(1.03);
   box-shadow: none;
 }
 
 .horizontal-product-card__image {
   width: 100%;
-  height: 95px;
+  height: 140px;
   background: transparent;
   display: flex;
   align-items: center;
@@ -947,7 +988,7 @@ input, select, textarea {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 8px;
+  padding: 12px;
   transition: transform 0.5s ease;
 }
 
@@ -956,7 +997,7 @@ input, select, textarea {
 }
 
 .horizontal-product-card__content {
-  padding: 0.5rem;
+  padding: 0.75rem;
   text-align: center;
   background: transparent;
 }
@@ -964,7 +1005,7 @@ input, select, textarea {
 .horizontal-product-card__name {
   font-family: 'Archivo', sans-serif;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1.3;
   overflow: hidden;
@@ -974,7 +1015,7 @@ input, select, textarea {
 }
 
 .horizontal-product-card__category {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: rgba(16, 185, 129, 0.7);
   font-weight: 500;
   text-transform: uppercase;
