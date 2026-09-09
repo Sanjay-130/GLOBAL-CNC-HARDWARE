@@ -38,5 +38,5 @@ global-cmc/
 
 - **Mobile Navigation Drawer**: Smooth slide-in mobile navigation menu.
 - **Product Catalog Filtering**: Real-time filtering by category ("Tools", "Fasteners", "Machinery Parts", "Electrical Hardware") and live text search.
-- **Dynamic Product Details**: URL query parameter lookup (`?id=cnc-001`) with specifications table and related category items.
+- **Dynamic Product Details**: URL query parameter lookup (`?id=cnc-001`) with specifications, availability/service-life details, and related category items. Products can optionally define `usableLimit`, `usableLife`, `expiryDate`, and `availableSizes` (or `sizes`) in `js/products-data.js`; size and service-life specs are also detected automatically.
 - **Contact Form**: FormSubmit API integration with graceful `mailto:` fallback and location Google Map embed.

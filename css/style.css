@@ -169,6 +169,456 @@ input, select, textarea {
   max-width: 1240px;
 }
 
+/* Premium Hero Layout */
+.premium-hero-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Train Product Range Animation */
+.train-product-range {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background:
+    linear-gradient(135deg, rgba(16,185,129,0.08), transparent),
+    rgba(255,255,255,0.04);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(16,185,129,0.35);
+  border-radius: 16px;
+  overflow: visible;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 0 25px rgba(16,185,129,0.1);
+  height: 250px;
+  animation: premiumRangeFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.train-product-range::-webkit-scrollbar {
+  display: none;
+}
+
+.train-product-range {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.train-product-range::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.train-product-range__header {
+  position: relative;
+  z-index: 5;
+  padding: 1rem 1.5rem;
+  background: rgba(11, 28, 45, 0.5);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.train-product-range__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.train-product-range__title-text {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #10b981;
+}
+
+.train-product-range__title-accent {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+.train-product-range__indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.train-product-range__pulse {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+.train-product-range__status {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Railroad Track */
+.train-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(139, 69, 19, 0.3), rgba(101, 67, 33, 0.2));
+  border-top: 3px solid rgba(139, 69, 19, 0.5);
+}
+
+.train-track__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to bottom, #8b4513, #654321);
+  border-radius: 2px;
+}
+
+.train-track__rail--top {
+  top: 8px;
+}
+
+.train-track__rail--bottom {
+  bottom: 8px;
+}
+
+.train-track__ties {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20px,
+    rgba(101, 67, 33, 0.4) 20px,
+    rgba(101, 67, 33, 0.4) 28px
+  );
+}
+
+/* Train Container */
+.train-container {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 50px;
+  overflow: visible;
+  width: 100%;
+  background-image: radial-gradient(rgba(16,185,129,0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.train-wrapper {
+  display: flex;
+  align-items: flex-end;
+  width: max-content;
+  min-width: max-content;
+  animation: trainMove 30s linear infinite;
+  animation-delay: 3s;
+}
+
+.train-wrapper:hover {
+  animation-play-state: paused;
+}
+
+/* Train Engine */
+.train-engine {
+  position: relative;
+  width: 130px;
+  height: 100px;
+  margin-right: 15px;
+  flex-shrink: 0;
+  z-index: 10;
+  filter: drop-shadow(0 15px 18px rgba(0,0,0,0.45));
+}
+
+.train-engine__body {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 8px 8px 4px 4px;
+  border: 2px solid rgba(16,185,129,0.4);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 0 16px rgba(16,185,129,0.14);
+}
+
+.train-engine__cabin {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  width: 50px;
+  height: 40px;
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  border-radius: 4px 4px 0 0;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.train-engine__window {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 34px;
+  height: 20px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1));
+  border-radius: 2px;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.train-engine__chimney {
+  position: absolute;
+  top: -35px;
+  right: 15px;
+  width: 15px;
+  height: 20px;
+  background: linear-gradient(to bottom, #333, #1a1a2e);
+  border-radius: 2px 2px 0 0;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.train-engine__front {
+  position: absolute;
+  right: -15px;
+  top: 20px;
+  width: 20px;
+  height: 35px;
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  border-radius: 0 8px 8px 0;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.train-engine__cowcatcher {
+  position: absolute;
+  bottom: -15px;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid rgba(16, 185, 129, 0.3);
+}
+
+.train-engine__wheels {
+  position: absolute;
+  bottom: -15px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.train-engine__wheel {
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle, #333 60%, #1a1a2e 100%);
+  border: 3px solid rgba(16, 185, 129, 0.4);
+  border-radius: 50%;
+  animation: wheelSpin 2s linear infinite;
+}
+
+.train-engine__wheel--large {
+  width: 30px;
+  height: 30px;
+}
+
+.train-engine__wheel--small {
+  width: 20px;
+  height: 20px;
+  animation-duration: 1.5s;
+}
+
+.train-engine__smoke {
+  position: absolute;
+  top: -50px;
+  right: 20px;
+}
+
+.train-engine__smoke-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: smokeRise 3s ease-out infinite;
+}
+
+.train-engine__smoke-particle:nth-child(1) {
+  animation-delay: 0s;
+  left: 0;
+}
+
+.train-engine__smoke-particle:nth-child(2) {
+  animation-delay: 1s;
+  left: 5px;
+}
+
+.train-engine__smoke-particle:nth-child(3) {
+  animation-delay: 2s;
+  left: -5px;
+}
+
+/* Train Cars (Products) */
+.train-cars {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.train-car {
+  position: relative;
+  width: 104px;
+  height: 84px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(16,185,129,0.15));
+  border: 2px solid rgba(16,185,129,0.34);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.2), inset 0 0 8px rgba(255,255,255,0.05);
+}
+
+.train-car:hover {
+  transform: translateY(-5px);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.train-car__image {
+  width: 100%;
+  height: 50px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(16,185,129,0.2);
+}
+
+.train-car__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px 6px 0 0;
+  background: rgba(255,255,255,0.96);
+  transition: transform 0.8s ease, filter 0.8s ease;
+}
+
+.train-car__content {
+  padding: 8px;
+  text-align: center;
+}
+
+.train-car__name {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 600;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.train-car__wheels {
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.train-car__wheel {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, #333 60%, #1a1a2e 100%);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  animation: wheelSpin 2s linear infinite;
+}
+
+/* Train Animations */
+@keyframes trainMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes wheelSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes smokeRise {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(2);
+  }
+}
+
+@keyframes premiumRangeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes titlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes livePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0);
+  }
+}
+
+
+
 /* ── GCH WATERMARK — PARENT SECTIONS ONLY ── */
 /*
  * Applied ONLY via the .watermark-bg class added explicitly to
@@ -287,6 +737,44 @@ input, select, textarea {
   .watermark-bg::before {
     background-size: 360px 240px;
   }
+
+}
+
+@media (max-width: 1023px) {
+  .premium-hero-layout {
+    gap: 2rem;
+  }
+
+  .train-product-range {
+    height: 200px;
+  }
+
+  .train-engine {
+    width: 100px;
+    height: 80px;
+  }
+
+  .train-car {
+    width: 80px;
+    height: 65px;
+  }
+
+  .train-car__image {
+    height: 40px;
+  }
+
+  .train-car__name {
+    font-size: 0.6rem;
+  }
+}
+
+@keyframes heroProductScrollHorizontal {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* Smooth Fade and Slide Animations */
@@ -336,6 +824,217 @@ input, select, textarea {
   opacity: 1;
 }
 
+/* Horizontal Product Scroller - Premium Animation */
+.horizontal-product-scroller {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: transparent;
+  overflow: visible;
+  animation: scrollerFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.horizontal-product-scroller__header {
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  background: transparent;
+  border-bottom: none;
+  display: none;
+}
+
+.horizontal-product-scroller__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.horizontal-product-scroller__title-text {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #10b981;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.horizontal-product-scroller__title-accent {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.9), 0 0 30px rgba(16, 185, 129, 0.5);
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+.horizontal-product-scroller__indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.horizontal-product-scroller__pulse {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: livePulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+
+.horizontal-product-scroller__status {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.horizontal-scroller-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
+  background: transparent;
+}
+
+.horizontal-product-track {
+  display: flex;
+  gap: 2rem;
+  padding: 0 2rem;
+  animation: scrollHorizontal 150s linear infinite;
+  width: max-content;
+}
+
+.horizontal-product-track:hover {
+  animation-play-state: paused;
+}
+
+.horizontal-product-card {
+  position: relative;
+  width: 140px;
+  height: 180px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.horizontal-product-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: none;
+}
+
+.horizontal-product-card__image {
+  width: 100%;
+  height: 110px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border-bottom: none;
+  position: relative;
+}
+
+.horizontal-product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  transition: transform 0.5s ease;
+}
+
+.horizontal-product-card:hover .horizontal-product-card__img {
+  transform: scale(1.1);
+}
+
+.horizontal-product-card__content {
+  padding: 0.5rem;
+  text-align: center;
+  background: transparent;
+}
+
+.horizontal-product-card__name {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0.3rem;
+}
+
+.horizontal-product-card__category {
+  font-size: 0.55rem;
+  color: rgba(16, 185, 129, 0.7);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.horizontal-product-card__badge {
+  display: none;
+}
+
+/* Fade gradients on edges for smooth visual effect - REMOVED FOR CLEAN LOOK */
+.horizontal-scroller-container::before,
+.horizontal-scroller-container::after {
+  display: none;
+}
+
+@keyframes scrollHorizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .horizontal-product-card {
+    width: 110px;
+    height: 150px;
+  }
+
+  .horizontal-product-card__image {
+    height: 85px;
+  }
+
+  .horizontal-product-card__name {
+    font-size: 0.6rem;
+  }
+
+  .horizontal-product-card__category {
+    font-size: 0.55rem;
+  }
+
+  .horizontal-product-scroller__title-text {
+    font-size: 0.75rem;
+  }
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -351,6 +1050,9 @@ input, select, textarea {
     animation: none !important;
   }
   .watermark-bg::before {
+    animation: none !important;
+  }
+  .horizontal-product-track {
     animation: none !important;
   }
 }

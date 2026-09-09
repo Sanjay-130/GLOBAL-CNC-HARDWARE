@@ -77,6 +77,68 @@ function createProductCardHTML(product) {
   `;
 }
 
+function createProductRailItemHTML(product) {
+  return `
+    <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="hero-product-ticker__item group">
+      <span class="hero-product-ticker__dot" aria-hidden="true"></span>
+      <span class="min-w-0">
+        <span class="block text-white/90 text-sm font-semibold leading-snug truncate group-hover:text-signal transition-colors">${product.name}</span>
+        <span class="block text-white/45 text-[10px] uppercase tracking-wider mt-1">${product.category}</span>
+      </span>
+    </a>
+  `;
+}
+
+function createHorizontalProductCardHTML(product) {
+  const nameSlug = getProductSlug(product.name);
+  const primarySlug = getImageSlug(product);
+  
+  return `
+    <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="horizontal-product-card group">
+      <div class="horizontal-product-card__badge">NEW</div>
+      <div class="horizontal-product-card__image">
+        <img 
+          src="images/${nameSlug}.jpg" 
+          alt="${product.name}" 
+          class="horizontal-product-card__img"
+          onerror="
+            if (this.getAttribute('data-tried-fallback') !== 'true') {
+              this.setAttribute('data-tried-fallback', 'true');
+              this.src = 'images/${primarySlug}.jpg';
+            } else {
+              this.style.display='none';
+              this.parentElement.style.background='linear-gradient(135deg, rgba(16,185,129,0.1), rgba(11,28,45,0.2))';
+              this.parentElement.innerHTML='<div style=\\'text-align:center;padding:10px;color:rgba(255,255,255,0.7);font-size:0.6rem;\\'>${product.category}</div>';
+            }
+          "
+        />
+      </div>
+      <div class="horizontal-product-card__content">
+        <div class="horizontal-product-card__name">${product.name}</div>
+        <div class="horizontal-product-card__category">${product.category}</div>
+      </div>
+    </a>
+  `;
+}
+
+function renderProductRail(products) {
+  const rail = document.getElementById('product-rail-track');
+  if (!rail || !products.length) return;
+
+  const items = products.map(createProductRailItemHTML).join('');
+  rail.innerHTML = `<div class="hero-product-ticker__set">${items}</div><div class="hero-product-ticker__set" aria-hidden="true">${items}</div>`;
+}
+
+function renderHorizontalProductTrack(products) {
+  const track = document.getElementById('horizontal-product-track');
+  if (!track || !products.length) return;
+
+  // Create product cards and duplicate them for seamless infinite scroll
+  const productCards = products.map(createHorizontalProductCardHTML).join('');
+  // Duplicate the set 3 times to ensure smooth infinite scrolling
+  track.innerHTML = productCards + productCards + productCards;
+}
+
 // Render dynamic category filter buttons based on products data
 function renderCategoryButtons() {
   const container = document.getElementById('category-filter-buttons');
@@ -314,6 +376,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Render Controls & Products
   renderCategoryButtons();
   updateBrandButtonsUI();
+  renderProductRail(allProducts);
+  renderHorizontalProductTrack(allProducts);
   renderProducts();
 
   // Attach Category Filter Listener

@@ -13,6 +13,41 @@ function getImageSlug(product) {
   return getProductSlug(product.name);
 }
 
+function getProductAvailability(product) {
+  const specs = product.specs || {};
+  const specEntries = Object.entries(specs);
+  const sizeSpec = specEntries.find(([label]) => /size|diameter|dimension|thread|bore|capacity/i.test(label));
+  const lifeSpec = specEntries.find(([label]) => /life|duration|shelf|service/i.test(label));
+
+  const sizes = product.availableSizes || product.sizes || (sizeSpec ? sizeSpec[1] : null);
+  const usableLimit = product.usableLimit || product.usableLife || (lifeSpec ? lifeSpec[1] : null);
+
+  return {
+    usableLimit: usableLimit || 'Not specified',
+    expiryDate: product.expiryDate || 'Not applicable for this product',
+    availableSizes: Array.isArray(sizes) ? sizes.join(', ') : (sizes || 'Standard size')
+  };
+}
+
+function renderAvailability(product) {
+  const container = document.getElementById('detail-availability');
+  if (!container) return;
+
+  const availability = getProductAvailability(product);
+  const rows = [
+    // ['Usable limit', availability.usableLimit],
+    // ['Expiry date', availability.expiryDate],
+    ['Available sizes', availability.availableSizes]
+  ];
+
+  container.innerHTML = rows.map(([label, value]) => `
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 py-3 text-sm">
+      <dt class="text-steel">${label}</dt>
+      <dd class="font-medium text-navy sm:text-right">${value}</dd>
+    </div>
+  `).join('');
+}
+
 function createRelatedCardHTML(product) {
   const nameSlug = getProductSlug(product.name);
   const primarySlug = getImageSlug(product);
@@ -144,6 +179,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (descEl) descEl.textContent = product.description;
   if (priceEl) priceEl.textContent = `₹${product.price.toFixed(2)}`;
   if (skuEl) skuEl.textContent = product.sku;
+
+  renderAvailability(product);
 
   // Specifications Table
   const specsContainer = document.getElementById('detail-specs');
