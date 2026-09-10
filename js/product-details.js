@@ -41,9 +41,9 @@ function renderAvailability(product) {
   ];
 
   container.innerHTML = rows.map(([label, value]) => `
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 py-3 text-sm">
-      <dt class="text-steel">${label}</dt>
-      <dd class="font-medium text-navy sm:text-right">${value}</dd>
+    <div class="spec-row">
+      <dt>${label}</dt>
+      <dd>${value}</dd>
     </div>
   `).join('');
 }
@@ -95,6 +95,86 @@ function createRelatedCardHTML(product) {
     </a>
   `;
 }
+
+// Modal Functions
+function openInquiryModal() {
+  const modal = document.getElementById('inquiry-modal');
+  const productName = document.getElementById('detail-name').textContent;
+  const productSku = document.getElementById('detail-sku').textContent;
+  const productCategory = document.getElementById('detail-category').textContent;
+  
+  // Set product info in modal
+  document.getElementById('modal-product-name').textContent = productName;
+  document.getElementById('form-product-name').value = productName;
+  document.getElementById('form-product-sku').value = productSku;
+  document.getElementById('form-product-category').value = productCategory;
+  
+  // Reset form and show form (hide success message)
+  document.getElementById('inquiry-form').reset();
+  document.getElementById('inquiry-form').classList.remove('hidden');
+  document.getElementById('success-message').classList.add('hidden');
+  
+  // Show modal
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeInquiryModal() {
+  const modal = document.getElementById('inquiry-modal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = 'auto';
+}
+
+function submitInquiry(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const formData = new FormData(form);
+  
+  // Create email body
+  const emailBody = `
+NEW PRODUCT INQUIRY
+====================
+
+Product Information:
+- Product: ${formData.get('product_name')}
+- SKU: ${formData.get('product_sku')}
+- Category: ${formData.get('product_category')}
+
+Customer Information:
+- Name: ${formData.get('name')}
+- Phone: ${formData.get('phone')}
+- Email: ${formData.get('email')}
+- Company: ${formData.get('company') || 'Not provided'}
+
+Inquiry Details:
+${formData.get('inquiry')}
+  `;
+  
+  // Create mailto link
+  const subject = encodeURIComponent(`Product Inquiry: ${formData.get('product_name')}`);
+  const body = encodeURIComponent(emailBody);
+  const mailtoLink = `mailto:globalcnchardware@gmail.com?subject=${subject}&body=${body}`;
+  
+  // Open email client
+  window.location.href = mailtoLink;
+  
+  // Show success message
+  document.getElementById('inquiry-form').classList.add('hidden');
+  document.getElementById('success-message').classList.remove('hidden');
+  
+  // Reset form after delay
+  setTimeout(() => {
+    form.reset();
+  }, 1000);
+}
+
+// Close modal on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeInquiryModal();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -170,28 +250,100 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const categoryEl = document.getElementById('detail-category');
   const nameEl = document.getElementById('detail-name');
+  const taglineEl = document.getElementById('detail-tagline');
   const descEl = document.getElementById('detail-description');
   const priceEl = document.getElementById('detail-price');
   const skuEl = document.getElementById('detail-sku');
 
   if (categoryEl) categoryEl.textContent = product.category;
   if (nameEl) nameEl.textContent = product.name;
+  if (taglineEl) {
+    if (product.tagline) {
+      taglineEl.textContent = product.tagline;
+      taglineEl.classList.remove('hidden');
+    } else {
+      taglineEl.classList.add('hidden');
+    }
+  }
   if (descEl) descEl.textContent = product.description;
   if (priceEl) priceEl.textContent = `₹${product.price.toFixed(2)}`;
   if (skuEl) skuEl.textContent = product.sku;
 
   renderAvailability(product);
 
-  // Specifications Table
+  // Key Features Section (now on left side)
+  const featuresContainer = document.getElementById('detail-features');
+  if (featuresContainer && product.features && Array.isArray(product.features)) {
+    featuresContainer.innerHTML = product.features.map((feature, i) => `
+      <li class="animate-slide-up" style="animation-delay: ${i * 0.05}s;">
+        <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span>${feature}</span>
+      </li>
+    `).join('');
+  } else if (featuresContainer) {
+    featuresContainer.innerHTML = '<li class="text-steel">No features specified</li>';
+  }
+
+  // Specifications Table (now on right side)
   const specsContainer = document.getElementById('detail-specs');
   if (specsContainer && product.specs) {
     const specEntries = Object.entries(product.specs);
     specsContainer.innerHTML = specEntries.map(([label, value], i) => `
-      <div class="grid grid-cols-2 px-4 py-3 text-sm ${i !== 0 ? 'border-t border-line' : ''}">
-        <dt class="text-steel">${label}</dt>
-        <dd class="font-medium text-navy">${value}</dd>
+      <div class="spec-row animate-slide-up" style="animation-delay: ${i * 0.03}s;">
+        <dt>${label}</dt>
+        <dd>${value}</dd>
       </div>
     `).join('');
+  }
+
+  // Applications Section (now on right side)
+  const applicationsContainer = document.getElementById('detail-applications');
+  if (applicationsContainer && product.applications && Array.isArray(product.applications)) {
+    applicationsContainer.innerHTML = product.applications.map((application, i) => `
+      <li class="animate-slide-up" style="animation-delay: ${i * 0.05}s;">
+        <svg class="application-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span>${application}</span>
+      </li>
+    `).join('');
+  } else if (applicationsContainer) {
+    applicationsContainer.innerHTML = '<li class="text-steel">No applications specified</li>';
+  }
+
+  // Technical Details Section (now on left side)
+  const technicalDetailsSection = document.getElementById('technical-details-section');
+  const technicalDetailsContainer = document.getElementById('detail-technical-details');
+  if (technicalDetailsContainer && product.technicalDetails) {
+    const techEntries = Object.entries(product.technicalDetails);
+    if (techEntries.length > 0) {
+      technicalDetailsSection.classList.remove('hidden');
+      technicalDetailsContainer.innerHTML = techEntries.map(([label, value], i) => `
+        <div class="spec-row animate-slide-up" style="animation-delay: ${i * 0.03}s;">
+          <dt>${label}</dt>
+          <dd>${value}</dd>
+        </div>
+      `).join('');
+    } else {
+      technicalDetailsSection.classList.add('hidden');
+    }
+  } else if (technicalDetailsSection) {
+    technicalDetailsSection.classList.add('hidden');
+  }
+
+  // Image Gallery
+  const galleryContainer = document.getElementById('product-gallery');
+  if (galleryContainer && product.gallery && Array.isArray(product.gallery) && product.gallery.length > 1) {
+    galleryContainer.classList.remove('hidden');
+    const primarySlug = getImageSlug(product);
+    galleryContainer.innerHTML = product.gallery.map((img, index) => `
+      <div class="product-gallery-item" 
+           onclick="document.getElementById('product-image').src = 'images/${img}.jpg'">
+        <img src="images/${img}.jpg" alt="${product.name} - View ${index + 1}" 
+             class="w-full h-full object-contain p-2"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-xs text-steel text-center p-2\\'>Image ${index + 1}</span>'" />
+      </div>
+    `).join('');
+  } else if (galleryContainer) {
+    galleryContainer.classList.add('hidden');
   }
 
   // Related Products

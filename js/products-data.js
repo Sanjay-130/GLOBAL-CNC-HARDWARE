@@ -6,10 +6,45 @@ window.PRODUCTS_DATA = [
     "category": "Machinery Parts",
     "shortDescription": "High-precision pulsecoder for servo motors.",
     "description": "Essential component for precise position and speed feedback in CNC servo motor systems. Designed for durability in industrial environments.",
+    "tagline": "PRECISION POSITION FEEDBACK SOLUTION",
     "price": 145.00,
     "sku": "CNC-SMP-001",
-    "specs": { "Compatibility": "Standard Servo Motors", "Output": "Digital" },
-    "images": ["servo-motor-pulsecoder"]
+    "brand": "Universal",
+    "model": "SM-001",
+    "specs": { 
+      "Compatibility": "Standard Servo Motors", 
+      "Output": "Digital",
+      "Resolution": "2500 PPR",
+      "Voltage": "5V DC",
+      "Operating Temperature": "0°C to 70°C",
+      "Protection Rating": "IP65"
+    },
+    "features": [
+      "High-precision position feedback",
+      "Durable industrial construction",
+      "Low signal noise",
+      "Easy installation",
+      "Wide compatibility range"
+    ],
+    "applications": [
+      "CNC servo motor systems",
+      "Position control systems",
+      "Automated machinery",
+      "Robotics applications"
+    ],
+    "technicalDetails": {
+      "type": "Incremental Encoder",
+      "outputType": "Line Driver",
+      "cableLength": "2 meters standard",
+      "mounting": "Flange mount",
+      "weight": "250g"
+    },
+    "images": ["servo-motor-pulsecoder"],
+    "gallery": [
+      "servo-motor-pulsecoder",
+      "servo-motor-pulsecoder-side",
+      "servo-motor-pulsecoder-mount"
+    ]
   },
   {
     "id": "cnc-002",
@@ -17,10 +52,45 @@ window.PRODUCTS_DATA = [
     "category": "Machinery Parts",
     "shortDescription": "Automatic Tool Changer Arm for CNC mills.",
     "description": "Robust ATC arm designed for rapid and reliable tool changes in machining centers. Precision machined to ensure exact tool alignment.",
+    "tagline": "RAPID TOOL CHANGE SYSTEM",
     "price": 320.00,
     "sku": "CNC-ATC-ARM",
-    "specs": { "Material": "Cast Iron/Aluminum", "Type": "Swing Arm" },
-    "images": ["atc-tool-changer-arm"]
+    "brand": "Universal",
+    "model": "ATC-SW-001",
+    "specs": { 
+      "Material": "Cast Iron/Aluminum", 
+      "Type": "Swing Arm",
+      "Tool Capacity": "16-24 tools",
+      "Change Time": "1.5 seconds",
+      "Weight Capacity": "15kg",
+      "Accuracy": "±0.01mm"
+    },
+    "features": [
+      "High-speed tool change",
+      "Precision alignment",
+      "Low maintenance design",
+      "Heavy-duty construction",
+      "Compatible with major CNC brands"
+    ],
+    "applications": [
+      "CNC machining centers",
+      "Vertical machining centers",
+      "Horizontal machining centers",
+      "Turn-mill centers"
+    ],
+    "technicalDetails": {
+      "actuation": "Hydraulic/Pneumatic",
+      "armLength": "450mm standard",
+      "mounting": "Base plate mount",
+      "cycleLife": "1 million cycles",
+      "weight": "12kg"
+    },
+    "images": ["atc-tool-changer-arm"],
+    "gallery": [
+      "atc-tool-changer-arm",
+      "atc-tool-changer-arm-side",
+      "atc-tool-changer-arm-mount"
+    ]
   },
   {
     "id": "cnc-003",
@@ -28,10 +98,45 @@ window.PRODUCTS_DATA = [
     "category": "Electrical Hardware",
     "shortDescription": "3-color LED signal tower with audible buzzer.",
     "description": "Clear visual and audible status indication for CNC machinery. Red, yellow, and green LED tiers with an integrated 85dB buzzer.",
+    "tagline": "ADVANCED STATUS INDICATION SYSTEM",
     "price": 45.00,
     "sku": "CNC-STL-3B",
-    "specs": { "Voltage": "24V DC", "Colors": "R/Y/G", "Buzzer": "85dB" },
-    "images": ["signal-tower-lamp-with-buzzer"]
+    "brand": "Universal",
+    "model": "STL-3T-001",
+    "specs": { 
+      "Voltage": "24V DC", 
+      "Colors": "R/Y/G", 
+      "Buzzer": "85dB",
+      "Light Type": "LED",
+      "Sound Type": "Continuous/Pulsed",
+      "Mounting": "Panel mount"
+    },
+    "features": [
+      "Multi-color LED indication",
+      "High-decibel buzzer alarm",
+      "Low power consumption",
+      "Long LED lifespan",
+      "Easy to install and maintain"
+    ],
+    "applications": [
+      "CNC machine status monitoring",
+      "Industrial automation systems",
+      "Production line signaling",
+      "Safety warning systems"
+    ],
+    "technicalDetails": {
+      "lightOutput": "High brightness LEDs",
+      "soundOutput": "85dB at 1m",
+      "cableLength": "2 meters",
+      "protection": "IP65",
+      "weight": "800g"
+    },
+    "images": ["signal-tower-lamp-with-buzzer"],
+    "gallery": [
+      "signal-tower-lamp-with-buzzer",
+      "signal-tower-lamp-with-buzzer-side",
+      "signal-tower-lamp-with-buzzer-mount"
+    ]
   },
   {
     "id": "cnc-004",
@@ -39,10 +144,45 @@ window.PRODUCTS_DATA = [
     "category": "Electrical Hardware",
     "shortDescription": "Handheld MPG pendant for manual machine control.",
     "description": "Precision handwheel for manual axis positioning. Features axis selection and multiplier switches in a durable, oil-resistant housing.",
+    "tagline": "PRECISE MANUAL CONTROL SOLUTION",
     "price": 115.00,
     "sku": "CNC-MPG-HD1",
-    "specs": { "Output": "100 PPR", "Voltage": "5V/12V", "Cable": "Coiled" },
-    "images": ["manual-pulse-generator-mpg"]
+    "brand": "Universal",
+    "model": "MPG-HD-001",
+    "specs": { 
+      "Output": "100 PPR", 
+      "Voltage": "5V/12V", 
+      "Cable": "Coiled",
+      "Encoder Type": "Incremental",
+      "Multipliers": "X1, X10, X100",
+      "Axis Selection": "4-axis standard"
+    },
+    "features": [
+      "High-precision handwheel",
+      "Multiple axis selection",
+      "Variable speed multipliers",
+      "Oil-resistant housing",
+      "Ergonomic design"
+    ],
+    "applications": [
+      "CNC machine setup",
+      "Manual positioning",
+      "Maintenance operations",
+      "Precision adjustments"
+    ],
+    "technicalDetails": {
+      "encoderResolution": "100 pulses per revolution",
+      "cableType": "Coiled extensible",
+      "cableLength": "3m extended",
+      "housing": "IP65 rated",
+      "weight": "450g"
+    },
+    "images": ["manual-pulse-generator-mpg"],
+    "gallery": [
+      "manual-pulse-generator-mpg",
+      "manual-pulse-generator-mpg-side",
+      "manual-pulse-generator-mpg-controls"
+    ]
   },
   {
     "id": "cnc-005",
@@ -50,10 +190,45 @@ window.PRODUCTS_DATA = [
     "category": "Electrical Hardware",
     "shortDescription": "Industrial SSR for high-cycle load switching.",
     "description": "Reliable solid-state switching for heaters and motors. Optically isolated input and zero-cross switching for minimal electrical noise.",
+    "tagline": "HIGH-PERFORMANCE SOLID STATE SWITCHING",
     "price": 28.50,
     "sku": "CNC-SSR-40A",
-    "specs": { "Current": "40A", "Control": "3-32V DC", "Load": "24-380V AC" },
-    "images": ["solid-state-relay-ssr"]
+    "brand": "Universal",
+    "model": "SSR-40A-001",
+    "specs": { 
+      "Current": "40A", 
+      "Control": "3-32V DC", 
+      "Load": "24-380V AC",
+      "Switching Type": "Zero-cross",
+      "Isolation": "Opto-coupled",
+      "Mounting": "Panel mount"
+    },
+    "features": [
+      "High-speed switching",
+      "Zero electrical noise",
+      "Long operational life",
+      "Optical isolation",
+      "Compact design"
+    ],
+    "applications": [
+      "Heater control systems",
+      "Motor control",
+      "Lighting control",
+      "Industrial automation"
+    ],
+    "technicalDetails": {
+      "loadCurrent": "40A max",
+      "controlVoltage": "3-32V DC",
+      "loadVoltage": "24-380V AC",
+      "responseTime": "< 10ms",
+      "protection": "Built-in snubber"
+    },
+    "images": ["solid-state-relay-ssr"],
+    "gallery": [
+      "solid-state-relay-ssr",
+      "solid-state-relay-ssr-side",
+      "solid-state-relay-ssr-mount"
+    ]
   },
   {
     "id": "cnc-006",
@@ -1973,17 +2148,47 @@ window.PRODUCTS_DATA = [
   "category": "Machinery Parts",
   "shortDescription": "High-performance servo motors for spindle and axis control in CNC machines.",
   "description": "Precision-engineered spindle and axis servo motors designed for high-speed, high-torque CNC operations. These motors ensure accurate positioning, smooth motion control, and reliable performance under continuous industrial workloads. Built with robust materials and advanced feedback systems, they enhance machining accuracy and overall machine efficiency.",
+  "tagline": "HIGH-PERFORMANCE PRECISION MOTION CONTROL",
   "price": 750.00,
   "sku": "GCH-SASM-001",
+  "brand": "Universal",
+  "model": "SASM-HS-001",
   "specs": {
     "Type": "Spindle & Axis Servo Motors",
     "Power Range": "0.5 kW – 15 kW",
     "Voltage": "220V / 380V",
     "Speed": "Up to 6000 RPM",
     "Feedback": "Encoder / Resolver",
-    "Build": "Industrial Grade"
+    "Build": "Industrial Grade",
+    "Torque": "High torque output",
+    "Cooling": "Forced air cooling"
   },
-  "images": ["spindle-axis-servo-motor"]
+  "features": [
+    "High torque density",
+    "Advanced feedback systems",
+    "Precision positioning",
+    "Robust industrial construction",
+    "Wide power range availability"
+  ],
+  "applications": [
+    "CNC machining centers",
+    "Turning centers",
+    "Grinding machines",
+    "Robotics and automation"
+  ],
+  "technicalDetails": {
+    "motorType": "AC Servo Motor",
+    "feedbackType": "Incremental/Absolute Encoder",
+    "brake": "Optional holding brake",
+    "protection": "IP65 rated",
+    "weight": "15-45kg depending on model"
+  },
+  "images": ["spindle-axis-servo-motor"],
+  "gallery": [
+    "spindle-axis-servo-motor",
+    "spindle-axis-servo-motor-side",
+    "spindle-axis-servo-motor-mount"
+  ]
 },
 {
   "id": "cnc-121",
