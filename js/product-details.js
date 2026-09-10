@@ -309,6 +309,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     applicationsContainer.innerHTML = '<li class="text-steel">No applications specified</li>';
   }
 
+  // Compatible Models Section
+  const compatibleModelsContainer = document.getElementById('detail-compatible-models');
+  if (compatibleModelsContainer && product.compatibleModels && Array.isArray(product.compatibleModels)) {
+    compatibleModelsContainer.innerHTML = `
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        ${product.compatibleModels.map((model, i) => `
+          <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up" style="animation-delay: ${i * 0.03}s;">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="text-sm font-medium text-navy">${model}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (compatibleModelsContainer) {
+    compatibleModelsContainer.innerHTML = '<p class="text-steel text-sm">No compatible models specified</p>';
+  }
+
   // Technical Details Section (now on left side)
   const technicalDetailsSection = document.getElementById('technical-details-section');
   const technicalDetailsContainer = document.getElementById('detail-technical-details');

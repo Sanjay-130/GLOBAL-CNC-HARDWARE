@@ -1224,6 +1224,58 @@ input, select, textarea {
   text-align: right;
 }
 
+/* Compatible Models Section */
+#detail-compatible-models {
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+  border-radius: 8px;
+}
+
+#detail-compatible-models .grid {
+  gap: 0.75rem;
+}
+
+#detail-compatible-models .bg-paper {
+  background: white;
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+#detail-compatible-models .bg-paper:hover {
+  border-color: #10B981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+  transform: translateY(-2px);
+}
+
+#detail-compatible-models .bg-paper svg {
+  transition: all 0.3s ease;
+}
+
+#detail-compatible-models .bg-paper:hover svg {
+  transform: scale(1.1);
+  color: #059669;
+}
+
+/* Responsive adjustments for compatible models */
+@media (max-width: 640px) {
+  #detail-compatible-models .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #detail-compatible-models .bg-paper {
+    padding: 0.75rem;
+  }
+  
+  #detail-compatible-models .bg-paper span {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #detail-compatible-models .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Image Gallery Styles */
 .product-gallery {
   display: grid;

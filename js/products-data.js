@@ -39,6 +39,20 @@ window.PRODUCTS_DATA = [
       "mounting": "Flange mount",
       "weight": "250g"
     },
+    "compatibleModels": [
+      "Fanuc A06B-6055",
+      "Fanuc A06B-6058",
+      "Fanuc A06B-6079",
+      "Siemens 6FX2001",
+      "Siemens 6FX2002",
+      "Mitsubishi MR-J2",
+      "Mitsubishi MR-J3",
+      "Yaskawa SGDH",
+      "Yaskawa SGMG",
+      "Panasonic A-series",
+      "Panasonic MINAS",
+      "Universal Servo Motors"
+    ],
     "images": ["servo-motor-pulsecoder"],
     "gallery": [
       "servo-motor-pulsecoder",
@@ -85,6 +99,19 @@ window.PRODUCTS_DATA = [
       "cycleLife": "1 million cycles",
       "weight": "12kg"
     },
+    "compatibleModels": [
+      "Fanuc M series",
+      "Fanuc T series",
+      "DMG Mori NH series",
+      "DMG Mori DMU series",
+      "Haas VF series",
+      "Haas ST series",
+      "Makino D series",
+      "Okuma MA series",
+      "Doosan Puma series",
+      "Huron VX series",
+      "Universal CNC ATC systems"
+    ],
     "images": ["atc-tool-changer-arm"],
     "gallery": [
       "atc-tool-changer-arm",
@@ -131,6 +158,19 @@ window.PRODUCTS_DATA = [
       "protection": "IP65",
       "weight": "800g"
     },
+    "compatibleModels": [
+      "Fanuc 0i/31i/32i",
+      "Siemens 828D/840D",
+      "Heidenhain TNC",
+      "Mitsubishi M800",
+      "Okuma OSP",
+      "Haas NGC",
+      "DMG Mori CELOS",
+      "Makino Professional",
+      "Doosan Fanuc",
+      "Huron Siemens",
+      "Universal CNC controllers"
+    ],
     "images": ["signal-tower-lamp-with-buzzer"],
     "gallery": [
       "signal-tower-lamp-with-buzzer",
@@ -177,6 +217,19 @@ window.PRODUCTS_DATA = [
       "housing": "IP65 rated",
       "weight": "450g"
     },
+    "compatibleModels": [
+      "Fanuc 0i/31i/32i Series",
+      "Siemens 828D/840D Series",
+      "Mitsubishi M800/M80 Series",
+      "Haas NGC Control",
+      "Okuma OSP Series",
+      "DMG Mori CELOS",
+      "Heidenhain TNC Series",
+      "Yaskawa Sigma Series",
+      "Panasonic Minas Series",
+      "Bosch Rexroth IndraMotion",
+      "Universal CNC Controllers"
+    ],
     "images": ["manual-pulse-generator-mpg"],
     "gallery": [
       "manual-pulse-generator-mpg",
@@ -223,6 +276,19 @@ window.PRODUCTS_DATA = [
       "responseTime": "< 10ms",
       "protection": "Built-in snubber"
     },
+    "compatibleModels": [
+      "Fanuc 0i/31i/32i",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Okuma OSP",
+      "Haas NGC",
+      "DMG Mori CELOS",
+      "Heidenhain TNC",
+      "Yaskawa SGDH",
+      "Panasonic MINAS",
+      "Bosch Rexroth",
+      "Universal CNC Systems"
+    ],
     "images": ["solid-state-relay-ssr"],
     "gallery": [
       "solid-state-relay-ssr",
@@ -239,6 +305,18 @@ window.PRODUCTS_DATA = [
     "price": 12.00,
     "sku": "CNC-CFB-25M",
     "specs": { "Rating": "25 Micron", "Material": "Polypropylene", "Ring": "Steel" },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC Coolant Systems"
+    ],
     "images": ["coolant-filter-bag"]
   },
   {
@@ -250,6 +328,19 @@ window.PRODUCTS_DATA = [
     "price": 285.00,
     "sku": "CNC-MPG-WRLS",
     "specs": { "Range": "40m", "Axes": "Up to 6", "Frequency": "433 MHz" },
+    "compatibleModels": [
+      "Fanuc 0i/31i/32i Series",
+      "Siemens 828D/840D Series",
+      "Mitsubishi M800/M80 Series",
+      "Haas NGC Control",
+      "Okuma OSP Series",
+      "DMG Mori CELOS",
+      "Heidenhain TNC Series",
+      "Yaskawa Sigma Series",
+      "Panasonic Minas Series",
+      "Bosch Rexroth IndraMotion",
+      "Universal CNC Controllers"
+    ],
     "images": ["wireless-mpg-cnc-control-pendant"]
   },
   {
@@ -261,6 +352,18 @@ window.PRODUCTS_DATA = [
     "price": 195.00,
     "sku": "CNC-TCC-HYD",
     "specs": { "Pressure": "70 Bar", "Stroke": "15mm", "Type": "Hydraulic" },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC ATC Systems"
+    ],
     "images": ["tool-clamp-cylinder"]
   },
   {
@@ -272,6 +375,18 @@ window.PRODUCTS_DATA = [
     "price": 45.00,
     "sku": "CNC-LMP-01",
     "specs": { "Load Capacity": "2000 kg/pad", "Material": "Steel & NBR Rubber", "Thread": "M16" },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC Machines"
+    ],
     "images": ["leveling-mounts-anti-vibration-pads"]
   },
   {
@@ -283,6 +398,18 @@ window.PRODUCTS_DATA = [
     "price": 135.00,
     "sku": "CNC-ALS-2L",
     "specs": { "Capacity": "2 Liters", "Voltage": "110V/220V", "Flow": "150 cc/min" },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC Machines"
+    ],
     "images": ["automatic-lubrication-system"]
   },
   {
@@ -294,6 +421,18 @@ window.PRODUCTS_DATA = [
     "price": 450.00,
     "sku": "CNC-TBS-LSR",
     "specs": { "Detection Time": "< 1 sec", "Protection": "IP67", "Type": "Laser" },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC Machining Centers"
+    ],
     "images": ["tool-breakage-sensor"]
   },
   {
@@ -311,6 +450,18 @@ window.PRODUCTS_DATA = [
       "Operation": "Continuous Flow",
       "Build": "Industrial Grade"
     },
+    "compatibleModels": [
+      "Fanuc M/T Series",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Haas VF/ST Series",
+      "Okuma MA Series",
+      "DMG Mori NH/DMU Series",
+      "Doosan Puma Series",
+      "Makino D Series",
+      "Huron VX Series",
+      "Universal CNC Machines"
+    ],
     "images": ["metal-oil-lubrication-system"]
   },
   {
@@ -328,6 +479,18 @@ window.PRODUCTS_DATA = [
       "Protection Rating": "IP65",
       "Mounting": "Panel Mount"
     },
+    "compatibleModels": [
+      "Fanuc 0i/31i/32i",
+      "Siemens 828D/840D",
+      "Mitsubishi M800",
+      "Okuma OSP",
+      "Haas NGC",
+      "DMG Mori CELOS",
+      "Heidenhain TNC",
+      "Yaskawa SGDH",
+      "Panasonic MINAS",
+      "Universal CNC Control Panels"
+    ],
     "images": ["keysheet-operator-panel"]
   },
   {
@@ -345,6 +508,18 @@ window.PRODUCTS_DATA = [
       "Application": "Drive Systems & Control Panels",
       "Build": "Industrial Grade"
     },
+    "compatibleModels": [
+      "Fanuc A06B Series Drives",
+      "Siemens Sinamic Drives",
+      "Mitsubishi MDS Servo Drives",
+      "Haas Servo Drives",
+      "Okuma Servo Systems",
+      "DMG Mori Drive Units",
+      "Yaskawa Servo Drives",
+      "Panasonic Servo Systems",
+      "Bosch Rexroth Drives",
+      "Universal CNC Drive Systems"
+    ],
     "images": ["drive-cooling-fan"]
   },
   {
@@ -362,6 +537,16 @@ window.PRODUCTS_DATA = [
     "Operation": "High-Speed Tool Change",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc Robodrill Series",
+    "Fanuc Alpha Series",
+    "Fanuc T Series",
+    "Brother TC Series",
+    "DMG Mori NH Series",
+    "Haas VF Series",
+    "Makino D Series",
+    "Universal CNC ATC Systems"
+  ],
   "images": ["fanuc-robodrill-tool-pot"]
 },
 {
@@ -379,6 +564,16 @@ window.PRODUCTS_DATA = [
     "Application": "Spindle Testing & Calibration",
     "Finish": "Precision Ground"
   },
+  "compatibleModels": [
+    "BT40 Spindles",
+    "BT50 Spindles",
+    "HSK63 Spindles",
+    "HSK100 Spindles",
+    "CAT40 Spindles",
+    "CAT50 Spindles",
+    "ISO Spindles",
+    "Universal CNC Spindles"
+  ],
   "images": ["spindle-runout-test-bar"]
 },
 {
@@ -396,6 +591,13 @@ window.PRODUCTS_DATA = [
     "Application": "ATC Magazine",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Doosan Puma Series",
+    "Doosan Lynx Series",
+    "Doosan DNM Series",
+    "Doosan NHP Series",
+    "Universal CNC ATC Systems"
+  ],
   "images": ["tool-pocket-doosan"]
 },
 {
@@ -413,6 +615,18 @@ window.PRODUCTS_DATA = [
     "Clamping": "High Rigidity",
     "Application": "Internal Turning & Boring"
   },
+  "compatibleModels": [
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "DMG Mori NL Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Huron VX Series",
+    "Universal CNC Lathes"
+  ],
   "images": ["turning-tool-holder-boring-mount"]
 },
 {
@@ -430,6 +644,18 @@ window.PRODUCTS_DATA = [
     "Mounting": "VDI Standard",
     "Compatibility": "CNC Turning Centers"
   },
+  "compatibleModels": [
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "DMG Mori NL Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "VDI 30/40/50 Turrets",
+    "Universal CNC Turning Centers"
+  ],
   "images": ["vdi-tool-holder-axial-face-turning"]
 },
 {
@@ -447,6 +673,17 @@ window.PRODUCTS_DATA = [
     "Feature": "High Precision & Vibration Damping",
     "Mounting": "Shaft to Shaft"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series",
+    "Siemens 1FT7/1FK7",
+    "Mitsubishi MR-J2/J3",
+    "Haas Servo Motors",
+    "Okuma Servo Systems",
+    "DMG Mori Spindle Systems",
+    "Yaskawa SGDH",
+    "Panasonic MINAS",
+    "Universal Spindle Encoders"
+  ],
   "images": ["spindle-encoder-coupling"]
 },
 {
@@ -465,6 +702,17 @@ window.PRODUCTS_DATA = [
     "Feature": "Zero Backlash, Anti-Vibration",
     "Installation": "Easy Clamp Type"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series",
+    "Siemens 1FT7/1FK7",
+    "Mitsubishi MR-J2/J3",
+    "Haas Servo Motors",
+    "Okuma Servo Systems",
+    "DMG Mori Spindle Systems",
+    "Yaskawa SGDH",
+    "Panasonic MINAS",
+    "Universal Shaft Couplings"
+  ],
   "images": ["machinery-collet-coupling"]
 },
 {
@@ -482,6 +730,17 @@ window.PRODUCTS_DATA = [
     "Application": "CNC Coolant Tanks",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Coolant Systems"
+  ],
   "images": ["coolant-oil-skimmer-350mm"]
 },
 {
@@ -499,6 +758,17 @@ window.PRODUCTS_DATA = [
     "Application": "CNC Spindle Systems",
     "Sealing": "High-Performance Mechanical Seal"
   },
+  "compatibleModels": [
+    "Fanuc M Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Spindles"
+  ],
   "images": ["machinery-rotary-union"]
 },
 {
@@ -516,6 +786,16 @@ window.PRODUCTS_DATA = [
     "Mounting": "Panel Mount",
     "Material": "Industrial Grade Plastic/Metal"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Control Panels"
+  ],
   "images": ["control-panel-push-button"]
 },
 {
@@ -533,6 +813,17 @@ window.PRODUCTS_DATA = [
     "Performance": "High Torque Transmission",
     "Durability": "Wear & Heat Resistant"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Spindle Systems"
+  ],
   "images": ["spindle-timing-belt"]
 },
 {
@@ -550,6 +841,17 @@ window.PRODUCTS_DATA = [
     "Pressure Rating": "High Pressure",
     "Mounting": "Turret Mounted"
   },
+  "compatibleModels": [
+    "LMW CNC Turret",
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "DMG Mori NL Series",
+    "Doosan Puma Series",
+    "Universal CNC Turrets"
+  ],
   "images": ["lmw-turret-coolant-block"]
 },
 {
@@ -567,6 +869,17 @@ window.PRODUCTS_DATA = [
     "Application": "CNC & Industrial Machinery",
     "Build": "Heavy Duty"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Machinery"
+  ],
   "images": ["machinery-ball-joint"]
 },
 {
@@ -584,6 +897,17 @@ window.PRODUCTS_DATA = [
     "Protection Rating": "IP65",
     "Mounting": "Panel / Cable Mount"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series",
+    "Siemens 6FX Series",
+    "Mitsubishi MR-J2/J3",
+    "Haas Servo Systems",
+    "Okuma Servo Systems",
+    "DMG Mori Drive Systems",
+    "Yaskawa SGDH",
+    "Panasonic MINAS",
+    "Universal CNC Connectors"
+  ],
   "images": ["allied-connector-power-feedback"]
 },
 {
@@ -601,6 +925,16 @@ window.PRODUCTS_DATA = [
     "Filtration": "5 Micron",
     "Application": "Pneumatic Systems & CNC Machines"
   },
+  "compatibleModels": [
+    "SMC FRL Units",
+    "Festo FRL Units",
+    "Mindman FRL Units",
+    "Norgren FRL Units",
+    "Fanuc Pneumatic Systems",
+    "Siemens Pneumatic Systems",
+    "Mitsubishi Pneumatic Systems",
+    "Universal Pneumatic Systems"
+  ],
   "images": ["frl-unit"]
 },
 {
@@ -618,6 +952,17 @@ window.PRODUCTS_DATA = [
     "Backlash": "Zero Backlash",
     "Application": "Servo Motors & CNC Systems"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series",
+    "Siemens 1FT7/1FK7",
+    "Mitsubishi MR-J2/J3",
+    "Haas Servo Motors",
+    "Okuma Servo Systems",
+    "DMG Mori Spindle Systems",
+    "Yaskawa SGDH",
+    "Panasonic MINAS",
+    "Universal Servo Couplings"
+  ],
   "images": ["machinery-servo-bellows-coupling"]
 },
 {
@@ -635,6 +980,17 @@ window.PRODUCTS_DATA = [
     "Mounting": "Turret / Bed Mount",
     "Application": "CNC Lathe Tool Setting"
   },
+  "compatibleModels": [
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "DMG Mori NL Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Lathes"
+  ],
   "images": ["cnc-lathe-tool-offset-sensor"]
 },
 {
@@ -652,6 +1008,16 @@ window.PRODUCTS_DATA = [
     "Compatibility": "Fanuc, Siemens, Mitsubishi",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i Series",
+    "Siemens 828D/840D Series",
+    "Mitsubishi M800/M80 Series",
+    "Haas NGC Control",
+    "Okuma OSP Series",
+    "DMG Mori CELOS",
+    "Heidenhain TNC Series",
+    "Universal CNC Controllers"
+  ],
   "images": ["electrical-mpg-future"]
 },
 {
@@ -669,6 +1035,17 @@ window.PRODUCTS_DATA = [
     "Mounting": "Front Mount",
     "Usage": "Tool Holding"
   },
+  "compatibleModels": [
+    "Fanuc M Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC ATC Systems"
+  ],
   "images": ["tool-pot-spl-front-atc"]
 },
 {
@@ -686,6 +1063,16 @@ window.PRODUCTS_DATA = [
     "Precision": "High Accuracy",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "BT40 Tool Holders",
+    "BT50 Tool Holders",
+    "HSK63 Tool Holders",
+    "HSK100 Tool Holders",
+    "CAT40 Tool Holders",
+    "CAT50 Tool Holders",
+    "ISO Tool Holders",
+    "Universal Tool Holders"
+  ],
   "images": ["tool-mounting-tapper-wedge"]
 },
 {
@@ -703,6 +1090,16 @@ window.PRODUCTS_DATA = [
     "Interface": "Wired",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i Series",
+    "Siemens 828D/840D Series",
+    "Mitsubishi M800/M80 Series",
+    "Haas NGC Control",
+    "Okuma OSP Series",
+    "DMG Mori CELOS",
+    "Heidenhain TNC Series",
+    "Universal CNC Controllers"
+  ],
   "images": ["mpg-fanuc-siemens-mitsubishi"]
 },
 {
@@ -721,6 +1118,16 @@ window.PRODUCTS_DATA = [
     "Flexibility": "High Flex Cable",
     "Build": "Oil & Wear Resistant"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas NGC",
+    "Okuma OSP",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal MPG Systems"
+  ],
   "images": ["mpg-cable"]
 },
 {
@@ -738,6 +1145,17 @@ window.PRODUCTS_DATA = [
     "Performance": "High Speed & Low Vibration",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Spindle Systems"
+  ],
   "images": ["spindle-encoder-pulley"]
 },
 {
@@ -756,6 +1174,16 @@ window.PRODUCTS_DATA = [
     "Application": "CNC Turning Centers",
     "Build": "Industrial Grade Alloy Steel"
   },
+  "compatibleModels": [
+    "Pragati 8 Station Turret",
+    "Pragati 12 Station Turret",
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "Universal CNC Turrets"
+  ],
   "images": ["pragati-turret-spares"]
 },
 {
@@ -773,6 +1201,15 @@ window.PRODUCTS_DATA = [
     "Surface Finish": "Precision Machined",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc Hydraulic Systems",
+    "Siemens Hydraulic Systems",
+    "Mitsubishi Hydraulic Systems",
+    "Haas Hydraulic Systems",
+    "Okuma Hydraulic Systems",
+    "DMG Mori Hydraulic Systems",
+    "Universal Hydraulic Cylinders"
+  ],
   "images": ["hydraulic-cylinder-piston"]
 },
 {
@@ -791,6 +1228,17 @@ window.PRODUCTS_DATA = [
     "Cooling": "Heat Sink / Fan Assisted",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series Drives",
+    "Siemens Sinamic Drives",
+    "Mitsubishi MDS Servo Drives",
+    "Haas Servo Drives",
+    "Okuma Servo Systems",
+    "DMG Mori Drive Units",
+    "Yaskawa Servo Drives",
+    "Panasonic Servo Systems",
+    "Universal CNC Drive Systems"
+  ],
   "images": ["igbt-module"]
 },
 {
@@ -808,6 +1256,14 @@ window.PRODUCTS_DATA = [
     "Mounting": "Panel Mount",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc 0i Series",
+    "Fanuc 31i Series",
+    "Fanuc 32i Series",
+    "Fanuc 16i/18i Series",
+    "Fanuc 21i Series",
+    "Universal Fanuc Controllers"
+  ],
   "images": ["fanuc-keysheet-keyboard"]
 },
 {
@@ -826,6 +1282,13 @@ window.PRODUCTS_DATA = [
     "Application": "Circuit Protection",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series Drives",
+    "Fanuc I/O Cards",
+    "Fanuc 0i/31i/32i Series",
+    "Fanuc 16i/18i Series",
+    "Universal Fanuc Drive Systems"
+  ],
   "images": ["fanuc-drive-io-fuse"]
 },
 {
@@ -843,6 +1306,17 @@ window.PRODUCTS_DATA = [
     "Speed Capability": "High Speed",
     "Application": "CNC Spindles & Precision Machinery"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series Spindles",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Spindles"
+  ],
   "images": ["angular-contact-bearing"]
 },
 {
@@ -860,6 +1334,16 @@ window.PRODUCTS_DATA = [
     "Protection Rating": "IP65",
     "Mounting": "Panel Mount"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Control Panels"
+  ],
   "images": ["machine-operator-panel"]
 },
 {
@@ -879,6 +1363,16 @@ window.PRODUCTS_DATA = [
     "Mounting": "DIN Rail",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Control Panels"
+  ],
   "images": ["surge-protector-okaya"]
 },
 {
@@ -896,6 +1390,13 @@ window.PRODUCTS_DATA = [
     "Protection Rating": "IP65",
     "Application": "CNC Control Panels"
   },
+  "compatibleModels": [
+    "Siemens 828D Series",
+    "Siemens 840D Series",
+    "Siemens 840D sl",
+    "Siemens 802D Series",
+    "Universal Siemens Controllers"
+  ],
   "images": ["siemens-keysheet-keypads"]
 },
 {
@@ -913,6 +1414,16 @@ window.PRODUCTS_DATA = [
     "Mounting": "Panel / Machine Mount",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Sensors"
+  ],
   "images": ["sensors-ns-special-type"]
 },
 {
@@ -930,6 +1441,16 @@ window.PRODUCTS_DATA = [
     "Mounting": "Panel / Machine Mount",
     "Protection Rating": "IP65"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Systems"
+  ],
   "images": ["electrical-limit-switch"]
 },
 {
@@ -947,6 +1468,17 @@ window.PRODUCTS_DATA = [
     "Application": "CNC Machine Alignment",
     "Finish": "Ground & Polished"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Machines"
+  ],
   "images": ["machinery-dowel-pin"]
 },
 {
@@ -964,6 +1496,15 @@ window.PRODUCTS_DATA = [
     "Mounting": "Tank / Pipeline Mount",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Universal CNC Coolant Systems"
+  ],
   "images": ["float-pressure-switch"]
 },
 {
@@ -981,6 +1522,17 @@ window.PRODUCTS_DATA = [
     "Mounting Type": "Pole / Base Mount",
     "Application": "CNC Machines & Industrial Panels"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Heidenhain TNC",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Makino Professional",
+    "Universal CNC Controllers"
+  ],
   "images": ["signal-tower-buzzer-pilot-lamp"]
 },
 {
@@ -998,6 +1550,16 @@ window.PRODUCTS_DATA = [
     "Usage": "Manual Cleaning",
     "Build": "Heavy Duty"
   },
+  "compatibleModels": [
+    "BT40 Spindles",
+    "BT50 Spindles",
+    "CAT40 Spindles",
+    "CAT50 Spindles",
+    "HSK63 Spindles",
+    "HSK100 Spindles",
+    "ISO Spindles",
+    "Universal CNC Spindles"
+  ],
   "images": ["spindle-taper-cleaner"]
 },
 {
@@ -1015,6 +1577,17 @@ window.PRODUCTS_DATA = [
     "Compatibility": "CNC Machining Centers",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc M Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC ATC Systems"
+  ],
   "images": ["machinery-umbrella-atc-gripper"]
 },
 {
@@ -1032,6 +1605,16 @@ window.PRODUCTS_DATA = [
     "Design": "Multi-Tier Rack",
     "Application": "CNC Tool Storage & Transport"
   },
+  "compatibleModels": [
+    "BT40 Tool Holders",
+    "BT50 Tool Holders",
+    "HSK63 Tool Holders",
+    "HSK100 Tool Holders",
+    "CAT40 Tool Holders",
+    "CAT50 Tool Holders",
+    "ISO Tool Holders",
+    "Universal Tool Holders"
+  ],
   "images": ["tool-holder-trolley"]
 },
 {
@@ -1049,6 +1632,17 @@ window.PRODUCTS_DATA = [
     "Application": "Lathe Machines",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas ST Series",
+    "Okuma LB Series",
+    "DMG Mori NL Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Lathes"
+  ],
   "images": ["machinery-revolving-center"]
 },
 {
@@ -1066,6 +1660,17 @@ window.PRODUCTS_DATA = [
     "Durability": "Industrial Grade",
     "Usage": "CNC Machines & Automation Systems"
   },
+  "compatibleModels": [
+    "Fanuc M/T Series",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Haas VF/ST Series",
+    "Okuma MA Series",
+    "DMG Mori NH/DMU Series",
+    "Doosan Puma Series",
+    "Makino D Series",
+    "Universal CNC Machines"
+  ],
   "images": ["machinery-drag-chain"]
 },
 {
@@ -1083,6 +1688,17 @@ window.PRODUCTS_DATA = [
     "Application": "CNC Control & Servo Systems",
     "Durability": "High Reliability"
   },
+  "compatibleModels": [
+    "Fanuc A06B Series",
+    "Siemens 6FX Series",
+    "Mitsubishi MR-J2/J3",
+    "Haas Servo Systems",
+    "Okuma Servo Systems",
+    "DMG Mori Drive Systems",
+    "Yaskawa SGDH",
+    "Panasonic MINAS",
+    "Universal CNC Connectors"
+  ],
   "images": ["fanuc-siemens-mitsubishi-connector"]
 },
 {
@@ -1100,6 +1716,15 @@ window.PRODUCTS_DATA = [
     "Mounting Type": "External Mount",
     "Build": "Industrial Grade"
   },
+  "compatibleModels": [
+    "Fanuc Hydraulic Systems",
+    "Siemens Hydraulic Systems",
+    "Mitsubishi Hydraulic Systems",
+    "Haas Hydraulic Systems",
+    "Okuma Hydraulic Systems",
+    "DMG Mori Hydraulic Systems",
+    "Universal Hydraulic Systems"
+  ],
   "images": ["hydraulic-radiator-fan"]
 },
 {
@@ -1118,6 +1743,16 @@ window.PRODUCTS_DATA = [
     "Protection": "IP65",
     "Application": "CNC Machines & Industrial Equipment"
   },
+  "compatibleModels": [
+    "Fanuc 0i/31i/32i",
+    "Siemens 828D/840D",
+    "Mitsubishi M800",
+    "Okuma OSP",
+    "Haas NGC",
+    "DMG Mori CELOS",
+    "Heidenhain TNC",
+    "Universal CNC Control Panels"
+  ],
   "images": ["electrical-foot-pedal-switch"]
 },
 {
