@@ -1663,3 +1663,230 @@ input, select, textarea {
     animation: none !important;
   }
 }
+
+/* Model Details Modal Styles */
+#model-modal {
+  z-index: 1001;
+}
+
+#model-modal .animate-modal-in {
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#model-modal input,
+#model-modal textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+}
+
+#model-modal input:focus,
+#model-modal textarea:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Custom scrollbar for modal */
+#model-modal .overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #10B981 #E5E7EB;
+}
+
+#model-modal .overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+#model-modal .overflow-y-auto::-webkit-scrollbar-track {
+  background: #E5E7EB;
+  border-radius: 4px;
+}
+
+#model-modal .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #10B981;
+  border-radius: 4px;
+}
+
+#model-modal .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Clean modal animation */
+@keyframes modalSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.97) translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal backdrop animation */
+#model-modal > div:first-child {
+  animation: backdropFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Model card clickable styling */
+#detail-compatible-models .bg-paper {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+#detail-compatible-models .bg-paper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#detail-compatible-models .bg-paper:hover::after {
+  opacity: 1;
+}
+
+#detail-compatible-models .bg-paper::before {
+  content: 'View Details';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(15px);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #10B981;
+  opacity: 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#detail-compatible-models .bg-paper:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+#detail-compatible-models .bg-paper:hover span {
+  padding-right: 2.5rem;
+}
+
+/* Modal responsive adjustments */
+@media (max-width: 1024px) {
+  #model-modal .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #model-modal .max-w-4xl {
+    max-width: 100%;
+  }
+  
+  #model-modal .p-8 {
+    padding: 1.5rem;
+  }
+  
+  #model-modal .gap-8 {
+    gap: 1.5rem;
+  }
+  
+  #model-modal .max-h-\[90vh\] {
+    max-height: 95vh;
+  }
+}
+
+@media (max-width: 640px) {
+  #model-modal .relative {
+    padding: 1rem;
+  }
+  
+  #model-modal .p-8 {
+    padding: 1rem;
+  }
+  
+  #model-modal .px-8 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  #model-modal .py-5 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  #model-modal .mb-6 {
+    margin-bottom: 1rem;
+  }
+  
+  #model-modal .space-y-3 > * + * {
+    margin-top: 0.5rem;
+  }
+  
+  #model-modal .space-y-6 > * + * {
+    margin-top: 1rem;
+  }
+  
+  #model-modal .text-xl {
+    font-size: 1.125rem;
+  }
+  
+  #model-modal .text-lg {
+    font-size: 0.875rem;
+  }
+  
+  #model-modal .text-sm {
+    font-size: 0.75rem;
+  }
+  
+  #model-modal .text-base {
+    font-size: 0.875rem;
+  }
+  
+  #model-modal .aspect-square {
+    aspect-ratio: 1;
+  }
+  
+  #model-modal .max-h-\[90vh\] {
+    max-height: 98vh;
+  }
+}
+
+/* Modal button effects */
+#model-modal button {
+  position: relative;
+  overflow: hidden;
+}
+
+#model-modal button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.4s ease;
+}
+
+#model-modal button:hover::before {
+  left: 100%;
+}
+
+/* Success state animation */
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.model-enquiry-success {
+  animation: successPulse 0.3s ease-in-out;
+}

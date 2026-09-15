@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     compatibleModelsContainer.innerHTML = `
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         ${product.compatibleModels.map((model, i) => `
-          <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up" style="animation-delay: ${i * 0.03}s;">
+          <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up cursor-pointer" style="animation-delay: ${i * 0.03}s;" onclick="openModelModal('${model.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', '${product.sku.replace(/'/g, "\\'")}')">
             <div class="flex items-center gap-2">
               <svg class="w-4 h-4 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               <span class="text-sm font-medium text-navy">${model}</span>
@@ -375,5 +375,255 @@ document.addEventListener('DOMContentLoaded', async () => {
     relatedSection.classList.remove('hidden');
     if (relatedCategoryTitle) relatedCategoryTitle.textContent = product.category;
     relatedContainer.innerHTML = related.map(createRelatedCardHTML).join('');
+  }
+});
+
+// Model Modal Functions
+let currentModel = '';
+let currentProduct = '';
+let currentProductSku = '';
+
+function openModelModal(modelName, productName, productSku) {
+  currentModel = modelName;
+  currentProduct = productName;
+  currentProductSku = productSku;
+
+  const modal = document.getElementById('model-modal');
+  const modelNameEl = document.getElementById('modal-model-name');
+  const productNameEl = document.getElementById('modal-product-name');
+  const productSkuEl = document.getElementById('modal-product-sku');
+  const modelImageEl = document.getElementById('modal-model-image');
+
+  // Ensure modal is properly reset
+  modal.classList.remove('hidden');
+  modal.style.display = '';
+  modal.style.visibility = '';
+
+  modelNameEl.textContent = modelName;
+  productNameEl.textContent = productName;
+  productSkuEl.textContent = 'SKU: ' + productSku;
+
+  // Reset image container
+  const imageContainer = modelImageEl.parentElement;
+  imageContainer.innerHTML = `<img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-cover">`;
+  const newModelImageEl = document.getElementById('modal-model-image');
+
+  // Set placeholder image (you can replace this with actual model images later)
+  const modelSlug = modelName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  newModelImageEl.src = `images/models/${modelSlug}.jpg`;
+  newModelImageEl.alt = modelName;
+
+  // Fallback to placeholder if image fails to load
+  newModelImageEl.onerror = function() {
+    this.style.display = 'none';
+    this.parentElement.innerHTML = `
+      <div class="text-steel text-center p-8">
+        <svg class="w-20 h-20 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <p class="text-sm font-medium">Model Image</p>
+        <p class="text-xs mt-1 opacity-70">Placeholder - Replace with actual image</p>
+      </div>
+    `;
+  };
+
+  // Populate model specifications based on model name
+  populateModelSpecs(modelName);
+
+  // Reset scroll position
+  const scrollableBody = modal.querySelector('.overflow-y-auto');
+  if (scrollableBody) {
+    scrollableBody.scrollTop = 0;
+  }
+
+  document.body.style.overflow = 'hidden';
+}
+
+function populateModelSpecs(modelName) {
+  const controllerEl = document.getElementById('modal-spec-controller');
+  const seriesEl = document.getElementById('modal-spec-series');
+  const voltageEl = document.getElementById('modal-spec-voltage');
+  const applicationEl = document.getElementById('modal-spec-application');
+
+  // Extract specifications from model name
+  let controller = 'Standard';
+  let series = 'General';
+  let voltage = '220V / 380V';
+  let application = 'CNC Machining';
+
+  // Fanuc
+  if (modelName.toLowerCase().includes('fanuc')) {
+    controller = 'Fanuc CNC';
+    if (modelName.includes('0i')) series = '0i Series';
+    else if (modelName.includes('31i')) series = '31i Series';
+    else if (modelName.includes('32i')) series = '32i Series';
+    else if (modelName.includes('M/T')) series = 'M/T Series';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Lathe & Milling';
+  }
+  // Siemens
+  else if (modelName.toLowerCase().includes('siemens')) {
+    controller = 'Siemens CNC';
+    if (modelName.includes('828D')) series = '828D Series';
+    else if (modelName.includes('840D')) series = '840D Series';
+    else series = 'Standard Series';
+    voltage = '24V DC / 230V AC';
+    application = 'CNC Machining Centers';
+  }
+  // Mitsubishi
+  else if (modelName.toLowerCase().includes('mitsubishi')) {
+    controller = 'Mitsubishi CNC';
+    if (modelName.includes('M800')) series = 'M800 Series';
+    else if (modelName.includes('M80')) series = 'M80 Series';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Lathe & Milling';
+  }
+  // Haas
+  else if (modelName.toLowerCase().includes('haas')) {
+    controller = 'Haas CNC';
+    if (modelName.includes('VF')) series = 'VF Series';
+    else if (modelName.includes('ST')) series = 'ST Series';
+    else if (modelName.includes('NGC')) series = 'NGC Control';
+    else series = 'Standard Series';
+    voltage = '208-240V AC';
+    application = 'CNC Machining Centers';
+  }
+  // Okuma
+  else if (modelName.toLowerCase().includes('okuma')) {
+    controller = 'Okuma CNC';
+    if (modelName.includes('MA')) series = 'MA Series';
+    else if (modelName.includes('LB')) series = 'LB Series';
+    else if (modelName.includes('OSP')) series = 'OSP Control';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Lathe & Machining';
+  }
+  // DMG Mori
+  else if (modelName.toLowerCase().includes('dmg') || modelName.toLowerCase().includes('mori')) {
+    controller = 'DMG Mori CNC';
+    if (modelName.includes('NH')) series = 'NH Series';
+    else if (modelName.includes('DMU')) series = 'DMU Series';
+    else if (modelName.includes('NL')) series = 'NL Series';
+    else if (modelName.includes('CELOS')) series = 'CELOS Control';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Machining Centers';
+  }
+  // Doosan
+  else if (modelName.toLowerCase().includes('doosan')) {
+    controller = 'Doosan CNC';
+    if (modelName.includes('Puma')) series = 'Puma Series';
+    else if (modelName.includes('Lynx')) series = 'Lynx Series';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Lathe & Machining';
+  }
+  // Makino
+  else if (modelName.toLowerCase().includes('makino')) {
+    controller = 'Makino CNC';
+    if (modelName.includes('D')) series = 'D Series';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Machining Centers';
+  }
+  // Huron
+  else if (modelName.toLowerCase().includes('huron')) {
+    controller = 'Huron CNC';
+    if (modelName.includes('VX')) series = 'VX Series';
+    else series = 'Standard Series';
+    voltage = '200-240V AC';
+    application = 'CNC Machining Centers';
+  }
+  // Tool Holders
+  else if (modelName.toLowerCase().includes('tool holder') || modelName.toLowerCase().includes('bt') || modelName.toLowerCase().includes('hsk') || modelName.toLowerCase().includes('cat')) {
+    controller = 'Tool Holder System';
+    series = 'Standard Tooling';
+    voltage = 'N/A';
+    application = 'Tool Clamping';
+  }
+  // Universal
+  else if (modelName.toLowerCase().includes('universal')) {
+    controller = 'Universal CNC';
+    series = 'Multi-Brand';
+    voltage = 'Variable';
+    application = 'General CNC';
+  }
+
+  controllerEl.textContent = controller;
+  seriesEl.textContent = series;
+  voltageEl.textContent = voltage;
+  applicationEl.textContent = application;
+}
+
+function closeModelModal() {
+  const modal = document.getElementById('model-modal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+
+  // Clear form fields
+  document.getElementById('model-enquiry-name').value = '';
+  document.getElementById('model-enquiry-email').value = '';
+  document.getElementById('model-enquiry-phone').value = '';
+  document.getElementById('model-enquiry-message').value = '';
+
+  // Reset scroll position
+  const scrollableBody = modal.querySelector('.overflow-y-auto');
+  if (scrollableBody) {
+    scrollableBody.scrollTop = 0;
+  }
+
+  // Remove any inline styles that might have been added
+  modal.style.display = '';
+}
+
+function sendModelEnquiry() {
+  const name = document.getElementById('model-enquiry-name').value.trim();
+  const email = document.getElementById('model-enquiry-email').value.trim();
+  const phone = document.getElementById('model-enquiry-phone').value.trim();
+  const message = document.getElementById('model-enquiry-message').value.trim();
+
+  if (!name || !email || !phone) {
+    alert('Please fill in your name, email, and phone number.');
+    return;
+  }
+
+  // Create email body
+  const subject = encodeURIComponent(`Enquiry for ${currentModel} - ${currentProduct}`);
+  const body = encodeURIComponent(
+    `Product: ${currentProduct}\n` +
+    `SKU: ${currentProductSku}\n` +
+    `Compatible Model: ${currentModel}\n\n` +
+    `Customer Details:\n` +
+    `Name: ${name}\n` +
+    `Email: ${email}\n` +
+    `Phone: ${phone}\n\n` +
+    `Message/Requirements:\n${message || 'No specific requirements mentioned.'}`
+  );
+
+  // Open email client
+  window.location.href = `mailto:globalcnchardware@gmail.com?subject=${subject}&body=${body}`;
+
+  // Show success feedback
+  const sendBtn = event.target;
+  const originalText = sendBtn.innerHTML;
+  sendBtn.innerHTML = `
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    Opening Email Client...
+  `;
+  sendBtn.classList.add('bg-signalDark');
+
+  setTimeout(() => {
+    closeModelModal();
+    sendBtn.innerHTML = originalText;
+    sendBtn.classList.remove('bg-signalDark');
+  }, 1500);
+}
+
+// Close modal on escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModelModal();
   }
 });
