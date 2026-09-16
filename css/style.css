@@ -697,48 +697,40 @@ input, select, textarea {
   z-index: 1;
 }
 
-/* Dark text watermark overlay on product & catalog images */
-.watermarked-image {
+/* Image protection styles */
+.protected-image {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Canvas-based image container */
+.image-protected-container {
   position: relative;
   overflow: hidden;
-}
-
-.watermarked-image::after {
-  content: 'GLOBAL CNC HARDWARE';
-  position: absolute;
-  inset: 0;
-  z-index: 15;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
   user-select: none;
-  font-family: Archivo, Arial, sans-serif;
-  font-weight: 900;
-  font-size: 13px;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: rgba(11, 28, 45, 0.6);
-  -webkit-text-stroke: 0.5px rgba(11, 28, 45, 0.8);
-  text-shadow:
-    0 0 4px rgba(255, 255, 255, 0.9),
-    0 0 8px rgba(255, 255, 255, 0.7),
-    0 0 12px rgba(255, 255, 255, 0.5);
-  transform: rotate(-30deg);
-  opacity: 0.8;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-.watermarked-image--detail::after {
-  font-size: 28px;
-  letter-spacing: 0.45em;
-  opacity: 0.9;
-  color: rgba(11, 28, 45, 0.7);
-  -webkit-text-stroke: 0.6px rgba(11, 28, 45, 0.9);
-  text-shadow:
-    0 0 6px rgba(255, 255, 255, 0.95),
-    0 0 12px rgba(255, 255, 255, 0.8),
-    0 0 18px rgba(255, 255, 255, 0.6);
+.image-protected-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 /* Responsive — slightly smaller watermark tile on mobile */

@@ -54,15 +54,15 @@ function createRelatedCardHTML(product) {
   return `
     <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
       <div class="relative overflow-hidden bg-white">
-        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line watermarked-image">
+        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line image-protected-container">
           <img 
-            src="images/${nameSlug}.jpg" 
+            data-src="images/${nameSlug}.jpg" 
             alt="${product.name}" 
-            class="aspect-square w-full h-full object-contain p-3 border-b border-line transition-transform duration-300 group-hover:scale-105" 
+            class="aspect-square w-full h-full object-contain p-3 border-b border-line transition-transform duration-300 group-hover:scale-105 protected-image" 
             onerror="
               if (this.getAttribute('data-tried-fallback') !== 'true') {
                 this.setAttribute('data-tried-fallback', 'true');
-                this.src = 'images/${primarySlug}.jpg';
+                this.setAttribute('data-src', 'images/${primarySlug}.jpg');
               } else {
                 this.style.display='none';
                 this.parentElement.querySelector('.fallback-box').style.display='flex';

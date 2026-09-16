@@ -106,8 +106,8 @@
         <div class="animate-slide-up">
           <div class="space-y-6">
             <!-- Main Product Image -->
-            <div class="aspect-square w-full border-2 border-line overflow-hidden bg-white relative group shadow-xl watermarked-image watermarked-image--detail rounded-xl transition-all duration-300 hover:shadow-2xl hover:border-signal">
-              <img id="product-image" alt="Product Image" class="w-full h-full object-contain p-8 transition-transform duration-500 group-hover:scale-105 relative z-5" />
+            <div class="aspect-square w-full border-2 border-line overflow-hidden bg-white relative group shadow-xl rounded-xl transition-all duration-300 hover:shadow-2xl hover:border-signal image-protected-container">
+              <img id="product-image" data-src="images/servo-motor-pulsecoder.jpg" alt="Product Image" class="w-full h-full object-contain p-8 transition-transform duration-500 group-hover:scale-105 relative z-5 protected-image" />
               
               <div id="product-image-fallback" class="w-full h-full hidden items-center justify-center bg-paper absolute inset-0 z-0">
                 <div class="text-center p-8">
@@ -119,10 +119,7 @@
               </div>
               
               <!-- Zoom indicator -->
-              <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-xs text-navy font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-25">
-                <svg class="w-4 h-4 inline mr-1.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
-                Hover to zoom
-              </div>
+            
             </div>
             
             <!-- Image Gallery -->
@@ -332,8 +329,8 @@
             <div class="space-y-6">
               <!-- Image Section -->
               <div class="bg-paper rounded-xl p-6 border border-line">
-                <div class="w-full aspect-square bg-white rounded-xl border border-line flex items-center justify-center overflow-hidden watermarked-image">
-                  <img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'text-steel text-center p-8\\'><svg class=\\'w-20 h-20 mx-auto mb-3\\' fill=\\'none\\' stroke=\\'currentColor\\' viewBox=\\'0 0 24 24\\'><path stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' stroke-width=\\'1.5\\' d=\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\'/></svg><p class=\\'text-sm font-medium\\'>Model Image</p><p class=\\'text-xs mt-1 opacity-70\\'>Placeholder - Replace with actual image</p></div>'">
+                <div class="w-full aspect-square bg-white rounded-xl border border-line flex items-center justify-center overflow-hidden image-protected-container">
+                  <img id="modal-model-image" data-src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-cover protected-image" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'text-steel text-center p-8\\'><svg class=\\'w-20 h-20 mx-auto mb-3\\' fill=\\'none\\' stroke=\\'currentColor\\' viewBox=\\'0 0 24 24\\'><path stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' stroke-width=\\'1.5\\' d=\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\'/></svg><p class=\\'text-sm font-medium\\'>Model Image</p><p class=\\'text-xs mt-1 opacity-70\\'>Placeholder - Replace with actual image</p></div>'">
                 </div>
               </div>
               
