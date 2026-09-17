@@ -54,15 +54,16 @@ function createRelatedCardHTML(product) {
   return `
     <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
       <div class="relative overflow-hidden bg-white">
-        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line image-protected-container">
-          <img 
-            data-src="images/${nameSlug}.jpg" 
-            alt="${product.name}" 
-            class="aspect-square w-full h-full object-contain p-3 border-b border-line transition-transform duration-300 group-hover:scale-105 protected-image" 
+        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line image-protected-container" style="max-height: 250px;">
+          <img
+            src="images/${nameSlug}.jpg"
+            alt="${product.name}"
+            class="aspect-square w-full h-full object-contain p-3 border-b border-line transition-transform duration-300 group-hover:scale-105 protected-image"
+            style="max-height: 250px; object-fit: contain;"
             onerror="
               if (this.getAttribute('data-tried-fallback') !== 'true') {
                 this.setAttribute('data-tried-fallback', 'true');
-                this.setAttribute('data-src', 'images/${primarySlug}.jpg');
+                this.src = 'images/${primarySlug}.jpg';
               } else {
                 this.style.display='none';
                 this.parentElement.querySelector('.fallback-box').style.display='flex';
@@ -354,10 +355,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     galleryContainer.classList.remove('hidden');
     const primarySlug = getImageSlug(product);
     galleryContainer.innerHTML = product.gallery.map((img, index) => `
-      <div class="product-gallery-item" 
+      <div class="product-gallery-item"
            onclick="document.getElementById('product-image').src = 'images/${img}.jpg'">
-        <img src="images/${img}.jpg" alt="${product.name} - View ${index + 1}" 
+        <img src="images/${img}.jpg" alt="${product.name} - View ${index + 1}"
              class="w-full h-full object-contain p-2"
+             style="max-height: 100px; object-fit: contain;"
              onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'text-xs text-steel text-center p-2\\'>Image ${index + 1}</span>'" />
       </div>
     `).join('');
@@ -405,7 +407,7 @@ function openModelModal(modelName, productName, productSku) {
 
   // Reset image container
   const imageContainer = modelImageEl.parentElement;
-  imageContainer.innerHTML = `<img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-cover">`;
+  imageContainer.innerHTML = `<img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-contain" style="max-height: 300px; object-fit: contain;">`;
   const newModelImageEl = document.getElementById('modal-model-image');
 
   // Set placeholder image (you can replace this with actual model images later)

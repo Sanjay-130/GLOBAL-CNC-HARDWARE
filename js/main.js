@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIconOpen = document.getElementById('menu-icon-open');
   const menuIconClose = document.getElementById('menu-icon-close');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
 
   if (mobileMenuBtn && mobileMenu) {
     mobileMenuBtn.addEventListener('click', () => {
@@ -21,6 +22,38 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Close button for mobile menu
+  if (mobileMenuClose && mobileMenu) {
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      if (menuIconOpen) menuIconOpen.classList.remove('hidden');
+      if (menuIconClose) menuIconClose.classList.add('hidden');
+    });
+  }
+
+  // Close mobile menu when clicking on a link
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (mobileMenu) {
+        mobileMenu.classList.remove('open');
+        if (menuIconOpen) menuIconOpen.classList.remove('hidden');
+        if (menuIconClose) menuIconClose.classList.add('hidden');
+      }
+    });
+  });
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (mobileMenu && mobileMenuBtn) {
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+        if (menuIconOpen) menuIconOpen.classList.remove('hidden');
+        if (menuIconClose) menuIconClose.classList.add('hidden');
+      }
+    }
+  });
 
   // Active Navigation Link Highlighting
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';

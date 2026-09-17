@@ -50,73 +50,20 @@ document.addEventListener('touchstart', function(e) {
 }, false);
 
 // Image obfuscation - Convert images to canvas (without watermark)
+// DISABLED: Canvas conversion was causing image visibility and sizing issues
+// Keeping the function for future use if needed
 function protectImages() {
-  const images = document.querySelectorAll('.protected-image');
-  
-  images.forEach(function(img) {
-    // Skip if already converted to canvas
-    if (img.tagName === 'CANVAS') return;
-    
-    const src = img.src;
-    if (!src) return;
-    
-    // Create canvas
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Set canvas dimensions
-    canvas.width = img.naturalWidth || img.width;
-    canvas.height = img.naturalHeight || img.height;
-    
-    // Draw image to canvas
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    
-    // Replace img with canvas
-    img.parentNode.replaceChild(canvas, img);
-    
-    // Apply protection styles to canvas
-    canvas.classList.add('protected-image');
-  });
+  // Disabled - images now use direct src with protection only
+  // Canvas conversion was causing display issues
+  return;
 }
 
 // Lazy loading with JavaScript
+// DISABLED: Using direct src instead of data-src to fix image visibility issues
 function lazyLoadImages() {
-  const images = document.querySelectorAll('img[data-src]');
-  
-  const imageObserver = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        const src = img.getAttribute('data-src');
-        
-        if (src) {
-          img.src = src;
-          img.removeAttribute('data-src');
-          img.classList.add('protected-image');
-          
-          // Convert to canvas after loading (without watermark)
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            
-            img.parentNode.replaceChild(canvas, img);
-            canvas.classList.add('protected-image');
-          };
-        }
-        
-        observer.unobserve(img);
-      }
-    });
-  });
-  
-  images.forEach(function(img) {
-    imageObserver.observe(img);
-  });
+  // Disabled - images now use direct src for better visibility
+  // Lazy loading with data-src was causing display problems
+  return;
 }
 
 // Initialize protection on DOM ready
