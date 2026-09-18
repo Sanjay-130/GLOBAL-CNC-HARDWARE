@@ -2755,3 +2755,52 @@ img.object-cover {
   }
 }
 
+/* Fan Tech Specs Table & Insights */
+.fan-size-group table {
+  border-collapse: collapse;
+}
+
+.fan-size-group table td {
+  border-color: #E5E7EB;
+}
+
+.fan-size-group table tr:hover td {
+  background-color: #F8FAFC;
+}
+
+/* =========================================================
+   FAN MODAL — Image Panel & Spec Rows
+   ========================================================= */
+
+.fan-modal-image-panel {
+  min-height: 340px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem;
+  width: 100%;
+  height: 100%;
+}
+
+/* Spin the fan SVG on hover */
+#modal-image-container:hover .fan-modal-image-panel > div:first-child svg {
+  animation: fan-spin 1.4s ease-in-out;
+}
+
+@keyframes fan-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Fan spec rows inside the modal */
+.fan-spec-row {
+  transition: background 0.15s ease;
+}
+
+.fan-spec-row:hover {
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+
+

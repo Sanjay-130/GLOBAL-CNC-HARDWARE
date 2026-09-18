@@ -389,7 +389,7 @@ let currentModel = '';
 let currentProduct = '';
 let currentProductSku = '';
 
-function openModelModal(modelName, productName, productSku) {
+function openModelModal(modelName, productName, productSku, catalogItemId) {
   currentModel = modelName;
   currentProduct = productName;
   currentProductSku = productSku;
@@ -398,43 +398,179 @@ function openModelModal(modelName, productName, productSku) {
   const modelNameEl = document.getElementById('modal-model-name');
   const productNameEl = document.getElementById('modal-product-name');
   const productSkuEl = document.getElementById('modal-product-sku');
-  const modelImageEl = document.getElementById('modal-model-image');
+  const modalHeaderTitle = document.getElementById('modal-header-title');
 
   // Ensure modal is properly reset
   modal.classList.remove('hidden');
   modal.style.display = '';
   modal.style.visibility = '';
 
-  modelNameEl.textContent = modelName;
-  productNameEl.textContent = productName;
-  productSkuEl.textContent = 'SKU: ' + productSku;
+  if (modelNameEl) modelNameEl.textContent = modelName;
+  if (productNameEl) productNameEl.textContent = productName;
+  if (productSkuEl) productSkuEl.textContent = 'SKU: ' + productSku;
 
-  // Reset image container
-  const imageContainer = modelImageEl.parentElement;
-  imageContainer.innerHTML = `<img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-contain" style="max-height: 300px; object-fit: contain;">`;
-  const newModelImageEl = document.getElementById('modal-model-image');
+  // Try to find catalog item for fan products (cnc-014)
+  let catalogItem = null;
+  const allProducts = window.PRODUCTS_DATA || [];
+  const product = allProducts.find(p => p.sku === productSku || p.name === productName || p.id === 'cnc-014');
+  if (product && product.modelCatalog) {
+    if (catalogItemId !== undefined) {
+      catalogItem = product.modelCatalog.find(m => m.id === catalogItemId);
+    }
+    if (!catalogItem && modelName) {
+      catalogItem = product.modelCatalog.find(m => 
+        m.model === modelName || 
+        `${m.brand} ${m.model}` === modelName ||
+        modelName.includes(m.model)
+      );
+    }
+  }
 
-  // Set placeholder image (you can replace this with actual model images later)
-  const modelSlug = modelName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  newModelImageEl.src = `images/models/${modelSlug}.jpg`;
-  newModelImageEl.alt = modelName;
+  const imageContainer = document.getElementById('modal-image-container');
 
-  // Fallback to placeholder if image fails to load
-  newModelImageEl.onerror = function() {
-    this.style.display = 'none';
-    this.parentElement.innerHTML = `
-      <div class="text-steel text-center p-8">
-        <svg class="w-20 h-20 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
-        <p class="text-sm font-medium">Model Image</p>
-        <p class="text-xs mt-1 opacity-70">Placeholder - Replace with actual image</p>
-      </div>
-    `;
-  };
+  if (catalogItem) {
+    // === FAN PRODUCT MODAL ===
+    if (modalHeaderTitle) modalHeaderTitle.textContent = 'Fan Model Details';
 
-  // Populate model specifications based on model name
-  populateModelSpecs(modelName);
+    // Update the model name in the header subtitle
+    if (modelNameEl) modelNameEl.textContent = `${catalogItem.brand} ${catalogItem.model}`;
+
+    // Replace image area with a fan SVG icon panel
+    if (imageContainer) {
+      imageContainer.innerHTML = renderFanImagePanel(catalogItem);
+    }
+
+    // Render rich fan specification rows
+    renderFanModalSpecs(catalogItem);
+
+    // Populate "PRODUCT INFORMATION" section with high-level system & catalog info (no duplicate model specs)
+    const sizeNum = getFanSizeWidth(catalogItem.size);
+    const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
+    const productInfoContainer = document.getElementById('modal-product-info-container');
+    if (productInfoContainer) {
+      productInfoContainer.innerHTML = `
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <span class="text-sm font-semibold text-steel uppercase tracking-wider">Product Information</span>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+            <span class="text-steel text-xs">Product Line</span>
+            <span class="text-navy font-semibold text-xs">Drive Cooling Fan</span>
+          </div>
+          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+            <span class="text-steel text-xs">Series</span>
+            <span class="text-navy font-semibold text-xs">${sizeSpecs.category || (sizeNum + 'mm Series')}</span>
+          </div>
+          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+            <span class="text-steel text-xs">Target Drives</span>
+            <span class="text-navy font-medium text-xs">Servo & Spindle Amplifiers</span>
+          </div>
+          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+            <span class="text-steel text-xs">CNC Compatibility</span>
+            <span class="text-navy text-xs font-medium">Fanuc / Siemens / Mitsubishi</span>
+          </div>
+          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+            <span class="text-steel text-xs">Catalog SKU</span>
+            <span class="text-steel font-mono text-xs">${productSku}</span>
+          </div>
+          <div class="flex justify-between items-center py-1.5">
+            <span class="text-steel text-xs">Stock Status</span>
+            <span class="inline-flex items-center gap-1.5 text-signalDark font-bold text-xs">
+              <span class="w-2 h-2 bg-signal inline-block"></span> In Stock (Ready to Ship)
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Concise, purposeful application description (no duplicate spec regurgitation)
+    const descEl = document.getElementById('modal-model-description');
+    if (descEl) {
+      descEl.innerHTML = `
+        High-efficiency thermal management fan engineered for CNC servo drive units, spindle amplifiers, and control cabinets. Designed for continuous industrial duty, low acoustic vibration, and reliable heat dissipation under heavy cutting cycles.
+      `;
+    }
+
+    // Pre-fill enquiry message
+    const msgEl = document.getElementById('model-enquiry-message');
+    if (msgEl && !msgEl.value) {
+      msgEl.placeholder = `I am interested in ${catalogItem.brand} ${catalogItem.model} (${catalogItem.size}mm). Please share pricing and availability.`;
+    }
+
+  } else {
+    // === STANDARD PRODUCT MODAL ===
+    if (modalHeaderTitle) modalHeaderTitle.textContent = 'Compatible Model Details';
+
+    if (imageContainer) {
+      imageContainer.innerHTML = `<img id="modal-model-image" src="images/model-placeholder.jpg" alt="Model Image" class="w-full h-full object-contain" style="max-height: 300px; object-fit: contain;">`;
+      const newModelImageEl = document.getElementById('modal-model-image');
+      if (newModelImageEl) {
+        const modelSlug = modelName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        newModelImageEl.src = `images/models/${modelSlug}.jpg`;
+        newModelImageEl.alt = modelName;
+        newModelImageEl.onerror = function() {
+          this.style.display = 'none';
+          this.parentElement.innerHTML = `
+            <div class="text-steel text-center p-8">
+              <svg class="w-20 h-20 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <p class="text-sm font-medium">Model Image</p>
+              <p class="text-xs mt-1 opacity-70">Placeholder - Replace with actual image</p>
+            </div>
+          `;
+        };
+      }
+    }
+
+    // Reset Product Information container for standard products
+    const productInfoContainer = document.getElementById('modal-product-info-container');
+    if (productInfoContainer) {
+      productInfoContainer.innerHTML = `
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <span class="text-sm font-semibold text-steel uppercase tracking-wider">Product Information</span>
+        </div>
+        <p id="modal-product-name" class="text-navy font-semibold text-base mb-2">${productName}</p>
+        <p id="modal-product-sku" class="text-steel text-sm">SKU: ${productSku}</p>
+      `;
+    }
+
+    // Reset description to generic text
+    const descEl = document.getElementById('modal-model-description');
+    if (descEl) {
+      descEl.innerHTML = 'This model is compatible with the selected product. Our team can provide detailed specifications, availability, and pricing information for this configuration.';
+    }
+
+    // Reset specs label
+    const specsLabel = document.getElementById('modal-specs-label');
+    if (specsLabel) specsLabel.textContent = 'Key Specifications';
+
+    // Reset specs to standard 4-row layout then populate
+    const specsContainer = document.getElementById('modal-model-specs');
+    if (specsContainer) {
+      specsContainer.innerHTML = `
+        <div class="flex justify-between items-center py-2 border-b border-line">
+          <span class="text-steel text-sm">Controller Type</span>
+          <span id="modal-spec-controller" class="text-navy font-medium text-sm">-</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-line">
+          <span class="text-steel text-sm">Series</span>
+          <span id="modal-spec-series" class="text-navy font-medium text-sm">-</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-line">
+          <span class="text-steel text-sm">Voltage</span>
+          <span id="modal-spec-voltage" class="text-navy font-medium text-sm">-</span>
+        </div>
+        <div class="flex justify-between items-center py-2">
+          <span class="text-steel text-sm">Application</span>
+          <span id="modal-spec-application" class="text-navy font-medium text-sm">-</span>
+        </div>
+      `;
+    }
+    populateModelSpecs(modelName);
+  }
 
   // Reset scroll position
   const scrollableBody = modal.querySelector('.overflow-y-auto');
@@ -445,31 +581,83 @@ function openModelModal(modelName, productName, productSku) {
   document.body.style.overflow = 'hidden';
 }
 
+function getFanModelImage(item) {
+  if (item && item.image) return item.image;
+  const slug = (item && item.model ? item.model : '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return `images/models/${slug}.jpg`;
+}
+
+function renderFanImagePanel(item) {
+  const sizeNum = getFanSizeWidth(item.size);
+  const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
+  const badge = sizeSpecs.badge || '';
+  const imgUrl = getFanModelImage(item);
+
+  return `
+    <div class="fan-modal-image-panel relative flex flex-col justify-between p-2.5 bg-white w-full h-full min-h-[340px] sm:min-h-[400px]">
+      <!-- Top Badges -->
+      <div class="w-full flex items-center justify-between pb-2 border-b border-line/60">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-paper px-2.5 py-1 border border-line">
+          ${item.size} mm
+        </span>
+        ${badge ? `<span class="text-[11px] font-bold uppercase tracking-wider bg-signal/15 text-signalDark border border-signal/30 px-2.5 py-1">${badge}</span>` : ''}
+      </div>
+
+      <!-- Main Image (Enlarged) -->
+      <div class="relative w-full flex-1 flex items-center justify-center py-2 image-protected-container min-h-[260px] sm:min-h-[320px]">
+        <img 
+          id="modal-model-image"
+          src="${imgUrl}" 
+          alt="${item.brand} ${item.model}" 
+          class="w-full h-64 sm:h-80 md:h-88 max-h-[380px] object-contain protected-image transition-transform duration-300 hover:scale-105"
+          onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';"
+        />
+      </div>
+
+      <!-- Bottom Tag -->
+      <div class="text-center pt-2 border-t border-line/60 bg-paper/30 py-1.5 px-2">
+        <div class="text-[10px] font-bold uppercase tracking-widest text-steel">Cooling Fan Model</div>
+        <div class="text-sm font-mono font-bold text-navy truncate">${item.brand} — ${item.model}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFanModalSpecs(item) {
+  const specsContainer = document.getElementById('modal-model-specs');
+  const specsLabel = document.getElementById('modal-specs-label');
+  if (!specsContainer) return;
+  if (specsLabel) specsLabel.textContent = 'Fan Specifications';
+
+  const rows = [
+    { label: 'Brand / Make',      value: item.brand,      icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
+    { label: 'Model Number',      value: item.model,      icon: 'M7 20l4-16m2 16l4-16M6 9h14M4 15h14',              mono: true },
+    { label: 'Dimensions',        value: item.size ? `${item.size} mm` : null, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4' },
+    { label: 'Electrical Rating', value: item.electrical, icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+    { label: 'Wire Count',        value: item.wires ? `${item.wires} Wire` : null, icon: 'M4 6h16M4 12h16M4 18h16' },
+    { label: 'Connector Type',    value: item.connector,  icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
+    { label: 'Fanuc Part No.',    value: item.fanucPart,  icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', highlight: true },
+  ].filter(r => r.value);
+
+  specsContainer.innerHTML = rows.map((row, idx) => `
+    <div class="fan-spec-row flex items-center gap-3 py-2.5 ${idx < rows.length - 1 ? 'border-b border-line/70' : ''}">
+      <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center bg-signal/10 border border-signal/20">
+        <svg class="w-3.5 h-3.5 text-signalDark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${row.icon}"/>
+        </svg>
+      </div>
+      <span class="text-steel text-xs w-28 flex-shrink-0">${row.label}</span>
+      <span class="text-navy font-semibold text-sm ${row.mono ? 'font-mono' : ''} ${row.highlight ? 'text-signalDark font-bold font-mono bg-signal/10 px-1.5 py-0.5 border border-signal/20 text-xs' : ''} ml-auto text-right leading-snug">${row.value}</span>
+    </div>
+  `).join('');
+}
+
 function populateModelSpecs(modelName) {
   const controllerEl = document.getElementById('modal-spec-controller');
   const seriesEl = document.getElementById('modal-spec-series');
   const voltageEl = document.getElementById('modal-spec-voltage');
   const applicationEl = document.getElementById('modal-spec-application');
-
-  // Check if current product has modelCatalog (like Drive Cooling Fan)
-  const product = products.find(p => p.id === currentProductSku || p.name === currentProduct);
-  let catalogItem = null;
-  if (product && product.modelCatalog) {
-    catalogItem = product.modelCatalog.find(m => 
-      m.model === modelName || 
-      `${m.brand} ${m.model}` === modelName ||
-      modelName.includes(m.model)
-    );
-  }
-
-  if (catalogItem) {
-    controllerEl.textContent = catalogItem.brand;
-    seriesEl.textContent = `${catalogItem.size} mm`;
-    voltageEl.textContent = catalogItem.electrical || 'DC 24V';
-    const extra = [catalogItem.connector, catalogItem.fanucPart].filter(Boolean).join(' | ');
-    applicationEl.textContent = extra || 'Drive & Panel Cooling';
-    return;
-  }
+  if (!controllerEl) return;
 
   // Extract specifications from model name
   let controller = 'Standard';
@@ -657,16 +845,132 @@ document.addEventListener('keydown', function(e) {
 /**
  * Size-categorized product model display system
  * Specifically designed for Drive Cooling Fan (cnc-014)
- * Dynamically groups models by physical frame size into clean industrial sections.
+ * Dynamically groups models by physical frame size into clean industrial sections
+ * in descending order (bigger size first) with complete technical specifications,
+ * application insights, and smart tags.
  */
-function getFanSizeCategory(sizeStr) {
-  if (!sizeStr) return 'Other Sizes';
+const FAN_SIZE_SPECS = {
+  172: {
+    category: '172mm Cooling Fans',
+    badge: 'Heavy Duty',
+    subtitle: 'Industrial High Airflow & Extreme Cooling Series',
+    description: 'Designed for heavy-duty CNC main electrical enclosures, multi-axis drive racks, and large industrial heat exchangers requiring maximum CFM displacement.',
+    voltage: '24V / 48V DC / 230V AC',
+    speed: '2,500 – 4,000 RPM',
+    airflow: '180 – 300+ CFM',
+    noise: '48 – 62 dBA',
+    bearing: 'Dual Precision Ball',
+    power: '15.0W – 45.0W',
+    insight: 'Maximum airflow delivery for large CNC cabinets and continuous multi-axis machining load dissipations.',
+    tags: ['Heavy Duty', 'Extreme Airflow', 'Dual Ball Bearing', 'Best for CNC Main Enclosures']
+  },
+  140: {
+    category: '140mm Cooling Fans',
+    badge: 'High Airflow',
+    subtitle: 'High Airflow & Main Drive Series',
+    description: 'High static pressure and high volumetric air delivery engineered for large spindle servo amplifiers, high-capacity regenerative units, and central CNC cabinet ventilation.',
+    voltage: '12V / 24V / 48V DC',
+    speed: '1,800 – 3,200 RPM',
+    airflow: '120 – 180+ CFM',
+    noise: '36 – 50 dBA',
+    bearing: 'Dual Ball Bearing',
+    power: '6.0W – 18.0W',
+    insight: 'High airflow with low noise signature, ideal for high-power CNC inverter modules and main drive enclosures.',
+    tags: ['High Airflow', 'Industrial Grade', 'Dual Ball Bearing', 'Best for Large Servo Cabinets']
+  },
+  120: {
+    category: '120mm Cooling Fans',
+    badge: 'Cabinet Grade',
+    subtitle: 'Industrial High Airflow Series',
+    description: 'Optimized for CNC control cabinets, multi-axis servo drives, and industrial power distribution panels. Delivers strong forced-air cooling across heatsink fins.',
+    voltage: '12V / 24V / 48V DC',
+    speed: '1,800 – 3,500 RPM',
+    airflow: '70 – 100+ CFM',
+    noise: '32 – 45 dBA',
+    bearing: 'Dual Precision Ball',
+    power: '3.5W – 12.0W',
+    insight: 'Superior static pressure and high airflow designed for dense heatsink arrays and sealed CNC cabinet ducting.',
+    tags: ['High Airflow', 'Industrial Grade', 'Dual Ball Bearing', 'Best for CNC Cabinets & Drives']
+  },
+  80: {
+    category: '80mm Cooling Fans',
+    badge: 'Servo Grade',
+    subtitle: 'Mid-Drive & Power Supply Series',
+    description: 'Precision cooling for mid-size servo drives, CNC power supply modules, and enclosed machine interface units requiring balanced static pressure.',
+    voltage: '12V / 24V DC',
+    speed: '2,500 – 5,000 RPM',
+    airflow: '25 – 45 CFM',
+    noise: '28 – 42 dBA',
+    bearing: 'Dual Ball / Precision Sleeve',
+    power: '1.5W – 6.0W',
+    insight: 'Balanced airflow and pressure profile, engineered for mid-capacity servo amplifier heatsinks and power supplies.',
+    tags: ['Balanced Airflow', 'Industrial Grade', 'Dual Ball Bearing', 'Best for Servo Drives & PSUs']
+  },
+  60: {
+    category: '60mm Cooling Fans',
+    badge: 'Precision',
+    subtitle: 'Mid-Size CNC Drive Series',
+    description: 'Specialized thermal management for Fanuc, Siemens, and Mitsubishi servo drives, power supply modules, and compact control interfaces.',
+    voltage: '12V / 24V DC',
+    speed: '3,000 – 6,000 RPM',
+    airflow: '12 – 30 CFM',
+    noise: '26 – 40 dBA',
+    bearing: 'Dual Precision Ball',
+    power: '1.0W – 4.5W',
+    insight: 'Moderate-to-high speed fan delivering concentrated airflow through tight drive heatsink fin channels.',
+    tags: ['Focused Airflow', 'Dual Ball Bearing', 'Fanuc Compatible', 'Best for CNC Servo Drives']
+  },
+  50: {
+    category: '50mm Cooling Fans',
+    badge: 'Compact',
+    subtitle: 'Specialty Drive & Module Series',
+    description: 'Designed for compact CNC servo amplifiers, auxiliary power packs, and specialized controller electronics where space is strictly constrained.',
+    voltage: '12V / 24V DC',
+    speed: '3,500 – 6,500 RPM',
+    airflow: '8 – 18 CFM',
+    noise: '24 – 38 dBA',
+    bearing: 'Precision Ball / Sleeve',
+    power: '0.8W – 3.5W',
+    insight: 'Compact footprint for targeted thermal relief in specialized modular drive systems and CNC sub-assemblies.',
+    tags: ['Compact Cooling', 'High Reliability', 'Precision Bearing', 'Best for Modular Drives']
+  },
+  40: {
+    category: '40mm Cooling Fans',
+    badge: 'Compact',
+    subtitle: 'Ultra-Compact CNC Drive & Internal Heat Sink Series',
+    description: 'Standard cooling solution for Fanuc, NMB, San Ace, and Sunon drive modules, embedded power boards, and tight heatsink compartments.',
+    voltage: '12V / 24V DC',
+    speed: '4,500 – 8,500 RPM',
+    airflow: '5 – 10+ CFM',
+    noise: '25 – 42 dBA',
+    bearing: 'Dual Precision Ball',
+    power: '0.5W – 3.5W',
+    insight: 'High rotational velocity engineered for direct heatsink fin cooling in tight, high-density electronic assemblies.',
+    tags: ['Compact Cooling', 'High RPM', 'Dual Ball Bearing', 'Best for Drive Modules & Heatsinks']
+  },
+  20: {
+    category: '20mm Cooling Fans',
+    badge: 'Micro',
+    subtitle: 'Micro Enclosure & Controller Component Series',
+    description: 'Specialized micro cooling for miniature electronic modules, high-density sensor amplifiers, and ultra-compact CNC internal drive compartments.',
+    voltage: '12V / 24V DC',
+    speed: '6,000 – 10,000 RPM',
+    airflow: '1.5 – 4.0 CFM',
+    noise: '20 – 32 dBA',
+    bearing: 'Precision Ball / Miniature Sleeve',
+    power: '0.4W – 1.8W',
+    insight: 'Micro-profile cooling delivering concentrated spot airflow in ultra-confined CNC machine enclosures.',
+    tags: ['Micro Form Factor', 'Spot Cooling', 'Low Power', 'Best for Micro Electronics']
+  }
+};
+
+function getFanSizeWidth(sizeStr) {
+  if (!sizeStr) return 0;
   const match = sizeStr.match(/(\d+)\s*x\s*(\d+)/i);
   if (match) {
-    const width = parseInt(match[1], 10);
-    return `${width}mm Cooling Fans`;
+    return parseInt(match[1], 10);
   }
-  return 'Standard Cooling Fans';
+  return 0;
 }
 
 function renderCategorizedFanModels(product) {
@@ -675,127 +979,245 @@ function renderCategorizedFanModels(product) {
     return '<p class="text-steel text-sm p-4">No model catalog available.</p>';
   }
 
-  // Group models dynamically by size category
-  const groups = {};
+  // Group models dynamically by size width
+  const sizeMap = {};
   catalog.forEach(item => {
-    const category = getFanSizeCategory(item.size);
-    if (!groups[category]) {
-      groups[category] = [];
+    const width = getFanSizeWidth(item.size);
+    if (!sizeMap[width]) {
+      sizeMap[width] = [];
     }
-    groups[category].push(item);
+    sizeMap[width].push(item);
   });
 
-  // Sort categories logically (e.g., 20mm, 40mm, 50mm, 60mm, 80mm, 120mm)
-  const sortedCategories = Object.keys(groups).sort((a, b) => {
-    const numA = parseInt(a, 10) || 999;
-    const numB = parseInt(b, 10) || 999;
-    return numA - numB;
-  });
+  // Sort sizes in DESCENDING order (bigger size first: e.g. 172, 140, 120, 80, 60, 50, 40, 20)
+  const sortedSizes = Object.keys(sizeMap)
+    .map(w => parseInt(w, 10))
+    .sort((a, b) => b - a);
 
   return `
-    <div class="fan-size-categorized-wrapper space-y-6">
-      <!-- Quick category summary / anchor pill bar -->
-      <div class="flex flex-wrap items-center gap-2 pb-2 border-b border-line">
-        <span class="text-xs uppercase font-bold text-steel tracking-wider mr-1 flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-          Available Sizes (${catalog.length} Models):
-        </span>
-        ${sortedCategories.map(cat => `
-          <a href="#size-group-${cat.replace(/[^a-zA-Z0-9]/g, '-')}" class="text-xs px-2.5 py-1 bg-white border border-line hover:border-signal hover:text-signal text-navy font-semibold transition-all">
-            ${cat} <span class="text-steel font-normal">(${groups[cat].length})</span>
-          </a>
-        `).join('')}
+    <div class="fan-size-categorized-wrapper space-y-8">
+      <!-- Quick category summary & anchor navigation -->
+      <div class="bg-paper border border-line p-3 sm:p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-line">
+          <span class="text-xs uppercase font-bold text-navy tracking-wider flex items-center gap-2">
+            <svg class="w-4 h-4 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+            Cooling Fan Categories (${catalog.length} Total Models – Descending by Size)
+          </span>
+          <span class="text-[11px] text-steel font-mono">Bigger Size First</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          ${sortedSizes.map(size => {
+            const spec = FAN_SIZE_SPECS[size] || { category: `${size}mm Cooling Fans` };
+            const count = sizeMap[size].length;
+            return `
+              <a href="#size-group-${size}mm" class="text-xs px-3 py-1.5 bg-white border border-line hover:border-signal hover:text-signalDark text-navy font-semibold transition-all flex items-center gap-1.5 shadow-sm">
+                <span class="w-1.5 h-1.5 bg-signal"></span>
+                <span>${spec.category}</span>
+                <span class="text-steel font-normal text-[11px]">(${count})</span>
+              </a>
+            `;
+          }).join('')}
+        </div>
       </div>
 
-      <!-- Categories Container -->
-      ${sortedCategories.map(category => {
-        const models = groups[category];
-        const categoryId = `size-group-${category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+      <!-- Categories Container (Descending Size Order) -->
+      ${sortedSizes.map(size => {
+        const models = sizeMap[size];
+        const spec = FAN_SIZE_SPECS[size] || {
+          category: `${size}mm Cooling Fans`,
+          badge: 'Standard',
+          subtitle: 'Industrial Cooling Series',
+          description: `Industrial cooling solution designed for CNC machine drive systems and control enclosures with ${size}mm mounting footprint.`,
+          voltage: '12V / 24V / 48V',
+          speed: '2,000 – 6,000 RPM',
+          airflow: 'Standard CFM',
+          noise: '25 – 45 dBA',
+          bearing: 'Dual Ball / Sleeve',
+          power: '1.0W – 10.0W',
+          insight: 'Engineered for continuous CNC electrical enclosure ventilation.',
+          tags: ['Industrial Grade', 'Dual Ball Bearing', 'Best for CNC Enclosures']
+        };
+        const categoryId = `size-group-${size}mm`;
+
         return `
           <div id="${categoryId}" class="fan-size-group bg-white border border-line">
-            <!-- Group Header Bar -->
-            <div class="fan-size-group-header flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-paper border-b border-line">
-              <div class="flex items-center gap-2.5">
-                <div class="w-2.5 h-2.5 bg-signal"></div>
-                <h3 class="font-display font-bold text-base md:text-lg text-navy tracking-tight uppercase">${category}</h3>
-                <span class="text-xs font-mono font-medium px-2 py-0.5 bg-white border border-line text-steel">
-                  ${models.length} ${models.length === 1 ? 'Model' : 'Models'}
-                </span>
-              </div>
-              <div class="text-xs text-steel font-mono">
-                Industrial Cooling Series
+            <!-- 1. Section Header -->
+            <div class="fan-size-group-header px-4 sm:px-6 py-4 bg-paper border-b border-line">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 bg-signal"></div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 class="font-display font-bold text-lg md:text-xl text-navy tracking-tight uppercase">${spec.category}</h3>
+                      <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/15 px-2 py-0.5 border border-signal/30">
+                        ${spec.badge}
+                      </span>
+                    </div>
+                    <p class="text-xs text-steel font-medium mt-0.5">${spec.subtitle}</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-mono font-bold px-2.5 py-1 bg-white border border-line text-navy shadow-sm">
+                    ${models.length} ${models.length === 1 ? 'Compatible Model' : 'Compatible Models'}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <!-- Models Grid -->
-            <div class="p-3 md:p-4">
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                ${models.map((item, idx) => {
-                  const safeModel = item.model.replace(/'/g, "\\'");
-                  const safeName = product.name.replace(/'/g, "\\'");
-                  const safeSku = product.sku.replace(/'/g, "\\'");
-                  return `
-                    <div 
-                      class="fan-model-card group bg-white border border-line hover:border-signal p-3.5 flex flex-col justify-between transition-all duration-200 cursor-pointer animate-slide-up"
-                      style="animation-delay: ${idx * 0.02}s;"
-                      onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}')"
-                      title="Click to view details for ${item.brand} ${item.model}"
-                    >
-                      <div>
-                        <!-- Top row: Brand & Size badge -->
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                          <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/10 px-2 py-0.5 border border-signal/20">
-                            ${item.brand}
-                          </span>
-                          <span class="text-[11px] font-mono text-steel bg-paper px-1.5 py-0.5 border border-line whitespace-nowrap">
-                            ${item.size} mm
-                          </span>
-                        </div>
-
-                        <!-- Model Number -->
-                        <div class="flex items-center gap-2 mb-2">
-                          <svg class="w-4 h-4 text-signal flex-shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                          </svg>
-                          <span class="text-sm font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight break-all">
-                            ${item.model}
-                          </span>
-                        </div>
-
-                        <!-- Specs details -->
-                        <div class="space-y-1 text-xs text-steel pt-1 border-t border-line/60">
-                          ${item.electrical ? `
-                            <div class="flex items-center justify-between text-[11px]">
-                              <span class="text-steelLight">Rating:</span>
-                              <span class="font-medium text-navy text-right">${item.electrical}</span>
-                            </div>
-                          ` : ''}
-                          ${item.connector ? `
-                            <div class="flex items-center justify-between text-[11px]">
-                              <span class="text-steelLight">Connector:</span>
-                              <span class="font-medium text-navy text-right">${item.connector}</span>
-                            </div>
-                          ` : ''}
-                          ${item.fanucPart ? `
-                            <div class="flex items-center justify-between text-[11px]">
-                              <span class="text-steelLight">Fanuc Part:</span>
-                              <span class="font-mono text-signalDark font-bold text-right">${item.fanucPart}</span>
-                            </div>
-                          ` : ''}
-                        </div>
-                      </div>
-
-                      <!-- Footer CTA indicator -->
-                      <div class="mt-3 pt-2 border-t border-line/40 flex items-center justify-between text-[11px] text-steel group-hover:text-signalDark transition-colors">
-                        <span class="font-semibold uppercase tracking-wider text-[10px]">View Specs</span>
-                        <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                      </div>
-                    </div>
-                  `;
-                }).join('')}
+            <!-- Body: Specs, Description, Insights & Models -->
+            <div class="p-4 sm:p-6 space-y-5">
+              
+              <!-- 2. Short Description & 6. Smart Tags -->
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-line">
+                <p class="text-sm text-steel leading-relaxed max-w-3xl">
+                  ${spec.description}
+                </p>
+                <!-- Smart Tags -->
+                <div class="flex flex-wrap gap-1.5 shrink-0">
+                  ${spec.tags.map(tag => `
+                    <span class="text-[11px] font-semibold text-navy bg-paper border border-line px-2.5 py-1 uppercase tracking-wider">
+                      ${tag}
+                    </span>
+                  `).join('')}
+                </div>
               </div>
+
+              <!-- 3. Technical Specification Table & 4. Performance Insight -->
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Technical Specification Table (Spans 2 columns on desktop) -->
+                <div class="lg:col-span-2 border border-line bg-white">
+                  <div class="bg-paper px-3 py-2 border-b border-line flex items-center justify-between">
+                    <span class="text-xs font-bold uppercase text-navy tracking-wider flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                      Technical Specification Range (${size}mm Series)
+                    </span>
+                    <span class="text-[10px] text-steel font-mono uppercase">Industry Standard</span>
+                  </div>
+                  <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                      <tbody class="divide-y divide-line">
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel w-1/3 bg-paper/30">Operating Voltage</td>
+                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.voltage}</td>
+                        </tr>
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Rotational Speed</td>
+                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.speed}</td>
+                        </tr>
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Airflow Range</td>
+                          <td class="px-3.5 py-2 font-mono font-bold text-signalDark">${spec.airflow}</td>
+                        </tr>
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Noise Level</td>
+                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.noise}</td>
+                        </tr>
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Bearing System</td>
+                          <td class="px-3.5 py-2 font-medium text-navy">${spec.bearing}</td>
+                        </tr>
+                        <tr class="hover:bg-paper/50 transition-colors">
+                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Power Consumption</td>
+                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.power}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- 4. Performance Insight Card -->
+                <div class="border border-line bg-paper/40 p-4 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2.5">
+                      <div class="w-2 h-2 bg-signal"></div>
+                      <span class="text-xs font-bold uppercase text-navy tracking-wider">Performance Insight</span>
+                    </div>
+                    <p class="text-xs text-steel leading-relaxed mb-3">
+                      ${spec.insight}
+                    </p>
+                    <div class="p-2.5 bg-white border border-line text-[11px] text-steel">
+                      <strong class="text-navy font-semibold block mb-0.5">Application Tip:</strong>
+                      ${size >= 80 
+                        ? 'High airflow series: ensure unimpeded exhaust vents and clean filter mats for optimal heat exchange.' 
+                        : 'Compact series: inspect heatsink fin clearance and wiring connector pin alignment during replacement.'}
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2.5 border-t border-line flex items-center justify-between text-[11px] text-steel">
+                    <span class="font-mono">Mounting: Standard ${size}mm</span>
+                    <span class="font-semibold text-signalDark">Ready Stock</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. Model Listing Section -->
+              <div class="pt-2">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-bold uppercase text-navy tracking-wider flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    Available ${spec.category} Models (${models.length})
+                  </span>
+                  <span class="text-[11px] text-steel">Click any model card to view specifications & request quote</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  ${models.map((item, idx) => {
+                    const safeModel = item.model.replace(/'/g, "\\'");
+                    const safeName = product.name.replace(/'/g, "\\'");
+                    const safeSku = product.sku.replace(/'/g, "\\'");
+                    const itemId = item.id;
+                    return `
+                      <div 
+                        class="fan-model-card group bg-white border border-line hover:border-signal p-3.5 flex flex-col justify-between transition-all duration-200 cursor-pointer animate-slide-up"
+                        style="animation-delay: ${idx * 0.02}s;"
+                        onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}', ${JSON.stringify(itemId)})"
+                        title="Click to view details for ${item.brand} ${item.model}"
+                      >
+                        <div>
+                          <!-- Top row: Brand & Size badge -->
+                          <div class="flex items-start justify-between gap-2 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/10 px-2 py-0.5 border border-signal/20">
+                              ${item.brand}
+                            </span>
+                            <span class="text-[11px] font-mono text-steel bg-paper px-1.5 py-0.5 border border-line whitespace-nowrap">
+                              ${item.size} mm
+                            </span>
+                          </div>
+
+                          <!-- Model Image Thumbnail -->
+                          <div class="w-full h-36 sm:h-40 bg-paper/40 border border-line/60 my-2.5 flex items-center justify-center p-2.5 overflow-hidden image-protected-container">
+                            <img 
+                              src="${item.image || getFanModelImage(item)}" 
+                              alt="${item.brand} ${item.model}" 
+                              class="w-full h-full object-contain protected-image group-hover:scale-105 transition-transform duration-200" 
+                              onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';" 
+                              loading="lazy"
+                            />
+                          </div>
+
+                          <!-- Model Number -->
+                          <div class="flex items-center gap-2 mt-2">
+                            <svg class="w-4 h-4 text-signal flex-shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="text-sm font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight break-all">
+                              ${item.model}
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Footer CTA indicator -->
+                        <div class="mt-4 pt-2 border-t border-line/40 flex items-center justify-between text-[11px] text-steel group-hover:text-signalDark transition-colors">
+                          <span class="font-semibold uppercase tracking-wider text-[10px]">View Specs &amp; Inquire</span>
+                          <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                          </svg>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
             </div>
           </div>
         `;
