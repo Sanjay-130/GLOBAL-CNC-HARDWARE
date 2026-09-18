@@ -312,21 +312,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Compatible Models Section
   const compatibleModelsContainer = document.getElementById('detail-compatible-models');
-  if (compatibleModelsContainer && product.compatibleModels && Array.isArray(product.compatibleModels)) {
-    compatibleModelsContainer.innerHTML = `
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        ${product.compatibleModels.map((model, i) => `
-          <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up cursor-pointer" style="animation-delay: ${i * 0.03}s;" onclick="openModelModal('${model.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', '${product.sku.replace(/'/g, "\\'")}')">
-            <div class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span class="text-sm font-medium text-navy">${model}</span>
+  if (compatibleModelsContainer) {
+    if (product.id === 'cnc-014' && product.modelCatalog && Array.isArray(product.modelCatalog)) {
+      compatibleModelsContainer.innerHTML = renderCategorizedFanModels(product);
+    } else if (product.compatibleModels && Array.isArray(product.compatibleModels)) {
+      compatibleModelsContainer.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          ${product.compatibleModels.map((model, i) => `
+            <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up cursor-pointer" style="animation-delay: ${i * 0.03}s;" onclick="openModelModal('${model.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', '${product.sku.replace(/'/g, "\\'")}')">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm font-medium text-navy">${model}</span>
+              </div>
             </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  } else if (compatibleModelsContainer) {
-    compatibleModelsContainer.innerHTML = '<p class="text-steel text-sm">No compatible models specified</p>';
+          `).join('')}
+        </div>
+      `;
+    } else {
+      compatibleModelsContainer.innerHTML = '<p class="text-steel text-sm">No compatible models specified</p>';
+    }
   }
 
   // Technical Details Section (now on left side)
@@ -446,6 +450,26 @@ function populateModelSpecs(modelName) {
   const seriesEl = document.getElementById('modal-spec-series');
   const voltageEl = document.getElementById('modal-spec-voltage');
   const applicationEl = document.getElementById('modal-spec-application');
+
+  // Check if current product has modelCatalog (like Drive Cooling Fan)
+  const product = products.find(p => p.id === currentProductSku || p.name === currentProduct);
+  let catalogItem = null;
+  if (product && product.modelCatalog) {
+    catalogItem = product.modelCatalog.find(m => 
+      m.model === modelName || 
+      `${m.brand} ${m.model}` === modelName ||
+      modelName.includes(m.model)
+    );
+  }
+
+  if (catalogItem) {
+    controllerEl.textContent = catalogItem.brand;
+    seriesEl.textContent = `${catalogItem.size} mm`;
+    voltageEl.textContent = catalogItem.electrical || 'DC 24V';
+    const extra = [catalogItem.connector, catalogItem.fanucPart].filter(Boolean).join(' | ');
+    applicationEl.textContent = extra || 'Drive & Panel Cooling';
+    return;
+  }
 
   // Extract specifications from model name
   let controller = 'Standard';
@@ -629,3 +653,153 @@ document.addEventListener('keydown', function(e) {
     closeModelModal();
   }
 });
+
+/**
+ * Size-categorized product model display system
+ * Specifically designed for Drive Cooling Fan (cnc-014)
+ * Dynamically groups models by physical frame size into clean industrial sections.
+ */
+function getFanSizeCategory(sizeStr) {
+  if (!sizeStr) return 'Other Sizes';
+  const match = sizeStr.match(/(\d+)\s*x\s*(\d+)/i);
+  if (match) {
+    const width = parseInt(match[1], 10);
+    return `${width}mm Cooling Fans`;
+  }
+  return 'Standard Cooling Fans';
+}
+
+function renderCategorizedFanModels(product) {
+  const catalog = product.modelCatalog || [];
+  if (!catalog.length) {
+    return '<p class="text-steel text-sm p-4">No model catalog available.</p>';
+  }
+
+  // Group models dynamically by size category
+  const groups = {};
+  catalog.forEach(item => {
+    const category = getFanSizeCategory(item.size);
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+    groups[category].push(item);
+  });
+
+  // Sort categories logically (e.g., 20mm, 40mm, 50mm, 60mm, 80mm, 120mm)
+  const sortedCategories = Object.keys(groups).sort((a, b) => {
+    const numA = parseInt(a, 10) || 999;
+    const numB = parseInt(b, 10) || 999;
+    return numA - numB;
+  });
+
+  return `
+    <div class="fan-size-categorized-wrapper space-y-6">
+      <!-- Quick category summary / anchor pill bar -->
+      <div class="flex flex-wrap items-center gap-2 pb-2 border-b border-line">
+        <span class="text-xs uppercase font-bold text-steel tracking-wider mr-1 flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          Available Sizes (${catalog.length} Models):
+        </span>
+        ${sortedCategories.map(cat => `
+          <a href="#size-group-${cat.replace(/[^a-zA-Z0-9]/g, '-')}" class="text-xs px-2.5 py-1 bg-white border border-line hover:border-signal hover:text-signal text-navy font-semibold transition-all">
+            ${cat} <span class="text-steel font-normal">(${groups[cat].length})</span>
+          </a>
+        `).join('')}
+      </div>
+
+      <!-- Categories Container -->
+      ${sortedCategories.map(category => {
+        const models = groups[category];
+        const categoryId = `size-group-${category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+        return `
+          <div id="${categoryId}" class="fan-size-group bg-white border border-line">
+            <!-- Group Header Bar -->
+            <div class="fan-size-group-header flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-paper border-b border-line">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2.5 h-2.5 bg-signal"></div>
+                <h3 class="font-display font-bold text-base md:text-lg text-navy tracking-tight uppercase">${category}</h3>
+                <span class="text-xs font-mono font-medium px-2 py-0.5 bg-white border border-line text-steel">
+                  ${models.length} ${models.length === 1 ? 'Model' : 'Models'}
+                </span>
+              </div>
+              <div class="text-xs text-steel font-mono">
+                Industrial Cooling Series
+              </div>
+            </div>
+
+            <!-- Models Grid -->
+            <div class="p-3 md:p-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                ${models.map((item, idx) => {
+                  const safeModel = item.model.replace(/'/g, "\\'");
+                  const safeName = product.name.replace(/'/g, "\\'");
+                  const safeSku = product.sku.replace(/'/g, "\\'");
+                  return `
+                    <div 
+                      class="fan-model-card group bg-white border border-line hover:border-signal p-3.5 flex flex-col justify-between transition-all duration-200 cursor-pointer animate-slide-up"
+                      style="animation-delay: ${idx * 0.02}s;"
+                      onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}')"
+                      title="Click to view details for ${item.brand} ${item.model}"
+                    >
+                      <div>
+                        <!-- Top row: Brand & Size badge -->
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/10 px-2 py-0.5 border border-signal/20">
+                            ${item.brand}
+                          </span>
+                          <span class="text-[11px] font-mono text-steel bg-paper px-1.5 py-0.5 border border-line whitespace-nowrap">
+                            ${item.size} mm
+                          </span>
+                        </div>
+
+                        <!-- Model Number -->
+                        <div class="flex items-center gap-2 mb-2">
+                          <svg class="w-4 h-4 text-signal flex-shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>
+                          <span class="text-sm font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight break-all">
+                            ${item.model}
+                          </span>
+                        </div>
+
+                        <!-- Specs details -->
+                        <div class="space-y-1 text-xs text-steel pt-1 border-t border-line/60">
+                          ${item.electrical ? `
+                            <div class="flex items-center justify-between text-[11px]">
+                              <span class="text-steelLight">Rating:</span>
+                              <span class="font-medium text-navy text-right">${item.electrical}</span>
+                            </div>
+                          ` : ''}
+                          ${item.connector ? `
+                            <div class="flex items-center justify-between text-[11px]">
+                              <span class="text-steelLight">Connector:</span>
+                              <span class="font-medium text-navy text-right">${item.connector}</span>
+                            </div>
+                          ` : ''}
+                          ${item.fanucPart ? `
+                            <div class="flex items-center justify-between text-[11px]">
+                              <span class="text-steelLight">Fanuc Part:</span>
+                              <span class="font-mono text-signalDark font-bold text-right">${item.fanucPart}</span>
+                            </div>
+                          ` : ''}
+                        </div>
+                      </div>
+
+                      <!-- Footer CTA indicator -->
+                      <div class="mt-3 pt-2 border-t border-line/40 flex items-center justify-between text-[11px] text-steel group-hover:text-signalDark transition-colors">
+                        <span class="font-semibold uppercase tracking-wider text-[10px]">View Specs</span>
+                        <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}

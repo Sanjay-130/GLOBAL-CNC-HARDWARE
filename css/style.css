@@ -2705,3 +2705,53 @@ img.object-cover {
 .model-enquiry-success {
   animation: successPulse 0.3s ease-in-out;
 }
+
+/* ==========================================================================
+   Categorized Fan Model Display (Drive Cooling Fan cnc-014)
+   Industrial theme: Sharp 0-radius edges, white background, clean borders,
+   navy headings, emerald/signal accents.
+   ========================================================================== */
+.fan-size-categorized-wrapper {
+  width: 100%;
+}
+
+.fan-size-group {
+  box-shadow: 0 1px 3px rgba(11, 28, 45, 0.04);
+  transition: border-color 0.2s ease;
+}
+
+.fan-size-group:hover {
+  border-color: #CBD5E1;
+}
+
+.fan-size-group-header {
+  letter-spacing: 0.02em;
+}
+
+.fan-model-card {
+  position: relative;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fan-model-card:hover {
+  border-color: #10B981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);
+  transform: translateY(-2px);
+  background-color: #FAFAFA;
+}
+
+.fan-model-card .bg-signal\/10 {
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+@media (max-width: 640px) {
+  .fan-size-group-header {
+    padding: 0.75rem 0.875rem;
+  }
+  .fan-model-card {
+    padding: 0.75rem;
+  }
+}
+
