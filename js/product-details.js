@@ -234,10 +234,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (fallbackEl) {
       fallbackEl.style.display = 'none';
     }
+    function _tryInitMainZoom() {
+      imgEl.classList.remove('group-hover:scale-105');
+      const container = document.getElementById('product-image-container') || imgEl.closest('.image-protected-container');
+      if (container) {
+        initImageZoom(imgEl, container);
+      }
+    }
+
     imgEl.onerror = function() {
       if (this.getAttribute('data-tried-fallback') !== 'true') {
         this.setAttribute('data-tried-fallback', 'true');
         this.src = `images/${primarySlug}.jpg`;
+        if (this.complete && this.naturalWidth > 0) {
+          _tryInitMainZoom();
+        } else {
+          this.addEventListener('load', _tryInitMainZoom, { once: true });
+        }
       } else {
         this.style.display = 'none';
         if (fallbackEl) {
@@ -245,8 +258,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
     };
+
     imgEl.src = `images/${nameSlug}.jpg`;
     imgEl.alt = product.name;
+
+    if (imgEl.complete && imgEl.naturalWidth > 0) {
+      _tryInitMainZoom();
+    } else {
+      imgEl.addEventListener('load', _tryInitMainZoom, { once: true });
+    }
   }
 
   const categoryEl = document.getElementById('detail-category');
@@ -359,8 +379,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     galleryContainer.classList.remove('hidden');
     const primarySlug = getImageSlug(product);
     galleryContainer.innerHTML = product.gallery.map((img, index) => `
-      <div class="product-gallery-item"
-           onclick="document.getElementById('product-image').src = 'images/${img}.jpg'">
+      <div class="product-gallery-item ${index === 0 ? 'active-thumb ring-2 ring-signal' : ''} cursor-pointer transition-all hover:border-signal"
+           onclick="switchMainProductImage('images/${img}.jpg', this)">
         <img src="images/${img}.jpg" alt="${product.name} - View ${index + 1}"
              class="w-full h-full object-contain p-2"
              style="max-height: 100px; object-fit: contain;"
@@ -435,9 +455,25 @@ function openModelModal(modelName, productName, productSku, catalogItemId) {
     // Update the model name in the header subtitle
     if (modelNameEl) modelNameEl.textContent = `${catalogItem.brand} ${catalogItem.model}`;
 
-    // Replace image area with a fan SVG icon panel
+    // Replace image area with fan image panel
     if (imageContainer) {
       imageContainer.innerHTML = renderFanImagePanel(catalogItem);
+
+      // Initialize zoom for the fan model image in the modal
+      setTimeout(() => {
+        const modalImg = document.getElementById('modal-model-image');
+        const modalZoomContainer = document.getElementById('modal-fan-zoom-container');
+        if (modalImg && modalZoomContainer && typeof window.ProductImageZoom === 'function') {
+          if (modalProductZoomInstance) {
+            modalProductZoomInstance.destroy();
+          }
+          modalProductZoomInstance = new window.ProductImageZoom({
+            container: modalZoomContainer,
+            image: modalImg,
+            zoomLevel: 2.2
+          });
+        }
+      }, 50);
     }
 
     // Render rich fan specification rows
@@ -587,6 +623,49 @@ function getFanModelImage(item) {
   return `images/models/${slug}.jpg`;
 }
 
+// ─────────────────────────────────────────────
+// PRODUCT IMAGE ZOOMER INTEGRATION
+// Utilizes the modular ProductImageZoom engine
+// ─────────────────────────────────────────────
+let mainProductZoomInstance = null;
+let modalProductZoomInstance = null;
+
+/**
+ * Switch main product image from thumbnail click
+ * Updates both <img> src and zoom preview panel instantly
+ */
+window.switchMainProductImage = function(newSrc, clickedEl) {
+  const imgEl = document.getElementById('product-image');
+  if (imgEl) {
+    imgEl.src = newSrc;
+  }
+  if (mainProductZoomInstance) {
+    mainProductZoomInstance.updateSource(newSrc);
+  }
+  if (clickedEl) {
+    document.querySelectorAll('.product-gallery-item').forEach(el => {
+      el.classList.remove('active-thumb', 'ring-2', 'ring-signal');
+    });
+    clickedEl.classList.add('active-thumb', 'ring-2', 'ring-signal');
+  }
+};
+
+function initImageZoom(imgEl, containerEl) {
+  if (!imgEl || !containerEl) return;
+  if (typeof window.ProductImageZoom !== 'function') return;
+
+  if (mainProductZoomInstance) {
+    mainProductZoomInstance.updateSource(imgEl.src);
+    return;
+  }
+
+  mainProductZoomInstance = new window.ProductImageZoom({
+    container: containerEl,
+    image: imgEl,
+    zoomLevel: 2.5
+  });
+}
+
 function renderFanImagePanel(item) {
   const sizeNum = getFanSizeWidth(item.size);
   const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
@@ -604,12 +683,12 @@ function renderFanImagePanel(item) {
       </div>
 
       <!-- Main Image (Enlarged) -->
-      <div class="relative w-full flex-1 flex items-center justify-center py-2 image-protected-container min-h-[260px] sm:min-h-[320px]">
+      <div id="modal-fan-zoom-container" class="relative w-full flex-1 flex items-center justify-center py-2 image-protected-container product-zoom-container min-h-[260px] sm:min-h-[320px]" style="overflow: visible; position: relative;">
         <img 
           id="modal-model-image"
           src="${imgUrl}" 
           alt="${item.brand} ${item.model}" 
-          class="w-full h-64 sm:h-80 md:h-88 max-h-[380px] object-contain protected-image transition-transform duration-300 hover:scale-105"
+          class="w-full h-64 sm:h-80 md:h-88 max-h-[380px] object-contain protected-image transition-transform duration-200"
           onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';"
         />
       </div>
@@ -775,6 +854,11 @@ function closeModelModal() {
   const modal = document.getElementById('model-modal');
   modal.classList.add('hidden');
   document.body.style.overflow = '';
+
+  if (modalProductZoomInstance) {
+    modalProductZoomInstance.destroy();
+    modalProductZoomInstance = null;
+  }
 
   // Clear form fields
   document.getElementById('model-enquiry-name').value = '';

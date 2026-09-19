@@ -1553,7 +1553,7 @@ window.PRODUCTS_DATA = [
         "electrical": "3 WIRE - DC 24V 0.095A",
         "connector": "Blue Connector",
         "fanucPart": "",
-        "image": "images/models/109p0424h316.jpg"
+        "image": "images/models/109p0424h316-blue.jpg"
       },
       {
         "id": 34,
