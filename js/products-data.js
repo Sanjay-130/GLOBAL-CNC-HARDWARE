@@ -1233,7 +1233,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.085A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/9wf0424f6d03.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424f6d03.jpg"
       },
       {
         "id": 2,
@@ -1243,7 +1243,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Special Connector",
         "fanucPart": "",
-        "image": "images/models/1608vl-05w-b59.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-05w-b59.jpg"
       },
       {
         "id": 3,
@@ -1253,7 +1253,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Length Connector",
         "fanucPart": "",
-        "image": "images/models/1608vl-05w-b59.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-05w-b59.jpg"
       },
       {
         "id": 4,
@@ -1263,7 +1263,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Standard Connector",
         "fanucPart": "",
-        "image": "images/models/1606kl-05w-b59.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1606kl-05w-b59.jpg"
       },
       {
         "id": 5,
@@ -1273,7 +1273,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Connector - Clip Type",
         "fanucPart": "",
-        "image": "images/models/109p0424h6d23.jpg"
+        "image": "images/models/Driver-Cooling-Fan/109p0424h6d23.jpg"
       },
       {
         "id": 6,
@@ -1283,7 +1283,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.076A - 3 WIRE",
         "connector": "Black Connector - Pin Type",
         "fanucPart": "",
-        "image": "images/models/9wf0424f6d03.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424f6d03.jpg"
       },
       {
         "id": 7,
@@ -1293,7 +1293,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Black Connector - Clip Type",
         "fanucPart": "",
-        "image": "images/models/9wf0424h6d05a.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6d05a.jpg"
       },
       {
         "id": 8,
@@ -1303,7 +1303,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "White Connector - BRW",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b59.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b59.jpg"
       },
       {
         "id": 9,
@@ -1313,7 +1313,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Clip Connector",
         "fanucPart": "",
-        "image": "images/models/1608vl-05-b49.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-05-b49.jpg"
       },
       {
         "id": 10,
@@ -1323,7 +1323,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - RBY",
         "fanucPart": "",
-        "image": "images/models/9wf0424h6d19.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6d19.jpg"
       },
       {
         "id": 11,
@@ -1333,7 +1333,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Connector",
         "fanucPart": "",
-        "image": "images/models/04020va-24m-cl.jpg"
+        "image": "images/models/Driver-Cooling-Fan/04020va-24m-cl.jpg"
       },
       {
         "id": 12,
@@ -1343,7 +1343,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b39.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b39.jpg"
       },
       {
         "id": 13,
@@ -1353,7 +1353,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "White Connector - BRY",
         "fanucPart": "",
-        "image": "images/models/1608vl-05w-b69.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-05w-b69.jpg"
       },
       {
         "id": 14,
@@ -1363,7 +1363,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 12V - 0.17A - 4 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/9ga0412p7g006.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9ga0412p7g006.jpg"
       },
       {
         "id": 15,
@@ -1373,7 +1373,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b39.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b39.jpg"
       },
       {
         "id": 16,
@@ -1383,7 +1383,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b69.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b69.jpg"
       },
       {
         "id": 17,
@@ -1393,7 +1393,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "Black Special Connector",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b59.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b59.jpg"
       },
       {
         "id": 18,
@@ -1403,7 +1403,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "Standard Connector",
         "fanucPart": "",
-        "image": "images/models/1608kl-05w-b89.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608kl-05w-b89.jpg"
       },
       {
         "id": 19,
@@ -1413,7 +1413,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/9wf0424h6d14.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6d14.jpg"
       },
       {
         "id": 20,
@@ -1423,7 +1423,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - RBY",
         "fanucPart": "",
-        "image": "images/models/9wf0424h6d17.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6d17.jpg"
       },
       {
         "id": 21,
@@ -1433,7 +1433,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - BRW",
         "fanucPart": "",
-        "image": "images/models/9wf0424h6d17.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6d17.jpg"
       },
       {
         "id": 22,
@@ -1443,7 +1443,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/109p0424h7d28.jpg"
+        "image": "images/models/Driver-Cooling-Fan/109p0424h7d28.jpg"
       },
       {
         "id": 23,
@@ -1453,7 +1453,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.085A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/9wf0424h7d03.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h7d03.jpg"
       },
       {
         "id": 24,
@@ -1463,7 +1463,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/04c24d5.jpg"
+        "image": "images/models/Driver-Cooling-Fan/04c24d5.jpg"
       },
       {
         "id": 25,
@@ -1473,7 +1473,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 12V - 0.6W - 2 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/kd1204pfb2-8.jpg"
+        "image": "images/models/Driver-Cooling-Fan/kd1204pfb2-8.jpg"
       },
       {
         "id": 26,
@@ -1483,7 +1483,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.6W - 2 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/12-ms-a-gn.jpg"
+        "image": "images/models/Driver-Cooling-Fan/12-ms-a-gn.jpg"
       },
       {
         "id": 27,
@@ -1493,7 +1493,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 50mA - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/043m24-02a.jpg"
+        "image": "images/models/Driver-Cooling-Fan/043m24-02a.jpg"
       },
       {
         "id": 28,
@@ -1503,7 +1503,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Black Box Connector",
         "fanucPart": "",
-        "image": "images/models/1608vl-s5w-b69.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-s5w-b69.jpg"
       },
       {
         "id": 29,
@@ -1513,7 +1513,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "Black Clip Type - SPL",
         "fanucPart": "",
-        "image": "images/models/9wf0434s604b.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0434s604b.jpg"
       },
       {
         "id": 30,
@@ -1523,7 +1523,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.076A - 3 WIRE",
         "connector": "Black Connector - Pin Type",
         "fanucPart": "",
-        "image": "images/models/9wf0424f6d04.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424f6d04.jpg"
       },
       {
         "id": 31,
@@ -1533,7 +1533,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 12V - 0.49A - 4 WIRE",
         "connector": "Special Connector",
         "fanucPart": "",
-        "image": "images/models/9ga0412p3j41.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9ga0412p3j41.jpg"
       },
       {
         "id": 32,
@@ -1543,7 +1543,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 3.9W - 2 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
-        "image": "images/models/gm2404pqb1-8a.jpg"
+        "image": "images/models/Driver-Cooling-Fan/gm2404pqb1-8a.jpg"
       },
       {
         "id": 33,
@@ -1553,7 +1553,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.095A - 3 WIRE",
         "connector": "Blue Connector",
         "fanucPart": "",
-        "image": "images/models/109p0424h316-blue.jpg"
+        "image": "images/models/Driver-Cooling-Fan/109p0424h316-blue.jpg"
       },
       {
         "id": 34,
@@ -1563,7 +1563,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Big Connector",
         "fanucPart": "",
-        "image": "images/models/1608vl-s5w-b69.jpg"
+        "image": "images/models/Driver-Cooling-Fan/1608vl-s5w-b69.jpg"
       },
       {
         "id": 35,
@@ -1573,7 +1573,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 12V - 0.50A - 4 WIRE",
         "connector": "Ball Bearing",
         "fanucPart": "",
-        "image": "images/models/dbta0420b2u.jpg"
+        "image": "images/models/Driver-Cooling-Fan/dbta0420b2u.jpg"
       },
       {
         "id": 36,
@@ -1583,7 +1583,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 12V - 0.50A - 4 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/dbta0420b2v.jpg"
+        "image": "images/models/Driver-Cooling-Fan/dbta0420b2v.jpg"
       },
       {
         "id": 37,
@@ -1593,7 +1593,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.095A - Double Connector",
         "connector": "Double Connector",
         "fanucPart": "A90L-0001-0580#C",
-        "image": "images/models/9pf0424h305.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9pf0424h305.jpg"
       },
       {
         "id": 38,
@@ -1603,7 +1603,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Box Connector",
         "fanucPart": "A90L-0001-0575#A",
-        "image": "images/models/9wf0424h6503.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6503.jpg"
       },
       {
         "id": 39,
@@ -1613,7 +1613,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.15A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "A90L-0001-0508",
-        "image": "images/models/9wf0624h4d03.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h4d03.jpg"
       },
       {
         "id": 40,
@@ -1623,7 +1623,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.15A - 3 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
-        "image": "images/models/9wf0624h4d04.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h4d04.jpg"
       },
       {
         "id": 41,
@@ -1633,7 +1633,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.095A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
-        "image": "images/models/109p0424h316.jpg"
+        "image": "images/models/Driver-Cooling-Fan/109p0424h316.jpg"
       },
       {
         "id": 42,
@@ -1643,7 +1643,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "7180803",
-        "image": "images/models/04020va-24p-bl.jpg"
+        "image": "images/models/Driver-Cooling-Fan/04020va-24p-bl.jpg"
       },
       {
         "id": 43,
@@ -1653,7 +1653,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Box Connector",
         "fanucPart": "A90L-0001-0575#A",
-        "image": "images/models/9wf0424h6503.jpg"
+        "image": "images/models/Driver-Cooling-Fan/9wf0424h6503.jpg"
       },
       {
         "id": 44,
@@ -1663,7 +1663,7 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 3.3W - 2 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
-        "image": "images/models/pmd2404pqb1-a.jpg"
+        "image": "images/models/Driver-Cooling-Fan/pmd2404pqb1-a.jpg"
       },
       {
         "id": 45,
@@ -1673,7 +1673,207 @@ window.PRODUCTS_DATA = [
         "electrical": "DC 24V - 0.12A - 2 WIRE",
         "connector": "Small Connector",
         "fanucPart": "",
-        "image": "images/models/2006ml-05w-b50.jpg"
+        "image": "images/models/Driver-Cooling-Fan/2006ml-05w-b50.jpg"
+      },
+      {
+        "id": 46,
+        "brand": "NMB - MAT",
+        "model": "240VL-S5W-B79",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.14A - 3 WIRE",
+        "connector": "Black Connector",
+        "fanucPart": "A90L-0001-0511",
+        "image": "images/models/Driver-Cooling-Fan/240vl-s5w-b79-46.jpg"
+      },
+      {
+        "id": 47,
+        "brand": "EVER FLOW",
+        "model": "R126010BM",
+        "size": "60 x 60 x 10",
+        "electrical": "DC 12V - 0.14Amp - 3 WIRE",
+        "connector": "Black Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/r126010bm-47.jpg"
+      },
+      {
+        "id": 48,
+        "brand": "SAN ACE 60 WF",
+        "model": "9WF062411707A",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 12V - 0.11A - 3 WIRE",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/9wf062411707a-48.jpg"
+      },
+      {
+        "id": 49,
+        "brand": "SAN ACE",
+        "model": "9WF0624H704",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 12V - 0.12A",
+        "connector": "White Special Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h704-49.jpg"
+      },
+      {
+        "id": 50,
+        "brand": "EBMPAPST",
+        "model": "614GNH",
+        "size": "60 x 60 x 25",
+        "electrical": "DC 24V - 0.125mA - 3W - 2 WIRE",
+        "connector": "Without Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/614gnh-50.jpg"  
+      },
+      {
+        "id": 51,
+        "brand": "RANAFLOW",
+        "model": "FBK08T24H",
+        "size": "80 x 80 x 15",
+        "electrical": "DC 24V - 0.17A",
+        "connector": "DC BRUSHLESS",
+        "fanucPart": "A90L-0001-0511",
+        "image": "images/models/Driver-Cooling-Fan/fbk08t24h-51.jpg"
+      },
+      {
+        "id": 52,
+        "brand": "NMB - MAT",
+        "model": "2410ML-05W-B70",
+        "size": "60 x 60 x 25",
+        "electrical": "DC 12V - 0.25A - 2 WIRE",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/2410ml-05w-b70-52.jpg"
+      },
+      {
+        "id": 53,
+        "brand": "SAN ACE 60 WF",
+        "model": "9WF0624H4D04",
+        "size": "60 x 60 x 25",
+        "electrical": "DC 24V - 0.15A - 3 WIRE",
+        "connector": "White Special Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h4d04-53.jpg"
+      },
+      {
+        "id": 54,
+        "brand": "EBMPAPST",
+        "model": "624HH-1",
+        "size": "60 x 60 x 25",
+        "electrical": "DC 12V - 146mA - 3.5W ",
+        "connector": "White Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/624hh-1-54.jpg"
+      },
+      {
+        "id": 55,
+        "brand": "EBMPAPST",
+        "model": "614NHHR",
+        "size": "60 x 60 x 25",
+        "electrical": "24V DC - 125mA - 3.0W -",
+        "connector": "White Connector",
+        "fanucPart": "A5E01052493AE",
+        "image": "images/models/Driver-Cooling-Fan/614nhhr-55.jpg"
+      },
+      {
+        "id": 56,
+        "brand": "NMB - MAT",
+        "model": "2408VL-S5W-B79",
+        "size": "60 x 60 x 25",
+        "electrical": "24V DC - 0.15A - 3 WIRE",
+        "connector": "Black Special Connector",
+        "fanucPart": "A90L-0001-0576",
+        "image": "images/models/Driver-Cooling-Fan/2408vl-s5w-b79 -56.jpg"
+      },
+      {
+        "id": 57,
+        "brand": "SAN ACE 40",
+        "model": "109P0424H316",
+        "size": "40 x 40 x 25",
+        "electrical": "24V DC - 0.095A - 3 WIRE",
+        "connector": "White Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/109p0424h316-57.jpg"
+      },
+      {
+        "id": 58,
+        "brand": "MITSUBISHI",
+        "model": "CA7027H03",
+        "size": "60 x 60 x 25",
+        "electrical": "24V DC - 0.10A",
+        "connector": "White Small Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/ca7027h03-58.jpg"
+      },
+      {
+        "id": 59,
+        "brand": "SAN ACE 60 WF",
+        "model": "9WF0624H7D04",
+        "size": "60 x 60 x 15",
+        "electrical": "24V DC - 0.12A",
+        "connector": "White Special Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h7d04-59.jpg"
+      },
+      {
+        "id": 60,
+        "brand": "SUNON",
+        "model": "PMD2406PMB1-A",
+        "size": "60 x 60 x 38",
+        "electrical": "24V DC - 10.3W",
+        "connector": "Black Special Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/pmd2406pmb1-a-60.jpg"
+      },
+      {
+        "id": 61,
+        "brand": "SAN ACE 40 WF",
+        "model": "9WF0424F6D04",
+        "size": "40 x 40 x 20",
+        "electrical": "12V DC - 0.076A - DOUBLE FAN",
+        "connector": "White Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/9wf0424f6d04-61.jpg"
+      },
+      {
+        "id": 62,
+        "brand": "NMB",
+        "model": "04020VA-24P-BL",
+        "size": "40 x 40 x 20",
+        "electrical": "24V DC - 0.13A - 3 WIRE",
+        "connector": "White Special Connector",
+        "fanucPart": "7180803",
+        "image": "images/models/Driver-Cooling-Fan/04020va-24p-bl-62.jpg"
+      },
+      {
+        "id": 63,
+        "brand": "BRUSHLESS",
+        "model": "2406KL-05W-B59",
+        "size": "60 x 60 x 15",
+        "electrical": "24V DC - 0.13A - 3 WIRE",
+        "connector": "Black Connector",
+        "fanucPart": "A90L-0001-0506/135",
+        "image": "images/models/Driver-Cooling-Fan/2406kl-05w-b59-63.jpg"
+      },
+      {
+        "id": 64,
+        "brand": "EBMPAPST",
+        "model": "405F",
+        "size": "40 x 40 x 15",
+        "electrical": "5V MDC - 140mA - 0.7W",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/405f-64.jpg"
+      },
+      {
+        "id": 65,
+        "brand": "EBMPAPST",
+        "model": "624/39HHPR",
+        "size": "60 x 60 x 25",
+        "electrical": "24V DC - 15mA - 3.7W",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/624-39hhpr-65.jpg"
       }
     ],
     "images": [
