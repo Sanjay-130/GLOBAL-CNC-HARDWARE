@@ -1230,7 +1230,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE - 40W",
         "model": "9WF0424F6D03",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 0.085A",
+        "electrical": "DC 24V - 0.085A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/9wf0424f6d03.jpg"
@@ -1240,7 +1240,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608VL-05W-B59",
         "size": "40 x 40 x 20",
-        "electrical": "DC 24V",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Special Connector",
         "fanucPart": "",
         "image": "images/models/1608vl-05w-b59.jpg"
@@ -1250,7 +1250,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "1608VL-05W-B59",
         "size": "40 x 40 x 20",
-        "electrical": "DC 24V",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Length Connector",
         "fanucPart": "",
         "image": "images/models/1608vl-05w-b59.jpg"
@@ -1260,7 +1260,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "1606KL-05W-B59",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 0.08A",
+        "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Standard Connector",
         "fanucPart": "",
         "image": "images/models/1606kl-05w-b59.jpg"
@@ -1270,7 +1270,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "109P0424H6D23",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Connector - Clip Type",
         "fanucPart": "",
         "image": "images/models/109p0424h6d23.jpg"
@@ -1280,7 +1280,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424F6D03",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.076A",
+        "electrical": "DC 24V - 0.076A - 3 WIRE",
         "connector": "Black Connector - Pin Type",
         "fanucPart": "",
         "image": "images/models/9wf0424f6d03.jpg"
@@ -1290,7 +1290,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424H6D05A",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.08A",
+        "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Black Connector - Clip Type",
         "fanucPart": "",
         "image": "images/models/9wf0424h6d05a.jpg"
@@ -1300,7 +1300,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "1608KL-05W-B59",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.11A",
+        "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "White Connector - BRW",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b59.jpg"
@@ -1310,7 +1310,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608VL-05-B49",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Clip Connector",
         "fanucPart": "",
         "image": "images/models/1608vl-05-b49.jpg"
@@ -1320,7 +1320,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9WF0424H6D19",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - RBY",
         "fanucPart": "",
         "image": "images/models/9wf0424h6d19.jpg"
@@ -1330,7 +1330,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "04020VA-24M-CL",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "Black Connector",
         "fanucPart": "",
         "image": "images/models/04020va-24m-cl.jpg"
@@ -1340,7 +1340,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "1608KL-05W-B39",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.08A",
+        "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b39.jpg"
@@ -1350,7 +1350,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "1608VL-05W-B69",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.13A",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "White Connector - BRY",
         "fanucPart": "",
         "image": "images/models/1608vl-05w-b69.jpg"
@@ -1360,7 +1360,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9GA0412P7G006",
         "size": "40 x 40 x 20",
-        "electrical": "4 WIRE - DC 12V 0.17A",
+        "electrical": "DC 12V - 0.17A - 4 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/9ga0412p7g006.jpg"
@@ -1370,7 +1370,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608KL-05W-B39",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.08A",
+        "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b39.jpg"
@@ -1380,7 +1380,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608KL-05W-B69",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.13A",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b69.jpg"
@@ -1390,7 +1390,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608KL-05W-B59",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.11A",
+        "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "Black Special Connector",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b59.jpg"
@@ -1400,7 +1400,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608KL-05W-B89",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.13A",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "Standard Connector",
         "fanucPart": "",
         "image": "images/models/1608kl-05w-b89.jpg"
@@ -1410,7 +1410,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9WF0424H6D14",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/9wf0424h6d14.jpg"
@@ -1420,7 +1420,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9WF0424H6D17",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - RBY",
         "fanucPart": "",
         "image": "images/models/9wf0424h6d17.jpg"
@@ -1430,7 +1430,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9WF0424H6D17",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.07A",
+        "electrical": "DC 24V - 0.07A - 3 WIRE",
         "connector": "White Connector - BRW",
         "fanucPart": "",
         "image": "images/models/9wf0424h6d17.jpg"
@@ -1440,7 +1440,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "109P0424H7D28",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 0.08A",
+        "electrical": "DC 24V - 0.08A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/109p0424h7d28.jpg"
@@ -1450,7 +1450,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424H7D03",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 0.085A",
+        "electrical": "DC 24V - 0.085A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/9wf0424h7d03.jpg"
@@ -1460,7 +1460,7 @@ window.PRODUCTS_DATA = [
         "brand": "MMF",
         "model": "04C24D5",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 0.09A",
+        "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/04c24d5.jpg"
@@ -1470,7 +1470,7 @@ window.PRODUCTS_DATA = [
         "brand": "SUNON",
         "model": "KD1204PFB2-8",
         "size": "40 x 40 x 10",
-        "electrical": "2 WIRE - DC 12V 0.6W",
+        "electrical": "DC 12V - 0.6W - 2 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/kd1204pfb2-8.jpg"
@@ -1480,7 +1480,7 @@ window.PRODUCTS_DATA = [
         "brand": "SUNON",
         "model": "12.MS.A.GN",
         "size": "40 x 40 x 10",
-        "electrical": "2 WIRE - DC 24V ZP",
+        "electrical": "DC 24V - 0.6W - 2 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/12-ms-a-gn.jpg"
@@ -1490,7 +1490,7 @@ window.PRODUCTS_DATA = [
         "brand": "DC BRUSHLESS WIND ACE",
         "model": "043M24-02A",
         "size": "40 x 40 x 15",
-        "electrical": "3 WIRE - DC 24V 50mA",
+        "electrical": "DC 24V - 50mA - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/043m24-02a.jpg"
@@ -1500,7 +1500,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608VL-S5W-B69",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.09A",
+        "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Black Box Connector",
         "fanucPart": "",
         "image": "images/models/1608vl-s5w-b69.jpg"
@@ -1510,7 +1510,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0434S604B",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.11A",
+        "electrical": "DC 24V - 0.11A - 3 WIRE",
         "connector": "Black Clip Type - SPL",
         "fanucPart": "",
         "image": "images/models/9wf0434s604b.jpg"
@@ -1520,7 +1520,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424F6D04",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.076A",
+        "electrical": "DC 24V - 0.076A - 3 WIRE",
         "connector": "Black Connector - Pin Type",
         "fanucPart": "",
         "image": "images/models/9wf0424f6d04.jpg"
@@ -1530,7 +1530,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9GA0412P3J41",
         "size": "40 x 40 x 28",
-        "electrical": "4 WIRE - DC 12V 0.49A",
+        "electrical": "DC 12V - 0.49A - 4 WIRE",
         "connector": "Special Connector",
         "fanucPart": "",
         "image": "images/models/9ga0412p3j41.jpg"
@@ -1540,7 +1540,7 @@ window.PRODUCTS_DATA = [
         "brand": "SUNON",
         "model": "GM2404PQB1-8A",
         "size": "40 x 40 x 25",
-        "electrical": "2 WIRE - DC 24V 3.9W",
+        "electrical": "DC 24V - 3.9W - 2 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
         "image": "images/models/gm2404pqb1-8a.jpg"
@@ -1550,7 +1550,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "109P0424H316",
         "size": "40 x 40 x 25",
-        "electrical": "3 WIRE - DC 24V 0.095A",
+        "electrical": "DC 24V - 0.095A - 3 WIRE",
         "connector": "Blue Connector",
         "fanucPart": "",
         "image": "images/models/109p0424h316-blue.jpg"
@@ -1560,7 +1560,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "1608VL-S5W-B69",
         "size": "20 x 20 x 40",
-        "electrical": "DC 24V 0.09A",
+        "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Big Connector",
         "fanucPart": "",
         "image": "images/models/1608vl-s5w-b69.jpg"
@@ -1570,7 +1570,7 @@ window.PRODUCTS_DATA = [
         "brand": "AVC",
         "model": "DBTA0420B2U",
         "size": "40 x 40 x 20",
-        "electrical": "4 WIRE - DC 12V 0.50A",
+        "electrical": "DC 12V - 0.50A - 4 WIRE",
         "connector": "Ball Bearing",
         "fanucPart": "",
         "image": "images/models/dbta0420b2u.jpg"
@@ -1580,7 +1580,7 @@ window.PRODUCTS_DATA = [
         "brand": "AVC",
         "model": "DBTA0420B2V",
         "size": "40 x 40 x 20",
-        "electrical": "4 WIRE - DC 12V 0.50A",
+        "electrical": "DC 12V - 0.50A - 4 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/dbta0420b2v.jpg"
@@ -1590,7 +1590,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "9PF0424H305",
         "size": "40 x 40 x 28",
-        "electrical": "Double Connector - DC 24V 0.095A",
+        "electrical": "DC 24V - 0.095A - Double Connector",
         "connector": "Double Connector",
         "fanucPart": "A90L-0001-0580#C",
         "image": "images/models/9pf0424h305.jpg"
@@ -1600,7 +1600,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424H6503",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.09A",
+        "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Box Connector",
         "fanucPart": "A90L-0001-0575#A",
         "image": "images/models/9wf0424h6503.jpg"
@@ -1610,7 +1610,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 60WF",
         "model": "9WF0624H4D03",
         "size": "60 x 60 x 25",
-        "electrical": "3 WIRE - DC 24V 0.15A",
+        "electrical": "DC 24V - 0.15A - 3 WIRE",
         "connector": "Black Pin Connector",
         "fanucPart": "A90L-0001-0508",
         "image": "images/models/9wf0624h4d03.jpg"
@@ -1620,7 +1620,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 60WF",
         "model": "9WF0624H4D04",
         "size": "60 x 60 x 25",
-        "electrical": "3 WIRE - DC 24V 0.15A",
+        "electrical": "DC 24V - 0.15A - 3 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
         "image": "images/models/9wf0624h4d04.jpg"
@@ -1630,7 +1630,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40",
         "model": "109P0424H316",
         "size": "40 x 40 x 25",
-        "electrical": "3 WIRE - DC 24V 0.095A",
+        "electrical": "DC 24V - 0.095A - 3 WIRE",
         "connector": "White Connector",
         "fanucPart": "",
         "image": "images/models/109p0424h316.jpg"
@@ -1640,7 +1640,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB",
         "model": "04020VA-24P-BL",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.13A",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "7180803",
         "image": "images/models/04020va-24p-bl.jpg"
@@ -1650,7 +1650,7 @@ window.PRODUCTS_DATA = [
         "brand": "SAN ACE 40WF",
         "model": "9WF0424H6503",
         "size": "40 x 40 x 20",
-        "electrical": "3 WIRE - DC 24V 0.09A",
+        "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Box Connector",
         "fanucPart": "A90L-0001-0575#A",
         "image": "images/models/9wf0424h6503.jpg"
@@ -1660,7 +1660,7 @@ window.PRODUCTS_DATA = [
         "brand": "SUNON",
         "model": "PMD2404PQB1-A",
         "size": "40 x 40 x 30",
-        "electrical": "2 WIRE - DC 26V 3.3W",
+        "electrical": "DC 24V - 3.3W - 2 WIRE",
         "connector": "White Special Connector",
         "fanucPart": "",
         "image": "images/models/pmd2404pqb1-a.jpg"
@@ -1670,7 +1670,7 @@ window.PRODUCTS_DATA = [
         "brand": "NMB - MAT",
         "model": "2006ML-05W-B50",
         "size": "50 x 50 x 15",
-        "electrical": "2 WIRE - DC 24V 0.12A",
+        "electrical": "DC 24V - 0.12A - 2 WIRE",
         "connector": "Small Connector",
         "fanucPart": "",
         "image": "images/models/2006ml-05w-b50.jpg"
