@@ -1831,7 +1831,7 @@ window.PRODUCTS_DATA = [
         "model": "9WF0424F6D04",
         "size": "40 x 40 x 20",
         "electrical": "12V DC - 0.076A - DOUBLE FAN",
-        "connector": "White Connector",
+        "connector": "Pin Connector",
         "fanucPart": "",
         "image": "images/models/Driver-Cooling-Fan/9wf0424f6d04-61.jpg"
       },
@@ -1874,6 +1874,286 @@ window.PRODUCTS_DATA = [
         "connector": "",
         "fanucPart": "",
         "image": "images/models/Driver-Cooling-Fan/624-39hhpr-65.jpg"
+      },
+      {
+        "id": 66,
+        "brand": "PANAFB",
+        "model": "FBA06T24H",
+        "size": "60 x 60 x 15",
+        "electrical": "24V DC - 0.11A - 3 WIRE",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/fba06t24h-66.jpg"
+      },
+      {
+        "id": 67,
+        "brand": "SUNON",
+        "model": "XDE2404PFVX",
+        "size": "40 x 40 x 15",
+        "electrical": "DC 24V - 1.9AW",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/xde2404pfvx-67.jpg"
+      },
+      {
+        "id": 68,
+        "brand": "DC BRUSHLESS",
+        "model": "AFBO624MB",
+        "size": "",
+        "electrical": "DC 24V - 0.10A",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/afbo624mb-68.jpg"
+      },
+      {
+        "id": 69,
+        "brand": "NMB",
+        "model": "2406KL-05W-B59",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
+        "connector": "Black Special Connector",
+        "fanucPart": "A90L-0001-0506/135",
+        "image": "images/models/Driver-Cooling-Fan/2406kl-05w-b59-69.jpg"
+      },
+      {
+        "id": 70,
+        "brand": "SAN ACE 60WF",
+        "model": "9WF0624H7D03",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.12A - 3 WIRE",
+        "connector": "Black Connector",
+        "fanucPart": "A90L-0001-0511",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h7d03-70.jpg"
+      },
+      {
+        "id": 71,
+        "brand": "SAN ACE 80",
+        "model": "109P0824H708",
+        "size": "80 x 80 x 25",
+        "electrical": "DC 24V - 0.1A - 3 WIRE",
+        "connector": "White Connector",
+        "fanucPart": "NIL",
+        "image": "images/models/Driver-Cooling-Fan/109p0824h708-71.jpg"
+      },
+      {
+        "id": 72,
+        "brand": "DC BRUSHLESS",
+        "model": "EFB0412HHA",
+        "size": "80 x 80 x 25",
+        "electrical": "DC 24V - 0.15A - 2 WIRE",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/efb0412hha-72.jpg"
+      },
+      {
+        "id": 73,
+        "brand": "SUNON",
+        "model": "SF11580AT",
+        "size": "80 x 80 x 25",
+        "electrical": "GN 115V - 0.12/0.10A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/sf11580at-73.jpg"
+      },
+      {
+        "id": 74,
+        "brand": "NMB",
+        "model": "2406V-05W-B59",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.09A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/2406v-05w-b59-74.jpg"
+      },
+      {
+        "id": 75,
+        "brand": "DC BRUSHLESS",
+        "model": "AFB0512HHB",
+        "size": "80 x 80 x 25",
+        "electrical": "DC 12V - 0.20A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/afb0512hhb-75.jpg"
+      },
+      {
+        "id": 76,
+        "brand": "SAN ACE 60WF",
+        "model": "9WF0624H706A",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.11A - 3 WIRE",
+        "connector": "Black Clip Connector",
+        "fanucPart": "A90L-0001-0567#A",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h706a-76.jpg"
+      },
+      {
+        "id": 77,
+        "brand": "PANAPLO DC BRUSHLESS",
+        "model": "FBK08T24H",
+        "size": "80 x 80 x 15",
+        "electrical": "DC 24V - 0.17A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/fbk08t24h-77.jpg"
+      },
+      {
+        "id": 78,
+        "brand": "CDC BRUSHLESS",
+        "model": "EFB0612HHA",
+        "size": "60 x 60 x 10",
+        "electrical": "DC 24V - 0.25A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/efb0612hha-78.jpg"
+      },
+      {
+        "id": 79,
+        "brand": "DC BRUSHLESS",
+        "model": "EFB0512HA",
+        "size": "50 x 50 x 10",
+        "electrical": "DC 12V - 0.15A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/efb0512ha-79.jpg"
+      },
+      {
+        "id": 80,
+        "brand": "DC BRUSHLESS",
+        "model": "AD0724HB-D7",
+        "size": "70 x 70 x 10",
+        "electrical": "DC 24V - 0.15A",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/ad0724hb-d7-80.jpg"
+      },
+      {
+        "id": 81,
+        "brand": "SAN ACE 60 WF",
+        "model": "9WF0624H603",
+        "size": "60 x 60 x 20",
+        "electrical": "DC 24V - 0.15A",
+        "connector": "BoX Type",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/9wf0624h603-81.jpg"
+      },
+      {
+        "id": 82,
+        "brand": "SAN ACE 60",
+        "model": "109P0624S7D03",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.08A",
+        "connector": "Clip Type",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/109p0624s7d03-82.jpg"
+      },
+      {
+        "id": 83,
+        "brand": "AIR MECH",
+        "model": "ATD6015",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.18A",
+        "connector": "White Connector",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/atd6015-83.jpg"
+      },
+      {
+        "id": 84,
+        "brand": "NMB - MAT",
+        "model": "2404KL-04W-B59",
+        "size": "60 x 60 x 10",
+        "electrical": "DC 12V - 0.35A - 3 WIRE",
+        "connector": "White Connector",
+        "fanucPart": "NIL",
+        "image": "images/models/Driver-Cooling-Fan/2404kl-04w-b59-84.jpg"
+      },
+      {
+        "id": 85,
+        "brand": "NMB",
+        "model": "06015KA-12N-AT",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 12V - 0.21A - 3 WIRE",
+        "connector": "White Connector",
+        "fanucPart": "NIL",
+        "image": "images/models/Driver-Cooling-Fan/06015ka-12n-at-85.jpg"
+      },
+      {
+        "id": 86,
+        "brand": "NMB",
+        "model": "2406KL-05W-B59",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.13A - 3 WIRE",
+        "connector": "Black Connector",
+        "fanucPart": "A90L-0001-0529/135",
+        "image": "images/models/Driver-Cooling-Fan/2406kl-05w-b59-86.jpg"
+      },
+      {
+        "id": 87,
+        "brand": "SAN ACE 80",
+        "model": "9GA0824J40031",
+        "size": "60 x 60 x 15",
+        "electrical": "DC 24V - 0.28A",
+        "connector": "White Connector",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/9ga0824j40031-87.jpg"
+      },
+      {
+        "id": 88,
+        "brand": "BRUSHLESS",
+        "model": "EFC-08E24D",
+        "size": "80 x 80 x 25",
+        "electrical": "DC 24V - 0.26A - 2 WIRE",
+        "connector": "Black Special Connector",
+        "fanucPart": "NIL",
+        "image": "images/models/Driver-Cooling-Fan/efc-08e24d-88.jpg"
+      },
+      {
+        "id": 89,
+        "brand": "STYLE FAN",
+        "model": "UP80B20",
+        "size": "80 x 80 x 25",
+        "electrical": "AC 200V - 50/60 Hz - 7/6w",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/up80b20-89.jpg"
+      },
+      {
+        "id": 90,
+        "brand": "NMB",
+        "model": "2410-ML-05W-B-39",
+        "size": "60 x 60 x 25",
+        "electrical": "DC 24V - 0.10A",
+        "connector": "Black Pin Type Connector",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/2410-ml-05w-b-39-90.jpg"
+      },
+      {
+        "id": 91,
+        "brand": "REXNORD",
+        "model": "EC-8025A2W",
+        "size": "80 x 80 x 25",
+        "electrical": "VAC 230 Hz 50Amp 0.02 [2.4w]",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/ec-8025a2w-91.jpg"
+      },
+      {
+        "id": 92,
+        "brand": "DC BRUSHLESS PAN",
+        "model": "PLA08025B24H-5",
+        "size": "80 x 80 x 25",
+        "electrical": "DC 24V - 0.45A - 3 WIRE",
+        "connector": "",
+        "fanucPart": "",
+        "image": "images/models/Driver-Cooling-Fan/pla08025b22h-5-92.jpg"
+      },
+      {
+        "id": 93,
+        "brand": "SUNON",
+        "model": "ME80152V1-0000-G99",
+        "size": "80 x 80 x 15",
+        "electrical": "DC 24V - 2.21W  - 3 WIRE",
+        "connector": "White Connector",
+        "fanucPart": "NIL",
+        "image": "images/models/Driver-Cooling-Fan/me80152v-0000-g99-93.jpg"
       }
     ],
     "images": [
