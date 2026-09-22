@@ -2154,6 +2154,16 @@ window.PRODUCTS_DATA = [
         "connector": "White Connector",
         "fanucPart": "NIL",
         "image": "images/models/Driver-Cooling-Fan/me80152v-0000-g99-93.jpg"
+      },
+      {
+        "id": 94,
+        "brand": "PANAFLO DC BRUSHLESS",
+        "model": "FBK08T24H",
+        "size": "80 x 80 x 15",
+        "electrical": "DC 24V - 0.17A  - 3 WIRE",
+        "connector": "-",
+        "fanucPart": "-",
+        "image": "images/models/Driver-Cooling-Fan/fbk08t24h-94.jpg"
       }
     ],
     "images": [
