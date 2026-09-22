@@ -76,7 +76,7 @@
   </header>
 
   <!-- MAIN -->
-  <main class="flex-1 pt-28 pb-16 watermark-bg">
+  <main class="flex-1 pt-32 md:pt-36 pb-16 watermark-bg">
 
     <!-- Not Found Container -->
     <div id="product-not-found" class="hidden max-w-content mx-auto px-5 md:px-8 py-20 text-center">
@@ -88,17 +88,6 @@
     <!-- Product Details Container -->
     <div id="product-details-container" class="max-w-content mx-auto px-4 md:px-6 py-6 md:py-8">
       
-      <!-- Breadcrumb -->
-      <nav class="text-sm text-steel mb-6 flex flex-wrap gap-1 items-center animate-fade-in">
-        <a href="index.html" class="hover:text-ink transition-colors">Home</a>
-        <span>/</span>
-        <a href="products.html" class="hover:text-ink transition-colors">Products</a>
-        <span>/</span>
-        <a id="breadcrumb-category" href="products.html" class="hover:text-ink transition-colors">Category</a>
-        <span>/</span>
-        <span id="breadcrumb-name" class="text-ink font-medium">Product Name</span>
-      </nav>
-
       <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
         
@@ -117,9 +106,6 @@
                   <p class="text-steel text-sm font-medium">Image coming soon</p>
                 </div>
               </div>
-              
-              <!-- Zoom indicator -->
-            
             </div>
             
             <!-- Image Gallery -->
@@ -514,8 +500,127 @@
     </div>
   </footer>
 
+  <!-- ═══════════════════════════════════════════════════════
+       GCH FULLSCREEN LIGHTBOX — Fan Model 4-View Gallery
+       Rendered outside all modals so z-index stacks cleanly
+       ═══════════════════════════════════════════════════════ -->
+  <div id="gch-lightbox" class="gch-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <!-- Backdrop (click to close) -->
+    <div class="gch-lightbox__backdrop"></div>
+
+    <!-- Panel -->
+    <div class="gch-lightbox__panel">
+
+      <!-- Header -->
+      <div class="gch-lightbox__header">
+        <div class="gch-lightbox__label-wrap">
+          <svg class="gch-lightbox__view-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="gch-lb-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5z"/>
+          </svg>
+          <span class="gch-lightbox__label" id="gch-lb-label">Front View</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="gch-lightbox__counter" id="gch-lb-counter">1 / 4</span>
+          <button class="gch-lightbox__close" onclick="GCHGallery.closeLightbox()" aria-label="Close image viewer">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Image area with quadrant clip -->
+      <div class="gch-lightbox__img-area">
+        <div class="gch-lightbox__img-wrap" id="gch-lb-img-wrap">
+          <img class="gch-lightbox__img" id="gch-lb-img" src="" alt="Product view" draggable="false" />
+        </div>
+
+        <!-- GCH logo badge -->
+        <div class="gch-lightbox__logo-badge">GCH</div>
+
+        <!-- Watermark -->
+        <div class="gch-lightbox__watermark">GCH | Global CNC Hardware</div>
+
+        <!-- Prev / Next arrows (inside img-area for proper z-stacking) -->
+        <button class="gch-lightbox__nav gch-lightbox__nav--prev" onclick="GCHGallery.prevImage()" aria-label="Previous view">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="gch-lightbox__nav gch-lightbox__nav--next" onclick="GCHGallery.nextImage()" aria-label="Next view">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Footer: dots + zoom hint -->
+      <div class="gch-lightbox__footer">
+        <div class="gch-lightbox__dots" id="gch-lb-dots">
+          <div class="gch-lightbox__dot gch-lightbox__dot--active" onclick="GCHGallery.goToImage(0)" title="Front View"></div>
+          <div class="gch-lightbox__dot" onclick="GCHGallery.goToImage(1)" title="Back View"></div>
+          <div class="gch-lightbox__dot" onclick="GCHGallery.goToImage(2)" title="Side View"></div>
+          <div class="gch-lightbox__dot" onclick="GCHGallery.goToImage(3)" title="Connector View"></div>
+        </div>
+        <span class="gch-lightbox__zoom-hint">Click image to zoom · Arrows or ← → keys</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Zoom Modal -->
+  <div id="image-zoom-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeImageZoom()"></div>
+
+    <!-- Modal Content -->
+    <div class="relative flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8">
+      <div class="bg-white rounded-xl shadow-2xl w-full max-w-6xl relative z-10 animate-modal-in overflow-hidden flex flex-col max-h-[90vh]">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-navy to-navyLight px-4 sm:px-6 md:px-8 py-3 sm:py-4 flex items-center justify-between flex-shrink-0">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-signal/20 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-base sm:text-lg text-white">Image Zoom</h3>
+              <p id="zoom-image-label" class="text-white/70 text-xs sm:text-sm mt-0.5">View Label</p>
+            </div>
+          </div>
+          <button onclick="closeImageZoom()" class="text-white/70 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Image Container -->
+        <div class="p-4 sm:p-6 md:p-8 flex-1 bg-surface flex flex-col overflow-hidden">
+          <!-- Zoom Controls -->
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-line">
+            <div class="flex items-center gap-2">
+              <button onclick="adjustZoom(-0.1)" class="p-2 border border-line rounded-lg hover:border-signal hover:bg-signal/10 transition-all" title="Zoom Out">
+                <svg class="w-5 h-5 text-steel" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+              </button>
+              <span id="zoom-level" class="text-sm font-mono font-semibold text-navy min-w-[60px] text-center">100%</span>
+              <button onclick="adjustZoom(0.1)" class="p-2 border border-line rounded-lg hover:border-signal hover:bg-signal/10 transition-all" title="Zoom In">
+                <svg class="w-5 h-5 text-steel" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              </button>
+            </div>
+            <button onclick="resetZoom()" class="text-xs text-steel hover:text-signal font-medium transition-colors">Reset Zoom</button>
+          </div>
+
+          <!-- Image Display Area -->
+          <div class="flex-1 flex items-center justify-center overflow-auto relative">
+            <img id="zoom-image" src="" alt="Zoomed Image" class="max-w-full max-h-[65vh] object-contain transition-transform duration-200" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'text-steel text-center p-8\\'><svg class=\\'w-16 h-16 mx-auto mb-3\\' fill=\\'none\\' stroke=\\'currentColor\\' viewBox=\\'0 0 24 24\\'><path stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' stroke-width=\\'1.5\\' d=\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\'/></svg><p class=\\'text-sm font-medium\\'>Image not found</p></div>'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
   <script src="js/products-data.js"></script>
+  <script src="js/gallery.js"></script>
   <script src="js/product-zoom.js"></script>
   <script src="js/product-details.js"></script>
   <script src="js/image-protection.js"></script>

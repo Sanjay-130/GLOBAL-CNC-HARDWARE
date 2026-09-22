@@ -2415,6 +2415,78 @@ img.object-cover {
 .animate-stagger-4 { animation-delay: 0.4s; }
 .animate-stagger-5 { animation-delay: 0.5s; }
 
+/* Image Zoom Modal Styles */
+#image-zoom-modal {
+  z-index: 9999 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+
+#image-zoom-modal.hidden {
+  display: none !important;
+}
+
+#image-zoom-modal:not(.hidden) {
+  display: flex !important;
+}
+
+#image-zoom-modal .animate-modal-in {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+#image-zoom-modal > div {
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: auto;
+}
+
+#zoom-image {
+  transition: transform 0.15s ease;
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: grab;
+}
+
+#zoom-image.grabbing {
+  cursor: grabbing !important;
+  transition: none !important;
+}
+
+/* Zoom controls styling */
+#zoom-level {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Image hover effects in 4-view gallery */
+.fan-modal-image-panel .aspect-square {
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.fan-modal-image-panel .aspect-square img {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fan-modal-image-panel .aspect-square:hover img {
+  transform: scale(1.08);
+}
+
 /* Impressive button effect */
 .request-quote-btn {
   position: relative;
@@ -2910,3 +2982,742 @@ img.object-cover {
   }
 }
 
+
+/* ============================================================
+   GCH IMAGE GALLERY — 2×2 QUADRANT GRID
+   CSS quadrant splitting: each cell clips & shows one quarter
+   of the combined 2×2 product image.
+   ============================================================ */
+
+.gch-quad-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  background: #E5E7EB;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #E5E7EB;
+}
+
+.gch-quad-cell {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  cursor: zoom-in;
+  transition: outline 0.15s ease;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+.gch-quad-cell:hover {
+  outline-color: #10B981;
+  z-index: 2;
+}
+
+/* The clip container — exactly half the grid cell width & height */
+.gch-quad-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* The image inside: rendered at 200% size, then offset per quadrant */
+.gch-quad-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.gch-quad-cell:hover .gch-quad-img {
+  transform: translate(var(--tx, 0%), var(--ty, 0%)) scale(1.04) !important;
+}
+
+/* View label ribbon at bottom of each cell */
+.gch-quad-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(11,28,45,0.92) 0%, rgba(11,28,45,0.6) 60%, transparent 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 16px 8px 7px 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.gch-quad-label__icon {
+  width: 11px;
+  height: 11px;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+/* GCH watermark overlay */
+.gch-quad-watermark {
+  position: absolute;
+  bottom: 26px;
+  right: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.38);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Zoom-in hint icon (top-right) */
+.gch-quad-zoom-hint {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  background: rgba(11,28,45,0.65);
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.gch-quad-cell:hover .gch-quad-zoom-hint {
+  opacity: 1;
+}
+
+/* Error state */
+.gch-quad-cell--error .gch-quad-clip,
+.gch-quad-cell--error .gch-quad-watermark,
+.gch-quad-cell--error .gch-quad-zoom-hint {
+  display: none;
+}
+
+.gch-quad-error-msg {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 100%;
+  color: #9CA3AF;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gch-quad-cell--error .gch-quad-error-msg {
+  display: flex;
+}
+
+/* ── Gallery section header in modal ── */
+.gch-gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #F4F4F4;
+  border-bottom: 1px solid #E5E7EB;
+  border-top: 1px solid #E5E7EB;
+}
+
+.gch-gallery-header__title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Archivo', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #0B1C2D;
+}
+
+.gch-gallery-header__badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #059669;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  padding: 2px 7px;
+}
+
+/* ============================================================
+   GCH FULLSCREEN LIGHTBOX
+   ============================================================ */
+
+.gch-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+  pointer-events: none;
+}
+
+.gch-lightbox--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.gch-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.94);
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+
+.gch-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(92vw, 680px);
+  max-height: 95vh;
+  overflow: hidden;
+}
+
+/* Header bar */
+.gch-lightbox__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #0B1C2D;
+  border-bottom: 2px solid #10B981;
+  flex-shrink: 0;
+}
+
+.gch-lightbox__label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gch-lightbox__view-icon {
+  width: 14px;
+  height: 14px;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.gch-lightbox__label {
+  font-family: 'Archivo', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.gch-lightbox__counter {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+}
+
+.gch-lightbox__close {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.gch-lightbox__close:hover {
+  background: rgba(239,68,68,0.25);
+  color: #ffffff;
+  border-color: rgba(239,68,68,0.5);
+}
+
+/* Image area */
+.gch-lightbox__img-area {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* The img-wrap clips to show the current quadrant */
+.gch-lightbox__img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;      /* 1:1 aspect ratio */
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
+.gch-lightbox__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Watermark inside lightbox */
+.gch-lightbox__watermark {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+
+/* GCH logo badge (top-right of lightbox image area) */
+.gch-lightbox__logo-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(11,28,45,0.78);
+  border: 1px solid rgba(16,185,129,0.4);
+  color: #10B981;
+  font-family: 'Archivo', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Navigation controls */
+.gch-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 36px;
+  height: 36px;
+  background: rgba(11,28,45,0.8);
+  border: 1px solid rgba(16,185,129,0.35);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.gch-lightbox__nav:hover {
+  background: #10B981;
+  border-color: #10B981;
+}
+
+.gch-lightbox__nav--prev {
+  left: 8px;
+}
+
+.gch-lightbox__nav--next {
+  right: 8px;
+}
+
+/* Footer: dot indicators + zoom hint */
+.gch-lightbox__footer {
+  width: 100%;
+  background: #0B1C2D;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.gch-lightbox__dots {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.gch-lightbox__dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.gch-lightbox__dot--active {
+  background: #10B981;
+  transform: scale(1.3);
+}
+
+.gch-lightbox__zoom-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── Prevent body scroll when lightbox is open ── */
+body.gch-lb-open {
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   QUICK VIEW PANEL (Products Catalog)
+   ============================================================ */
+
+.gch-quick-view-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(5, 10, 20, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.gch-quick-view-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gch-quick-view-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border-left: 3px solid #10B981;
+  z-index: 9001;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.gch-quick-view-panel--open {
+  transform: translateX(0);
+}
+
+/* QV Header */
+.gch-qv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #0B1C2D;
+  border-bottom: 2px solid #10B981;
+  flex-shrink: 0;
+}
+
+.gch-qv-header__title {
+  font-family: 'Archivo', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.gch-qv-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.gch-qv-close:hover {
+  background: rgba(239,68,68,0.3);
+  color: #ffffff;
+}
+
+/* QV Body */
+.gch-qv-body {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #E5E7EB transparent;
+}
+
+.gch-qv-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 280px;
+  background: #ffffff;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.gch-qv-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+  transition: transform 0.35s ease;
+}
+
+.gch-qv-image-wrap:hover img {
+  transform: scale(1.06);
+}
+
+.gch-qv-cat-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #0B1C2D;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+}
+
+.gch-qv-content {
+  padding: 18px 16px 16px;
+}
+
+.gch-qv-name {
+  font-family: 'Archivo', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0B1C2D;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.gch-qv-desc {
+  font-size: 12.5px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.gch-qv-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.gch-qv-price {
+  font-family: 'Archivo', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #10B981;
+}
+
+.gch-qv-sku {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9CA3AF;
+  background: #F4F4F4;
+  padding: 3px 8px;
+  border: 1px solid #E5E7EB;
+}
+
+/* QV Footer CTAs */
+.gch-qv-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  flex-shrink: 0;
+}
+
+.gch-qv-cta-primary {
+  flex: 1;
+  padding: 11px 12px;
+  background: #0B1C2D;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.gch-qv-cta-primary:hover {
+  background: #10B981;
+  color: #ffffff;
+}
+
+.gch-qv-cta-secondary {
+  padding: 11px 14px;
+  background: transparent;
+  color: #0B1C2D;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid #D1D5DB;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.gch-qv-cta-secondary:hover {
+  border-color: #10B981;
+  color: #10B981;
+}
+
+/* Product card: Quick View hover button */
+.gch-quick-view-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11,28,45,0.92);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 9px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  border: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s;
+  z-index: 10;
+}
+
+.gch-quick-view-btn:hover {
+  background: #10B981;
+}
+
+/* Show Quick View button on parent hover */
+.group:hover .gch-quick-view-btn,
+a:hover .gch-quick-view-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS FOR NEW COMPONENTS
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .gch-quad-grid {
+    aspect-ratio: auto;
+  }
+
+  .gch-quad-cell {
+    min-height: 120px;
+  }
+
+  .gch-quad-label {
+    font-size: 9px;
+    padding: 12px 6px 5px 6px;
+  }
+
+  .gch-lightbox__panel {
+    max-width: 100vw;
+    max-height: 100dvh;
+  }
+
+  .gch-quick-view-panel {
+    max-width: 100vw;
+    border-left-width: 2px;
+  }
+
+  .gch-tab-btn {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gch-qv-footer {
+    flex-direction: column;
+  }
+
+  .gch-qv-cta-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

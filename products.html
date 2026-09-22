@@ -329,6 +329,25 @@
     </div>
   </footer>
 
+  <!-- Quick View Slide-Over Panel & Overlay -->
+  <div id="quick-view-overlay" class="gch-quick-view-overlay" onclick="closeQuickView()"></div>
+  <aside id="quick-view-panel" class="gch-quick-view-panel" aria-label="Product Quick View" aria-hidden="true">
+    <div class="gch-qv-header">
+      <span class="gch-qv-header__title">Product Quick View</span>
+      <button class="gch-qv-close" onclick="closeQuickView()" aria-label="Close Quick View">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div id="quick-view-content" class="gch-qv-body">
+      <!-- Injected dynamically by products.js -->
+    </div>
+    <div id="quick-view-footer" class="gch-qv-footer">
+      <!-- Injected dynamically by products.js -->
+    </div>
+  </aside>
+
   <script src="js/main.js"></script>
   <script src="js/products-data.js"></script>
   <script src="js/products.js"></script>

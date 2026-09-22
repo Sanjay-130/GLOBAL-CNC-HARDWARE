@@ -27,9 +27,9 @@ function createProductCardHTML(product) {
   const formattedPrice = typeof product.price === 'number' ? product.price.toFixed(2) : product.price;
   
   return `
-    <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal">
+    <div class="group border border-line bg-white flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-signal border-b-4 hover:border-b-signal relative">
       <div class="relative overflow-hidden bg-white">
-        <div class="aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line watermarked-image">
+        <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="block aspect-square w-full bg-white relative flex items-center justify-center overflow-hidden border-b border-line watermarked-image">
           <img 
             src="images/${nameSlug}.jpg" 
             alt="${product.name}" 
@@ -56,12 +56,25 @@ function createProductCardHTML(product) {
               <span class="text-xs text-steel font-medium">${product.category}</span>
             </div>
           </div>
-        </div>
-        <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-20 shadow-sm">
+        </a>
+        <span class="absolute top-2 left-2 bg-navy text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 z-20 shadow-sm pointer-events-none">
           ${product.category}
         </span>
+        <!-- Quick View button revealed on card hover -->
+        <button 
+          type="button"
+          class="gch-quick-view-btn" 
+          onclick="openQuickView('${encodeURIComponent(product.id)}', event)"
+          aria-label="Quick view of ${product.name}"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
+          Quick View
+        </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
+      <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <h3 class="font-display font-bold text-navy text-base leading-tight mb-2 group-hover:text-signal transition-colors">
             ${product.name}
@@ -72,8 +85,8 @@ function createProductCardHTML(product) {
           <span class="font-display font-extrabold text-signal text-lg">₹${formattedPrice}</span>
           <span class="bg-paper px-2 py-0.5 text-steel font-mono text-[11px] font-semibold">${product.sku || ''}</span>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
   `;
 }
 
@@ -450,4 +463,121 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const emptyResetBtn = document.getElementById('empty-reset-btn');
   if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetAllFilters);
+});
+
+// ─── Quick View Modal Functionality ──────────────────────────────────────────
+
+function openQuickView(productId, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const decodedId = decodeURIComponent(productId);
+  const product = allProducts.find(p => p.id === decodedId);
+  if (!product) return;
+
+  const overlay = document.getElementById('quick-view-overlay');
+  const panel = document.getElementById('quick-view-panel');
+  const contentEl = document.getElementById('quick-view-content');
+  const footerEl = document.getElementById('quick-view-footer');
+
+  if (!panel || !contentEl) return;
+
+  const nameSlug = getProductSlug(product.name);
+  const primarySlug = getImageSlug(product);
+  const formattedPrice = typeof product.price === 'number' ? product.price.toFixed(2) : product.price;
+
+  // Key specs preview (up to 4 items)
+  let specsHTML = '';
+  if (product.specs && typeof product.specs === 'object') {
+    const entries = Object.entries(product.specs).slice(0, 4);
+    if (entries.length > 0) {
+      specsHTML = `
+        <div class="mt-4 pt-3 border-t border-line">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-steel mb-2">Key Specifications</div>
+          <div class="space-y-1.5">
+            ${entries.map(([k, v]) => `
+              <div class="flex justify-between text-xs py-1 border-b border-line/50">
+                <span class="text-steel">${k}</span>
+                <span class="font-semibold text-navy text-right font-mono">${v}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  contentEl.innerHTML = `
+    <div class="gch-qv-image-wrap">
+      <span class="gch-qv-cat-badge">${product.category}</span>
+      <img
+        src="images/${nameSlug}.jpg"
+        alt="${product.name}"
+        onerror="
+          if (this.getAttribute('data-tried') !== 'true') {
+            this.setAttribute('data-tried', 'true');
+            this.src = 'images/${primarySlug}.jpg';
+          } else {
+            this.src = 'images/drive-cooling-fan.jpg';
+          }
+        "
+      />
+    </div>
+    <div class="gch-qv-content">
+      <div class="gch-qv-meta-row">
+        <span class="gch-qv-sku">${product.sku || 'N/A'}</span>
+        <span class="text-[11px] font-semibold text-signalDark bg-signal/10 px-2 py-0.5">Ready to Ship</span>
+      </div>
+      <h3 class="gch-qv-name mt-2">${product.name}</h3>
+      <div class="flex items-baseline gap-2 my-2">
+        <span class="gch-qv-price">₹${formattedPrice}</span>
+        <span class="text-[11px] text-steel">Starting price</span>
+      </div>
+      <p class="gch-qv-desc">${product.shortDescription || product.description || ''}</p>
+      ${specsHTML}
+    </div>
+  `;
+
+  if (footerEl) {
+    footerEl.innerHTML = `
+      <a href="product-details.html?id=${encodeURIComponent(product.id)}" class="gch-qv-cta-primary">
+        <span>View Full Details</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </a>
+      <a href="tel:+919865292092" class="gch-qv-cta-secondary">
+        <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+        <span>Call</span>
+      </a>
+    `;
+  }
+
+  if (overlay) overlay.classList.add('gch-quick-view-overlay--open');
+  panel.classList.add('gch-quick-view-panel--open');
+  panel.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeQuickView() {
+  const overlay = document.getElementById('quick-view-overlay');
+  const panel = document.getElementById('quick-view-panel');
+
+  if (overlay) overlay.classList.remove('gch-quick-view-overlay--open');
+  if (panel) {
+    panel.classList.remove('gch-quick-view-panel--open');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+  document.body.style.overflow = '';
+}
+
+// Close Quick View on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeQuickView();
+  }
 });

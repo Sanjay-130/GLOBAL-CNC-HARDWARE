@@ -215,15 +215,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (notFoundEl) notFoundEl.classList.add('hidden');
   if (detailsEl) detailsEl.classList.remove('hidden');
 
-  // Populate Breadcrumb
-  const breadcrumbCategory = document.getElementById('breadcrumb-category');
-  const breadcrumbName = document.getElementById('breadcrumb-name');
-  if (breadcrumbCategory) {
-    breadcrumbCategory.textContent = product.category;
-    breadcrumbCategory.href = `products.html?category=${encodeURIComponent(product.category)}`;
-  }
-  if (breadcrumbName) breadcrumbName.textContent = product.name;
-
   // Populate Product Info
   const nameSlug = getProductSlug(product.name);
   const primarySlug = getImageSlug(product);
@@ -670,37 +661,70 @@ function renderFanImagePanel(item) {
   const sizeNum = getFanSizeWidth(item.size);
   const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
   const badge = sizeSpecs.badge || '';
-  const imgUrl = getFanModelImage(item);
+
+  // Create model slug for image naming
+  const modelSlug = `${item.brand}-${item.model}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+  // 4 separate images for manual upload with Driver-Cooling-Fan subfolder
+  const images = [
+    { view: 'Front View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-front.jpg`, label: 'FRONT VIEW' },
+    { view: 'Back View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-back.jpg`, label: 'BACK VIEW' },
+    { view: 'Side View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-side.jpg`, label: 'SIDE VIEW' },
+    { view: 'Connector View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-connector.jpg`, label: 'CONNECTOR VIEW' }
+  ];
+
+  // Create 2x2 grid for 4 images
+  const imagesGrid = images.map((img, index) => `
+    <div class="aspect-square bg-white border border-line flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-signal transition-all" onclick="openImageZoom('${img.src}', '${img.label}')">
+      <img src="${img.src}" alt="${img.view}" class="w-full h-full object-contain p-2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'text-steel text-center p-2\\'><span class=\\'text-xs font-medium\\'>${img.label}</span><br><span class=\\'text-[10px] text-steel/70\\'>Image not found</span></div>'">
+      <div class="absolute bottom-0 left-0 right-0 bg-navy/80 text-white text-[10px] font-bold uppercase tracking-wider py-1 text-center z-10">${img.label}</div>
+      <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
+        <div class="bg-white/90 rounded-full p-3 shadow-lg">
+          <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  console.log('Generated images grid for:', modelSlug);
 
   return `
-    <div class="fan-modal-image-panel relative flex flex-col justify-between p-2.5 bg-white w-full h-full min-h-[340px] sm:min-h-[400px]">
-      <!-- Top Badges -->
-      <div class="w-full flex items-center justify-between pb-2 border-b border-line/60">
-        <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-paper px-2.5 py-1 border border-line">
+    <div class="fan-modal-image-panel flex flex-col w-full bg-white" style="min-height:340px;">
+
+      <!-- Size badge + model label row -->
+      <div class="flex items-center justify-between px-3 py-2 bg-paper border-b border-line">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-white px-2.5 py-1 border border-line shadow-sm">
           ${item.size} mm
         </span>
         ${badge ? `<span class="text-[11px] font-bold uppercase tracking-wider bg-signal/15 text-signalDark border border-signal/30 px-2.5 py-1">${badge}</span>` : ''}
       </div>
 
-      <!-- Main Image (Enlarged) -->
-      <div id="modal-fan-zoom-container" class="relative w-full flex-1 flex items-center justify-center py-2 image-protected-container product-zoom-container min-h-[260px] sm:min-h-[320px]" style="overflow: visible; position: relative;">
-        <img 
-          id="modal-model-image"
-          src="${imgUrl}" 
-          alt="${item.brand} ${item.model}" 
-          class="w-full h-64 sm:h-80 md:h-88 max-h-[380px] object-contain protected-image transition-transform duration-200"
-          onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';"
-        />
+      <!-- Gallery section header -->
+      <div class="flex items-center justify-between px-3 py-2 bg-paper border-b border-line">
+        <div class="flex items-center gap-2">
+          <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01"/>
+          </svg>
+          <span class="text-xs font-bold uppercase tracking-wider text-navy">Product Views (4-Angle Gallery)</span>
+        </div>
+        <span class="text-[10px] text-steel">Click to view</span>
       </div>
 
-      <!-- Bottom Tag -->
-      <div class="text-center pt-2 border-t border-line/60 bg-paper/30 py-1.5 px-2">
+      <!-- 4-View Photos Grid (2x2) -->
+      <div class="w-full p-3 grid grid-cols-2 gap-2">
+        ${imagesGrid}
+      </div>
+
+      <!-- Model label footer -->
+      <div class="text-center border-t border-line bg-paper/40 py-2 px-3">
         <div class="text-[10px] font-bold uppercase tracking-widest text-steel">Cooling Fan Model</div>
         <div class="text-sm font-mono font-bold text-navy truncate">${item.brand} — ${item.model}</div>
       </div>
     </div>
   `;
 }
+
 
 function renderFanModalSpecs(item) {
   const specsContainer = document.getElementById('modal-model-specs');
@@ -876,6 +900,169 @@ function closeModelModal() {
   modal.style.display = '';
 }
 
+// Image Zoom Modal Functions
+let currentZoomLevel = 1.0;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let imageTranslateX = 0;
+let imageTranslateY = 0;
+
+function openImageZoom(imageSrc, label) {
+  const modal = document.getElementById('image-zoom-modal');
+  const zoomImage = document.getElementById('zoom-image');
+  const zoomLabel = document.getElementById('zoom-image-label');
+
+  console.log('Opening zoom modal with:', imageSrc, label);
+
+  // Reset zoom level when opening
+  currentZoomLevel = 1.0;
+  imageTranslateX = 0;
+  imageTranslateY = 0;
+  updateZoomDisplay();
+
+  if (zoomImage) {
+    zoomImage.src = imageSrc;
+    zoomImage.style.display = 'block';
+    zoomImage.style.transform = 'scale(1) translate(0px, 0px)';
+    zoomImage.style.cursor = 'grab';
+
+    // Add drag event listeners
+    zoomImage.addEventListener('mousedown', startDrag);
+    zoomImage.addEventListener('mousemove', drag);
+    zoomImage.addEventListener('mouseup', endDrag);
+    zoomImage.addEventListener('mouseleave', endDrag);
+
+    // Add touch support for mobile
+    zoomImage.addEventListener('touchstart', startDragTouch);
+    zoomImage.addEventListener('touchmove', dragTouch);
+    zoomImage.addEventListener('touchend', endDrag);
+  }
+  if (zoomLabel) {
+    zoomLabel.textContent = label;
+  }
+
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  modal.style.visibility = 'visible';
+  modal.style.position = 'fixed';
+  modal.style.top = '0';
+  modal.style.left = '0';
+  modal.style.right = '0';
+  modal.style.bottom = '0';
+
+  document.body.style.overflow = 'hidden';
+  document.body.style.overflowY = 'auto';
+}
+
+function closeImageZoom() {
+  const modal = document.getElementById('image-zoom-modal');
+  const zoomImage = document.getElementById('zoom-image');
+
+  // Remove drag event listeners
+  if (zoomImage) {
+    zoomImage.removeEventListener('mousedown', startDrag);
+    zoomImage.removeEventListener('mousemove', drag);
+    zoomImage.removeEventListener('mouseup', endDrag);
+    zoomImage.removeEventListener('mouseleave', endDrag);
+    zoomImage.removeEventListener('touchstart', startDragTouch);
+    zoomImage.removeEventListener('touchmove', dragTouch);
+    zoomImage.removeEventListener('touchend', endDrag);
+  }
+
+  modal.classList.add('hidden');
+  modal.style.display = 'none';
+  modal.style.visibility = 'hidden';
+  document.body.style.overflow = '';
+  document.body.style.overflowY = 'auto';
+
+  // Reset zoom when closing
+  currentZoomLevel = 1.0;
+  imageTranslateX = 0;
+  imageTranslateY = 0;
+}
+
+function startDrag(e) {
+  isDragging = true;
+  dragStartX = e.clientX - imageTranslateX;
+  dragStartY = e.clientY - imageTranslateY;
+  const zoomImage = document.getElementById('zoom-image');
+  if (zoomImage) {
+    zoomImage.classList.add('grabbing');
+  }
+}
+
+function drag(e) {
+  if (!isDragging) return;
+  e.preventDefault();
+
+  imageTranslateX = e.clientX - dragStartX;
+  imageTranslateY = e.clientY - dragStartY;
+
+  updateZoomDisplay();
+}
+
+function endDrag() {
+  isDragging = false;
+  const zoomImage = document.getElementById('zoom-image');
+  if (zoomImage) {
+    zoomImage.classList.remove('grabbing');
+  }
+}
+
+// Touch event handlers for mobile
+function startDragTouch(e) {
+  if (e.touches.length === 1) {
+    isDragging = true;
+    dragStartX = e.touches[0].clientX - imageTranslateX;
+    dragStartY = e.touches[0].clientY - imageTranslateY;
+    const zoomImage = document.getElementById('zoom-image');
+    if (zoomImage) {
+      zoomImage.classList.add('grabbing');
+    }
+  }
+}
+
+function dragTouch(e) {
+  if (!isDragging || e.touches.length !== 1) return;
+  e.preventDefault();
+
+  imageTranslateX = e.touches[0].clientX - dragStartX;
+  imageTranslateY = e.touches[0].clientY - dragStartY;
+
+  updateZoomDisplay();
+}
+
+function adjustZoom(delta) {
+  currentZoomLevel += delta;
+
+  // Clamp zoom level between 0.5x and 3x
+  if (currentZoomLevel < 0.5) currentZoomLevel = 0.5;
+  if (currentZoomLevel > 3.0) currentZoomLevel = 3.0;
+
+  updateZoomDisplay();
+}
+
+function resetZoom() {
+  currentZoomLevel = 1.0;
+  imageTranslateX = 0;
+  imageTranslateY = 0;
+  updateZoomDisplay();
+}
+
+function updateZoomDisplay() {
+  const zoomImage = document.getElementById('zoom-image');
+  const zoomLevelDisplay = document.getElementById('zoom-level');
+
+  if (zoomImage) {
+    zoomImage.style.transform = `scale(${currentZoomLevel}) translate(${imageTranslateX}px, ${imageTranslateY}px)`;
+  }
+
+  if (zoomLevelDisplay) {
+    zoomLevelDisplay.textContent = Math.round(currentZoomLevel * 100) + '%';
+  }
+}
+
 function sendModelEnquiry() {
   const name = document.getElementById('model-enquiry-name').value.trim();
   const email = document.getElementById('model-enquiry-email').value.trim();
@@ -923,6 +1110,7 @@ function sendModelEnquiry() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModelModal();
+    closeImageZoom();
   }
 });
 
