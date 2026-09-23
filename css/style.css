@@ -8,7 +8,15 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
+
+/* Standardized Responsive Breakpoints */
+/* Mobile: 0 - 480px */
+/* Tablet: 481px - 768px */
+/* Small Laptop: 769px - 1024px */
+/* Desktop: 1025px - 1440px */
+/* Large Desktop: 1441px+ */
 
 /* ── SITE BACKGROUND — layered industrial canvas ── */
 body {
@@ -1611,18 +1619,8 @@ li {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Mobile Menu Transitions */
-#mobile-menu {
-  transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
-
-#mobile-menu.open {
-  max-height: 400px;
-  opacity: 1;
-}
+/* Mobile Menu Transitions - Removed conflicting styles */
+/* Mobile menu now uses fixed positioning from media query below */
 
 /* Horizontal Product Scroller - Premium Animation */
 .horizontal-product-scroller {
@@ -3719,5 +3717,219 @@ a:hover .gch-quick-view-btn {
   .gch-qv-cta-secondary {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* ============================================
+   STANDARDIZED RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Mobile First (Default) - 0 to 480px */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  .max-w-content {
+    padding: 0 1rem;
+  }
+
+  /* Mobile Navigation - Fixed Drawer */
+  #mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  #mobile-menu.open {
+    right: 0;
+  }
+
+  #mobile-menu-btn {
+    z-index: 1001;
+  }
+
+  #mobile-menu-close {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #0B1C2D;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 3rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  /* Product Cards */
+  .product-card {
+    width: 100%;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Grid Layouts */
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tablet - 481px to 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  .max-w-content {
+    padding: 0 1.5rem;
+  }
+
+  /* Grid Layouts */
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  /* Product Cards */
+  .product-card {
+    width: calc(50% - 0.75rem);
+  }
+
+  /* Navigation */
+  #mobile-menu {
+    width: 70%;
+    max-width: 350px;
+  }
+}
+
+/* Small Laptop - 769px to 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+
+  .max-w-content {
+    padding: 0 2rem;
+  }
+
+  /* Grid Layouts */
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  /* Navigation - Hide mobile menu on tablet */
+  #mobile-menu {
+    display: none;
+  }
+}
+
+/* Desktop - 1025px to 1440px */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+
+  .max-w-content {
+    padding: 0 2.5rem;
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Large Desktop - 1441px+ */
+@media (min-width: 1441px) {
+  html {
+    font-size: 16px;
+  }
+
+  .max-w-content {
+    padding: 0 3rem;
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  #mobile-menu {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+
+  .nav-indicator {
+    display: none !important;
   }
 }
