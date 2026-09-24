@@ -132,22 +132,22 @@
     </section>
 
     <!-- CATALOG SECTION -->
-    <section class="bg-paper py-8 min-h-screen watermark-bg">
+    <section class="bg-paper py-8 min-h-screen watermark-bg relative">
       <div class="max-w-content mx-auto px-5 md:px-8">
         
         <!-- Filter & Search Controls Panel -->
-        <div class="bg-navy border-b-4 border-signal shadow-lg overflow-hidden mb-6">
+        <div id="filter-panel" class="bg-navy border-b-4 border-signal shadow-lg overflow-hidden mb-6">
           <!-- Top Controls Bar -->
           <div class="p-3 md:p-4 border-b border-white/10 flex flex-col lg:flex-row lg:items-center gap-3 justify-between">
             
-            <!-- Search Bar with Icon & Clear Button -->
-            <div class="relative flex-1 max-w-lg">
-              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/40">
+            <!-- Search Bar - First Element -->
+            <div class="relative flex-1 max-w-md lg:max-w-lg order-1 lg:order-1">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/40">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
               </div>
-              <input type="text" id="search-input" placeholder="Search by name, SKU (e.g. CMC-SMP), description..." class="w-full pl-10 pr-10 py-2.5 text-sm bg-navyLight text-white placeholder-white/40 border border-white/20 focus:border-signal outline-none transition-colors" />
+              <input type="text" id="search-input" placeholder="Search products..." class="w-full pl-10 pr-10 py-2.5 text-sm bg-navyLight text-white placeholder-white/40 border border-white/20 focus:border-signal outline-none transition-colors" />
               <button id="clear-search-btn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-white/50 hover:text-white transition-colors" title="Clear search">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -156,7 +156,7 @@
             </div>
 
             <!-- Quick Filters (Brand, Price Range, Sort, Reset) -->
-            <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3 order-2 lg:order-2">
               <!-- Brand Pills -->
               <div class="flex items-center gap-1 bg-navyLight p-1 border border-white/10 text-xs" id="brand-filter-buttons">
                 <span class="text-white/50 px-2 py-1 uppercase text-[10px] tracking-wider font-bold shrink-0">Brand:</span>
@@ -364,5 +364,74 @@
   <script src="js/main.js"></script>
   <script src="js/products-data.js"></script>
   <script src="js/products.js"></script>
+  
+  <!-- Filter Panel Sticky & Search Functionality -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterPanel = document.getElementById('filter-panel');
+      const searchInput = document.getElementById('search-input');
+      const clearSearchBtn = document.getElementById('clear-search-btn');
+      
+      // Scroll behavior for sticky filter panel
+      window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        const heroSection = document.querySelector('section.bg-navy');
+        const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+        
+        // Add scrolled class when past hero section
+        if (scrollY > heroHeight - 100) {
+          filterPanel.classList.add('scrolled');
+        } else {
+          filterPanel.classList.remove('scrolled');
+        }
+      });
+      
+      // Real-time search filtering
+      searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        
+        // Show/hide clear button
+        if (searchTerm.length > 0) {
+          clearSearchBtn.classList.remove('hidden');
+        } else {
+          clearSearchBtn.classList.add('hidden');
+        }
+        
+        // Filter products
+        filterProducts(searchTerm);
+      });
+      
+      // Clear search functionality
+      clearSearchBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        filterProducts('');
+      });
+      
+      // Filter products function
+      function filterProducts(searchTerm) {
+        const productsGrid = document.getElementById('products-grid');
+        const productCards = productsGrid.querySelectorAll('.product-card');
+        
+        productCards.forEach(card => {
+          const productName = card.querySelector('.product-name')?.textContent.toLowerCase() || '';
+          const productBrand = card.querySelector('.product-brand')?.textContent.toLowerCase() || '';
+          const productModel = card.querySelector('.product-model')?.textContent.toLowerCase() || '';
+          const productSku = card.querySelector('.product-sku')?.textContent.toLowerCase() || '';
+          
+          const matches = productName.includes(searchTerm) || 
+                         productBrand.includes(searchTerm) || 
+                         productModel.includes(searchTerm) ||
+                         productSku.includes(searchTerm);
+          
+          if (matches) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
