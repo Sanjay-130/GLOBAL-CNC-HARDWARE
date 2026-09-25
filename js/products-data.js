@@ -1747,7 +1747,7 @@ window.PRODUCTS_DATA = [
       },
       {
         "id": 53,
-        "brand": "SAN ACE 60 WF",
+        "brand": "SAN ACE 60WF",
         "model": "9WF0624H4D04",
         "size": "60 x 60 x 25",
         "electrical": "DC 24V - 0.15A - 3 WIRE",

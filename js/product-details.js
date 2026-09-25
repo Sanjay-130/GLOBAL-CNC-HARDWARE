@@ -452,19 +452,8 @@ function openModelModal(modelName, productName, productSku, catalogItemId) {
 
       // Initialize zoom for the fan model image in the modal
       setTimeout(() => {
-        const modalImg = document.getElementById('modal-model-image');
-        const modalZoomContainer = document.getElementById('modal-fan-zoom-container');
-        if (modalImg && modalZoomContainer && typeof window.ProductImageZoom === 'function') {
-          if (modalProductZoomInstance) {
-            modalProductZoomInstance.destroy();
-          }
-          modalProductZoomInstance = new window.ProductImageZoom({
-            container: modalZoomContainer,
-            image: modalImg,
-            zoomLevel: 2.2
-          });
-        }
-      }, 50);
+        initModalFanSingleZoom();
+      }, 70);
     }
 
     // Render rich fan specification rows
@@ -620,6 +609,249 @@ function getFanModelImage(item) {
 // ─────────────────────────────────────────────
 let mainProductZoomInstance = null;
 let modalProductZoomInstance = null;
+let modalFanZoomInstance = null;
+let modalGridZoomInstances = [];
+
+let currentFanModalViews = [];
+let currentFanActiveViewIndex = 0;
+let currentFanGalleryMode = 'single';
+
+const FAN_MODEL_4VIEW_MAP = {
+  1: "san-ace-40w-9wf0424f6d03",
+  2: "nmb-mat-1608vl-05w-b59",
+  3: "nmb-1608vl-05w-b59",
+  4: "nmb-1606kl-05w-b59",
+  6: "san-ace-40wf-9wf0424f6d03",
+  39: "san-ace-60wf-9wf0624h4d03",
+  40: "san-ace-60wf-9wf0624h4d04",
+  45: "nmb-mat-2006ml-05w-b50",
+  46: "nmb-mat-240vl-s5w-b79",
+  47: "ever-flow-r126010bm",
+  48: "san-ace-60-wf-9wf062411707a",
+  49: "san-ace-9wf0624h704",
+  50: "ebmpapst-614gnh",
+  51: "ranaflow-fbk08t24h",
+  52: "nmb-mat-2410ml-05w-b70",
+  53: "san-ace-60wf-9wf0624h4d04",
+  54: "ebmpapst-624hh-1",
+  55: "ebmpapst-614nhhr",
+  56: "nmb-mat-2408vl-s5w-b79",
+  58: "mitsubishi-ca7027h03",
+  59: "san-ace-60-wf-9wf0624h7d04",
+  60: "sunon-pmd2406pmb1-a",
+  63: "brushless-2406kl-05w-b59",
+  65: "ebmpapst-624-39hhpr",
+  66: "panafb-fba06t24h",
+  69: "nmb-2406kl-05w-b59",
+  70: "san-ace-60-wf-9wf0624h7d03",
+  71: "san-ace-80-109p0824h708",
+  72: "dc-brushless-efb0412hha",
+  73: "sunon-sf11580at",
+  74: "nmb-2406v-05w-b59",
+  75: "dc-brushless-afb0512hhb",
+  76: "san-ace-60wf-9wf0624h706a",
+  77: "panaplo-dc-brushless-fbk08t24h",
+  78: "cdc-brushless-efb0612hha",
+  79: "dc-brushless-efb0512ha",
+  80: "dc-brushless-ad0724hb-d7",
+  81: "san-ace-60-wf-9wf0624h603",
+  82: "san-ace-60-109p0624s7d03",
+  83: "air-mech-atd6015",
+  84: "nmb-mat-2404kl-04w-b59",
+  85: "nmb-06015ka-12n-at",
+  86: "nmb-2406kl-05w-b59",
+  87: "san-ace-80-9ga0824j40031",
+  88: "brushless-efc-08e24d",
+  89: "style-fan-up80b20",
+  90: "nmb-2410-ml-05w-b-39",
+  91: "rexnord-ec-8025a2w",
+  92: "dc-brushless-pan-pla08025b24h-5",
+  93: "sunon-me80152v1-0000-g99",
+  94: "panaflo-dc-brushless-fbk08t24h"
+};
+
+function resolveFanModelViews(item) {
+  const baseFromMap = FAN_MODEL_4VIEW_MAP[item.id];
+  const brandSlug = (item.brand || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const modelSlug = (item.model || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const combined = `${brandSlug}-${modelSlug}`;
+  const base = baseFromMap || combined;
+  const primaryFallback = item.image || getFanModelImage(item);
+
+  return [
+    {
+      id: 'front',
+      label: 'Front View',
+      shortLabel: 'Front',
+      icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-front.jpg` : primaryFallback
+    },
+    {
+      id: 'back',
+      label: 'Back View',
+      shortLabel: 'Back',
+      icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-back.jpg` : primaryFallback
+    },
+    {
+      id: 'side',
+      label: 'Side View',
+      shortLabel: 'Side',
+      icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-side.jpg` : primaryFallback
+    },
+    {
+      id: 'connector',
+      label: 'Connector View',
+      shortLabel: 'Connector',
+      icon: 'M7 16V4m0 0L3 8m4-4l4 4M17 8v8m0 0l4-4m-4 4l-4-4M3 12h18',
+      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-connector.jpg` : primaryFallback
+    }
+  ];
+}
+
+function destroyModalFanZooms() {
+  if (modalFanZoomInstance) {
+    modalFanZoomInstance.destroy();
+    modalFanZoomInstance = null;
+  }
+  if (modalGridZoomInstances && modalGridZoomInstances.length > 0) {
+    modalGridZoomInstances.forEach(inst => {
+      if (inst && typeof inst.destroy === 'function') {
+        inst.destroy();
+      }
+    });
+    modalGridZoomInstances = [];
+  }
+  if (modalProductZoomInstance) {
+    modalProductZoomInstance.destroy();
+    modalProductZoomInstance = null;
+  }
+}
+
+function initModalFanSingleZoom() {
+  if (modalFanZoomInstance) {
+    modalFanZoomInstance.destroy();
+    modalFanZoomInstance = null;
+  }
+
+  const container = document.getElementById('modal-fan-zoom-container');
+  const img = document.getElementById('modal-fan-active-image');
+  if (container && img && typeof window.ProductImageZoom === 'function') {
+    const activeView = currentFanModalViews[currentFanActiveViewIndex] || currentFanModalViews[0];
+    const viewTitle = activeView ? `${activeView.label.toUpperCase()} &bull; 2.5X ZOOM` : 'ZOOM PREVIEW &bull; 2.5X';
+
+    modalFanZoomInstance = new window.ProductImageZoom({
+      container: container,
+      image: img,
+      zoomLevel: 2.5,
+      title: viewTitle
+    });
+  }
+}
+
+function initModalFanGridZooms() {
+  modalGridZoomInstances.forEach(inst => {
+    if (inst && typeof inst.destroy === 'function') inst.destroy();
+  });
+  modalGridZoomInstances = [];
+
+  const anchor = document.getElementById('modal-fan-grid-zoom-anchor') || document.getElementById('modal-fan-zoom-container');
+  if (!currentFanModalViews || typeof window.ProductImageZoom !== 'function') return;
+
+  currentFanModalViews.forEach((view, idx) => {
+    const quadContainer = document.getElementById(`modal-fan-quad-${idx}`);
+    const quadImg = document.getElementById(`modal-fan-quad-img-${idx}`);
+    if (quadContainer && quadImg) {
+      const inst = new window.ProductImageZoom({
+        container: quadContainer,
+        image: quadImg,
+        zoomLevel: 2.5,
+        anchorContainer: anchor,
+        title: `${view.label.toUpperCase()} &bull; 2.5X ZOOM`
+      });
+      modalGridZoomInstances.push(inst);
+    }
+  });
+}
+
+window.switchFanModalView = function(index) {
+  if (!currentFanModalViews || !currentFanModalViews[index]) return;
+  currentFanActiveViewIndex = index;
+  const view = currentFanModalViews[index];
+
+  // Update hero active image
+  const heroImg = document.getElementById('modal-fan-active-image');
+  if (heroImg) {
+    heroImg.src = view.src;
+    heroImg.alt = view.label;
+  }
+
+  // Update view badge label & icon
+  const badgeLabel = document.getElementById('modal-fan-active-label');
+  if (badgeLabel) badgeLabel.textContent = view.label;
+  const badgePath = document.querySelector('#modal-fan-active-badge svg path');
+  if (badgePath) badgePath.setAttribute('d', view.icon);
+
+  // Update single zoom instance
+  if (modalFanZoomInstance) {
+    modalFanZoomInstance.updateSource(view.src);
+    modalFanZoomInstance.setTitle(`${view.label.toUpperCase()} &bull; 2.5X ZOOM`);
+  }
+
+  // Update thumbnail buttons active states
+  currentFanModalViews.forEach((_, idx) => {
+    const btn = document.getElementById(`fan-thumb-btn-${idx}`);
+    if (btn) {
+      if (idx === index) {
+        btn.classList.add('active');
+        btn.classList.remove('border-line', 'bg-paper/40');
+      } else {
+        btn.classList.remove('active');
+        btn.classList.add('border-line', 'bg-paper/40');
+      }
+    }
+  });
+};
+
+window.setFanModalGalleryMode = function(mode) {
+  currentFanGalleryMode = mode;
+  const singleContainer = document.getElementById('fan-view-single-container');
+  const gridContainer = document.getElementById('fan-view-grid-container');
+  const btnSingle = document.getElementById('fan-mode-btn-single');
+  const btnGrid = document.getElementById('fan-mode-btn-grid');
+
+  if (mode === 'grid') {
+    if (singleContainer) singleContainer.classList.add('hidden');
+    if (gridContainer) {
+      gridContainer.classList.remove('hidden');
+      gridContainer.classList.add('flex');
+    }
+    if (btnSingle) btnSingle.classList.remove('active');
+    if (btnGrid) btnGrid.classList.add('active');
+
+    // Initialize 4-picture grid zooms
+    setTimeout(() => {
+      initModalFanGridZooms();
+    }, 40);
+  } else {
+    if (gridContainer) {
+      gridContainer.classList.add('hidden');
+      gridContainer.classList.remove('flex');
+    }
+    if (singleContainer) singleContainer.classList.remove('hidden');
+    if (btnSingle) btnSingle.classList.add('active');
+    if (btnGrid) btnGrid.classList.remove('active');
+
+    // Destroy grid zoom instances and ensure single zoom is active
+    modalGridZoomInstances.forEach(inst => inst && inst.destroy());
+    modalGridZoomInstances = [];
+
+    setTimeout(() => {
+      initModalFanSingleZoom();
+    }, 40);
+  }
+};
 
 /**
  * Switch main product image from thumbnail click
@@ -662,65 +894,139 @@ function renderFanImagePanel(item) {
   const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
   const badge = sizeSpecs.badge || '';
 
-  // Create model slug for image naming
-  const modelSlug = `${item.brand}-${item.model}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  currentFanModalViews = resolveFanModelViews(item);
+  currentFanActiveViewIndex = 0;
+  currentFanGalleryMode = 'single';
 
-  // 4 separate images for manual upload with Driver-Cooling-Fan subfolder
-  const images = [
-    { view: 'Front View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-front.jpg`, label: 'FRONT VIEW' },
-    { view: 'Back View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-back.jpg`, label: 'BACK VIEW' },
-    { view: 'Side View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-side.jpg`, label: 'SIDE VIEW' },
-    { view: 'Connector View', src: `images/models/Driver-Cooling-Fan/${modelSlug}-connector.jpg`, label: 'CONNECTOR VIEW' }
-  ];
-
-  // Create 2x2 grid for 4 images
-  const imagesGrid = images.map((img, index) => `
-    <div class="aspect-square bg-white border border-line flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-signal transition-all" onclick="openImageZoom('${img.src}', '${img.label}')">
-      <img src="${img.src}" alt="${img.view}" class="w-full h-full object-contain p-2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'text-steel text-center p-2\\'><span class=\\'text-xs font-medium\\'>${img.label}</span><br><span class=\\'text-[10px] text-steel/70\\'>Image not found</span></div>'">
-      <div class="absolute bottom-0 left-0 right-0 bg-navy/80 text-white text-[10px] font-bold uppercase tracking-wider py-1 text-center z-10">${img.label}</div>
-      <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
-        <div class="bg-white/90 rounded-full p-3 shadow-lg">
-          <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
-        </div>
-      </div>
-    </div>
-  `).join('');
-
-  console.log('Generated images grid for:', modelSlug);
+  const views = currentFanModalViews;
+  const primaryFallback = item.image || 'images/models/fan-placeholder.jpg';
 
   return `
-    <div class="fan-modal-image-panel flex flex-col w-full bg-white" style="min-height:340px;">
+    <div class="fan-modal-gallery-container w-full bg-white flex flex-col">
 
-      <!-- Size badge + model label row -->
-      <div class="flex items-center justify-between px-3 py-2 bg-paper border-b border-line">
-        <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-white px-2.5 py-1 border border-line shadow-sm">
-          ${item.size} mm
-        </span>
-        ${badge ? `<span class="text-[11px] font-bold uppercase tracking-wider bg-signal/15 text-signalDark border border-signal/30 px-2.5 py-1">${badge}</span>` : ''}
-      </div>
-
-      <!-- Gallery section header -->
+      <!-- Header: Size & Series + Mode Switcher Tabs -->
       <div class="flex items-center justify-between px-3 py-2 bg-paper border-b border-line">
         <div class="flex items-center gap-2">
-          <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01"/>
-          </svg>
-          <span class="text-xs font-bold uppercase tracking-wider text-navy">Product Views (4-Angle Gallery)</span>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-white px-2.5 py-1 border border-line shadow-xs">
+            ${item.size} mm
+          </span>
+          ${badge ? `<span class="text-[11px] font-bold uppercase tracking-wider bg-signal/15 text-signalDark border border-signal/30 px-2 py-0.5">${badge}</span>` : ''}
         </div>
-        <span class="text-[10px] text-steel">Click to view</span>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="flex items-center bg-white border border-line p-0.5 shadow-2xs">
+          <button type="button" id="fan-mode-btn-single" onclick="window.setFanModalGalleryMode('single')"
+                  class="fan-mode-tab active px-2.5 py-1 text-xs font-bold flex items-center gap-1.5 text-navy bg-paper border border-line" title="Single Focus View with Magnifier Zoom">
+            <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            <span>Detail Zoom</span>
+          </button>
+          <button type="button" id="fan-mode-btn-grid" onclick="window.setFanModalGalleryMode('grid')"
+                  class="fan-mode-tab px-2.5 py-1 text-xs font-semibold flex items-center gap-1.5 text-steel hover:text-navy" title="4-Picture Grid View with Zoom">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span>4-Picture Mode</span>
+          </button>
+        </div>
       </div>
 
-      <!-- 4-View Photos Grid (2x2) -->
-      <div class="w-full p-3 grid grid-cols-2 gap-2">
-        ${imagesGrid}
+      <!-- SINGLE DETAIL ZOOM VIEW (DEFAULT) -->
+      <div id="fan-view-single-container" class="w-full p-3 flex flex-col">
+        <!-- Main Zoom Stage -->
+        <div id="modal-fan-zoom-container" class="aspect-square w-full max-h-[350px] bg-white border-2 border-line relative flex items-center justify-center p-3 transition-colors hover:border-signal cursor-zoom-in product-zoom-container image-protected-container" style="overflow: visible;">
+          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="w-full h-full object-contain protected-image" onerror="this.src='${primaryFallback}';" />
+
+          <!-- Top-Left Active View Badge -->
+          <div id="modal-fan-active-badge" class="absolute top-2.5 left-2.5 bg-navy/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 flex items-center gap-1.5 z-10 border border-white/20 pointer-events-none shadow-sm">
+            <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${views[0].icon}"/></svg>
+            <span id="modal-fan-active-label">${views[0].label}</span>
+          </div>
+
+          <!-- Top-Right Zoom Hint Badge -->
+          <div class="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-xs text-navy text-[10px] font-bold px-2 py-1 border border-line shadow-xs flex items-center gap-1 z-10 pointer-events-none uppercase tracking-wide">
+            <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            <span>Hover to Zoom &bull; 2.5X</span>
+          </div>
+
+          <!-- Bottom-Right Watermark -->
+          <div class="absolute bottom-2.5 right-2.5 text-[9px] font-bold uppercase tracking-widest text-steel/50 pointer-events-none z-10 font-mono">
+            GCH &bull; Global CNC
+          </div>
+        </div>
+
+        <!-- 4-Angle Thumbnail Selector Bar -->
+        <div class="mt-3">
+          <div class="flex items-center justify-between mb-1.5 px-0.5">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-navy flex items-center gap-1">
+              <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Angle Selector (4 Views)
+            </span>
+            <span class="text-[10px] text-steel font-mono">Click or hover to switch</span>
+          </div>
+          <div class="grid grid-cols-4 gap-2">
+            ${views.map((v, idx) => `
+              <button type="button"
+                      onclick="window.switchFanModalView(${idx})"
+                      onmouseenter="window.switchFanModalView(${idx})"
+                      id="fan-thumb-btn-${idx}"
+                      class="fan-thumb-btn ${idx === 0 ? 'active' : 'border-line bg-paper/40'} border flex flex-col items-center justify-between p-1.5 transition-all text-center group cursor-pointer">
+                <div class="w-full aspect-square bg-white flex items-center justify-center overflow-hidden mb-1 border border-line/40">
+                  <img src="${v.src}" alt="${v.label}" class="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform" onerror="this.src='${primaryFallback}';" />
+                </div>
+                <span class="text-[9px] font-bold uppercase tracking-wider truncate w-full group-hover:text-navy">
+                  ${v.shortLabel}
+                </span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
       </div>
 
-      <!-- Model label footer -->
-      <div class="text-center border-t border-line bg-paper/40 py-2 px-3">
-        <div class="text-[10px] font-bold uppercase tracking-widest text-steel">Cooling Fan Model</div>
-        <div class="text-sm font-mono font-bold text-navy truncate">${item.brand} — ${item.model}</div>
+      <!-- 4-PICTURE GRID VIEW (2x2) -->
+      <div id="fan-view-grid-container" class="w-full p-3 hidden flex-col">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-navy flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            4-Angle Photos (2&times;2 Grid)
+          </span>
+          <span class="text-[10px] text-steel font-mono">Hover to magnify &bull; Click to focus</span>
+        </div>
+
+        <!-- 2x2 Grid Anchor Container -->
+        <div id="modal-fan-grid-zoom-anchor" class="grid grid-cols-2 gap-2 w-full bg-paper/60 p-2 border border-line">
+          ${views.map((v, idx) => `
+            <div id="modal-fan-quad-${idx}"
+                 class="fan-quad-zoom-cell aspect-square bg-white border border-line hover:border-signal relative flex items-center justify-center p-2 cursor-zoom-in transition-all product-zoom-container image-protected-container group"
+                 style="overflow: visible;"
+                 onclick="window.switchFanModalView(${idx}); window.setFanModalGalleryMode('single');"
+                 title="Hover to zoom &bull; Click to focus ${v.label}">
+              <img id="modal-fan-quad-img-${idx}" src="${v.src}" alt="${v.label}" class="w-full h-full object-contain p-1 protected-image group-hover:scale-102 transition-transform" onerror="this.src='${primaryFallback}';" />
+
+              <!-- Bottom Label Ribbon -->
+              <div class="absolute bottom-0 left-0 right-0 bg-navy/85 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-wider py-1 px-2 flex items-center justify-between z-10 border-t border-white/10 pointer-events-none">
+                <span class="flex items-center gap-1 truncate">
+                  <svg class="w-2.5 h-2.5 text-signal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${v.icon}"/></svg>
+                  <span class="truncate">${v.label}</span>
+                </span>
+                <span class="text-[8px] text-signal font-mono ml-1 shrink-0">2.5X</span>
+              </div>
+
+              <!-- Top corner zoom icon -->
+              <div class="absolute top-1.5 right-1.5 bg-white/90 p-1 rounded-xs opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none border border-line shadow-xs">
+                <svg class="w-3 h-3 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
+
+      <!-- Footer Model Info Bar -->
+      <div class="px-3 py-2 bg-paper/50 border-t border-line flex items-center justify-between text-xs">
+        <div class="flex items-center gap-2 truncate">
+          <span class="text-steel text-[10px] font-bold uppercase tracking-wider">Model:</span>
+          <span class="font-bold text-navy truncate font-mono">${item.brand} &mdash; ${item.model}</span>
+        </div>
+        ${item.fanucPart ? `<span class="text-[10px] font-mono font-bold bg-signal/15 text-signalDark px-1.5 py-0.5 border border-signal/20 shrink-0">Fanuc: ${item.fanucPart}</span>` : ''}
+      </div>
+
     </div>
   `;
 }
@@ -879,10 +1185,7 @@ function closeModelModal() {
   modal.classList.add('hidden');
   document.body.style.overflow = '';
 
-  if (modalProductZoomInstance) {
-    modalProductZoomInstance.destroy();
-    modalProductZoomInstance = null;
-  }
+  destroyModalFanZooms();
 
   // Clear form fields
   document.getElementById('model-enquiry-name').value = '';

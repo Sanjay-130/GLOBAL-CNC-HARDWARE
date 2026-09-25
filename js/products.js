@@ -226,16 +226,33 @@ function syncURLParams() {
 // Filter and Sort Products
 function filterAndSortProducts() {
   const term = searchTerm.trim().toLowerCase();
+  
+  console.log('=== FILTERING START ===');
+  console.log('Filter parameters:', {
+    term,
+    activeCategory,
+    activeBrand,
+    activePriceRange,
+    activeSort,
+    totalProducts: allProducts.length
+  });
 
   let filtered = allProducts.filter(p => {
-    // Category Filter
-    const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+    // Category Filter - case insensitive comparison
+    const matchesCategory = activeCategory === 'All' || 
+                           (p.category && p.category.toLowerCase() === activeCategory.toLowerCase());
+    if (!matchesCategory) {
+      console.log(`❌ ${p.name} - Category filter: "${p.category}" != "${activeCategory}"`);
+    }
 
-    // Brand Filter (check name, description, specs, category)
+    // Brand Filter - simplified to check brand field directly
     let matchesBrand = true;
     if (activeBrand !== 'All') {
-      const pStr = (p.name + ' ' + (p.shortDescription || '') + ' ' + (p.description || '') + ' ' + JSON.stringify(p.specs || '')).toLowerCase();
-      matchesBrand = pStr.includes(activeBrand.toLowerCase());
+      matchesBrand = (p.brand && p.brand.toLowerCase() === activeBrand.toLowerCase()) ||
+                    (p.name && p.name.toLowerCase().includes(activeBrand.toLowerCase()));
+      if (!matchesBrand) {
+        console.log(`❌ ${p.name} - Brand filter: brand="${p.brand}" doesn't match "${activeBrand}"`);
+      }
     }
 
     // Price Range Filter
@@ -245,6 +262,9 @@ function filterAndSortProducts() {
       const minPrice = parseFloat(minStr) || 0;
       const maxPrice = parseFloat(maxStr) || Infinity;
       matchesPrice = p.price >= minPrice && p.price <= maxPrice;
+      if (!matchesPrice) {
+        console.log(`❌ ${p.name} - Price filter: ${p.price} not in range ${activePriceRange}`);
+      }
     }
 
     // Search Keyword Filter
@@ -253,10 +273,22 @@ function filterAndSortProducts() {
       (p.sku && p.sku.toLowerCase().includes(term)) ||
       (p.category && p.category.toLowerCase().includes(term)) ||
       (p.shortDescription && p.shortDescription.toLowerCase().includes(term));
+    
+    if (!matchesSearch && term) {
+      console.log(`❌ ${p.name} - Search filter: doesn't match "${term}"`);
+    }
 
-    return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+    const result = matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+    if (result) {
+      console.log(`✅ ${p.name} - PASSED ALL FILTERS`);
+    }
+    
+    return result;
   });
 
+  console.log('=== FILTERING COMPLETE ===');
+  console.log(`Products filtered: ${allProducts.length} → ${filtered.length}`);
+  
   // Sort Filtered Results
   if (activeSort === 'price-asc') {
     filtered.sort((a, b) => a.price - b.price);
@@ -282,8 +314,22 @@ function renderProducts() {
   const clearSearchBtn = document.getElementById('clear-search-btn');
 
   if (!container) return;
+  
+  console.log('=== RENDER PRODUCTS START ===');
+  console.log('Rendering products. Total products:', allProducts.length);
+  console.log('Current filters:', { activeCategory, activeBrand, activePriceRange, activeSort, searchTerm });
 
-  const filtered = filterAndSortProducts();
+  let filtered = filterAndSortProducts();
+  console.log('Filtered products:', filtered.length);
+  
+  // EMERGENCY FALLBACK: If no products show, reset brand filter to "All"
+  if (filtered.length === 0 && activeBrand !== 'All') {
+    console.warn('⚠️ No products found with current brand filter. Resetting to "All"');
+    activeBrand = 'All';
+    updateBrandButtonsUI();
+    filtered = filterAndSortProducts();
+    console.log('After brand reset, products:', filtered.length);
+  }
 
   // Update Section Title & Subtitle Summary
   if (activeTitleElement) {
@@ -323,10 +369,14 @@ function renderProducts() {
   if (filtered.length === 0) {
     container.innerHTML = '';
     if (emptyState) emptyState.classList.remove('hidden');
+    console.log('❌ SHOWING EMPTY STATE - No products to display');
   } else {
     if (emptyState) emptyState.classList.add('hidden');
     container.innerHTML = filtered.map(createProductCardHTML).join('');
+    console.log(`✅ RENDERED ${filtered.length} PRODUCTS SUCCESSFULLY`);
   }
+  
+  console.log('=== RENDER PRODUCTS COMPLETE ===');
 }
 
 // Reset All Filters to Defaults
@@ -339,6 +389,12 @@ function resetAllFilters() {
 
   const searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.value = '';
+
+  const navSearchInput = document.getElementById('nav-search-input');
+  if (navSearchInput) navSearchInput.value = '';
+  
+  const navClearSearch = document.getElementById('nav-clear-search');
+  if (navClearSearch) navClearSearch.classList.add('hidden');
 
   const priceSelect = document.getElementById('price-range-select');
   if (priceSelect) priceSelect.value = 'all';
@@ -354,35 +410,64 @@ function resetAllFilters() {
 
 // Initialize Page
 document.addEventListener('DOMContentLoaded', async () => {
-  // Read URL parameters if present
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('category')) activeCategory = urlParams.get('category');
-  if (urlParams.has('brand')) activeBrand = urlParams.get('brand');
-  if (urlParams.has('price')) activePriceRange = urlParams.get('price');
-  if (urlParams.has('sort')) activeSort = urlParams.get('sort');
-  if (urlParams.has('search')) searchTerm = urlParams.get('search');
+  // Force reset all filters to default to ensure products display
+  activeCategory = 'All';
+  activeBrand = 'All';
+  activePriceRange = 'all';
+  activeSort = 'default';
+  searchTerm = '';
+  
+  console.log('=== PAGE LOAD - FILTERS RESET ===');
+  console.log('Default filter state:', {
+    category: activeCategory,
+    brand: activeBrand,
+    price: activePriceRange,
+    sort: activeSort,
+    search: searchTerm
+  });
+  
+  // DO NOT read URL parameters - always start with clean state
+  // This ensures products always display on page load
 
-  // Sync Input Controls with URL params
+  // Sync Input Controls with clean state
   const searchInput = document.getElementById('search-input');
-  if (searchInput && searchTerm) searchInput.value = searchTerm;
+  if (searchInput) searchInput.value = '';
+  
+  const navSearchInput = document.getElementById('nav-search-input');
+  if (navSearchInput) navSearchInput.value = '';
+  
+  const navClearSearch = document.getElementById('nav-clear-search');
+  if (navClearSearch) navClearSearch.classList.add('hidden');
 
   const priceSelect = document.getElementById('price-range-select');
-  if (priceSelect && activePriceRange) priceSelect.value = activePriceRange;
+  if (priceSelect) priceSelect.value = 'all';
 
   const sortSelect = document.getElementById('sort-select');
-  if (sortSelect && activeSort) sortSelect.value = activeSort;
+  if (sortSelect) sortSelect.value = 'default';
 
   // Load products data (supports local file:// protocol and http server)
   if (window.PRODUCTS_DATA && Array.isArray(window.PRODUCTS_DATA) && window.PRODUCTS_DATA.length > 0) {
     allProducts = window.PRODUCTS_DATA;
+    console.log('Loaded products from PRODUCTS_DATA:', allProducts.length);
   } else {
     try {
       const response = await fetch('./data/products.json');
       if (response.ok) {
         allProducts = await response.json();
+        console.log('Loaded products from JSON:', allProducts.length);
       }
     } catch (err) {
       console.warn('Error fetching products via JSON:', err);
+    }
+  }
+  
+  // Fallback if no products loaded
+  if (!allProducts || allProducts.length === 0) {
+    console.error('No products data available!');
+    // Try to load from PRODUCTS_DATA again
+    if (window.PRODUCTS_DATA) {
+      allProducts = window.PRODUCTS_DATA;
+      console.log('Fallback loaded products from PRODUCTS_DATA:', allProducts.length);
     }
   }
 
@@ -412,7 +497,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     brandContainer.addEventListener('click', (e) => {
       const btn = e.target.closest('.brand-btn');
       if (!btn) return;
-      activeBrand = btn.getAttribute('data-brand');
+      const newBrand = btn.getAttribute('data-brand');
+      console.log('Brand filter clicked:', newBrand);
+      activeBrand = newBrand;
+      console.log('Active brand set to:', activeBrand);
       updateBrandButtonsUI();
       syncURLParams();
       renderProducts();
@@ -441,6 +529,70 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchTerm = e.target.value;
+      syncURLParams();
+      renderProducts();
+      
+      // Sync with navigation search input
+      if (navSearchInput) {
+        navSearchInput.value = searchTerm;
+      }
+      if (navClearSearch) {
+        if (searchTerm.length > 0) {
+          navClearSearch.classList.remove('hidden');
+        } else {
+          navClearSearch.classList.add('hidden');
+        }
+      }
+    });
+  }
+  
+  // Attach Navigation Search Input Listener
+  if (navSearchInput) {
+    navSearchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value;
+      syncURLParams();
+      renderProducts();
+      
+      // Sync with main search input
+      if (searchInput) {
+        searchInput.value = searchTerm;
+        const mainClearBtn = document.getElementById('clear-search-btn');
+        if (mainClearBtn) {
+          if (searchTerm.length > 0) {
+            mainClearBtn.classList.remove('hidden');
+          } else {
+            mainClearBtn.classList.add('hidden');
+          }
+        }
+      }
+      
+      // Show/hide nav clear button
+      if (navClearSearch) {
+        if (searchTerm.length > 0) {
+          navClearSearch.classList.remove('hidden');
+        } else {
+          navClearSearch.classList.add('hidden');
+        }
+      }
+    });
+  }
+  
+  // Attach Navigation Search Clear Button
+  if (navClearSearch) {
+    navClearSearch.addEventListener('click', () => {
+      if (navSearchInput) {
+        navSearchInput.value = '';
+      }
+      navClearSearch.classList.add('hidden');
+      searchTerm = '';
+      if (searchInput) {
+        searchInput.value = '';
+        const mainClearBtn = document.getElementById('clear-search-btn');
+        if (mainClearBtn) {
+          mainClearBtn.classList.add('hidden');
+        }
+      }
+      
       syncURLParams();
       renderProducts();
     });

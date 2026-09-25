@@ -2879,6 +2879,68 @@ img.object-cover {
   background-color: rgba(16, 185, 129, 0.05);
 }
 
+/* =========================================================
+   FAN MODAL — 4-View Gallery & Interactive Magnifier Zoom
+   ========================================================= */
+
+.fan-modal-gallery-container {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.fan-mode-tab {
+  cursor: pointer;
+  border-radius: 4px;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fan-mode-tab.active {
+  background-color: #0B1C2D !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 1px 3px rgba(11, 28, 45, 0.15);
+}
+
+.fan-mode-tab.active svg {
+  color: #10B981 !important;
+}
+
+.fan-thumb-btn {
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fan-thumb-btn.active {
+  border-color: #10B981 !important;
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  box-shadow: 0 0 0 1.5px #10B981;
+}
+
+.fan-quad-zoom-cell {
+  position: relative;
+  border-radius: 6px;
+  cursor: zoom-in;
+  overflow: visible;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fan-quad-zoom-cell:hover {
+  border-color: #10B981 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+#modal-fan-zoom-container {
+  cursor: zoom-in;
+}
+
+#modal-fan-zoom-container .product-zoom-lens {
+  z-index: 30;
+}
+
 
 
 /* =============================================
@@ -3934,18 +3996,163 @@ a:hover .gch-quick-view-btn {
   }
 }
 
-/* Sticky Filter Panel Styles */
+/* Navigation Search Box Styles */
+.nav-search-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-search-input::placeholder {
+  color: #6B7280;
+  font-weight: 400;
+}
+
+.nav-search-input:focus {
+  background: white;
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.nav-search-input:hover {
+  border-color: #D1D5DB;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+#nav-clear-search {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 2px;
+  margin-right: 2px;
+}
+
+#nav-clear-search:hover {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+  transform: scale(1.1);
+}
+
+#nav-clear-search:active {
+  transform: scale(0.95);
+}
+
+/* Search icon animation in nav */
+.nav-search-input:focus ~ .absolute svg {
+  color: #10B981;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+/* Premium Search Bar Styles */
+#search-input {
+  background: linear-gradient(135deg, rgba(19, 36, 56, 0.9) 0%, rgba(11, 28, 45, 0.95) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+#search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+#search-input:focus {
+  background: linear-gradient(135deg, rgba(19, 36, 56, 1) 0%, rgba(11, 28, 45, 1) 100%);
+  border-color: #10B981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+#search-input:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, rgba(19, 36, 56, 0.95) 0%, rgba(11, 28, 45, 0.98) 100%);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#clear-search-btn {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 4px;
+  margin-right: 4px;
+}
+
+#clear-search-btn:hover {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.15);
+  transform: scale(1.1);
+}
+
+#clear-search-btn:active {
+  transform: scale(0.95);
+}
+
+/* Search icon animation */
+#search-input:focus ~ .absolute svg {
+  color: #10B981;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+/* Filter panel enhanced styling */
 #filter-panel {
   position: sticky;
   top: 0;
   z-index: 50;
   transition: box-shadow 0.3s ease, border-color 0.3s ease, border-width 0.3s ease;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, #0B1C2D 0%, #132438 100%);
 }
 
 #filter-panel.scrolled {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   border-bottom-color: #10B981;
-  border-bottom-width: 2px;
+  border-bottom-width: 3px;
+  backdrop-filter: blur(15px);
+}
+
+/* Brand buttons enhanced styling */
+.brand-btn {
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+
+.brand-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.brand-btn.active {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Category buttons enhanced styling */
+.category-btn {
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+
+.category-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.category-btn.active {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 /* Responsive adjustments for filter panel */
