@@ -1559,7 +1559,7 @@ window.PRODUCTS_DATA = [
         "id": 34,
         "brand": "NMB - MAT",
         "model": "1608VL-S5W-B69",
-        "size": "20 x 20 x 40",
+        "size": "40 x 40 x 20",
         "electrical": "DC 24V - 0.09A - 3 WIRE",
         "connector": "Big Connector",
         "fanucPart": "",

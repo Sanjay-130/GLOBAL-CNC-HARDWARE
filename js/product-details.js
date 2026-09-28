@@ -671,12 +671,28 @@ const FAN_MODEL_4VIEW_MAP = {
 };
 
 function resolveFanModelViews(item) {
-  const baseFromMap = FAN_MODEL_4VIEW_MAP[item.id];
+  // Generate slug from brand and model to match actual file naming
   const brandSlug = (item.brand || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const modelSlug = (item.model || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const combined = `${brandSlug}-${modelSlug}`;
-  const base = baseFromMap || combined;
+  
   const primaryFallback = item.image || getFanModelImage(item);
+  
+  // Use the actual file naming pattern from the folder
+  const basePath = `images/models/Driver-Cooling-Fan/${combined}`;
+  
+  console.log('Fan Image Paths:', {
+    brand: item.brand,
+    model: item.model,
+    brandSlug,
+    modelSlug,
+    combined,
+    basePath,
+    front: `${basePath}-front.jpg`,
+    back: `${basePath}-back.jpg`,
+    side: `${basePath}-side.jpg`,
+    connector: `${basePath}-connector.jpg`
+  });
 
   return [
     {
@@ -684,28 +700,32 @@ function resolveFanModelViews(item) {
       label: 'Front View',
       shortLabel: 'Front',
       icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
-      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-front.jpg` : primaryFallback
+      src: `${basePath}-front.jpg`,
+      fallback: primaryFallback
     },
     {
       id: 'back',
       label: 'Back View',
       shortLabel: 'Back',
       icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
-      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-back.jpg` : primaryFallback
+      src: `${basePath}-back.jpg`,
+      fallback: primaryFallback
     },
     {
       id: 'side',
       label: 'Side View',
       shortLabel: 'Side',
       icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
-      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-side.jpg` : primaryFallback
+      src: `${basePath}-side.jpg`,
+      fallback: primaryFallback
     },
     {
       id: 'connector',
       label: 'Connector View',
       shortLabel: 'Connector',
       icon: 'M7 16V4m0 0L3 8m4-4l4 4M17 8v8m0 0l4-4m-4 4l-4-4M3 12h18',
-      src: baseFromMap ? `images/models/Driver-Cooling-Fan/${base}-connector.jpg` : primaryFallback
+      src: `${basePath}-connector.jpg`,
+      fallback: primaryFallback
     }
   ];
 }
@@ -932,7 +952,7 @@ function renderFanImagePanel(item) {
       <div id="fan-view-single-container" class="w-full p-3 flex flex-col">
         <!-- Main Zoom Stage -->
         <div id="modal-fan-zoom-container" class="aspect-square w-full max-h-[350px] bg-white border-2 border-line relative flex items-center justify-center p-3 transition-colors hover:border-signal cursor-zoom-in product-zoom-container image-protected-container" style="overflow: visible;">
-          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="w-full h-full object-contain protected-image" onerror="this.src='${primaryFallback}';" />
+          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="w-full h-full object-contain protected-image" onerror="console.error('Image load error:', this.src); this.src='${views[0].fallback}'; console.log('Fallback to:', this.src);" />
 
           <!-- Top-Left Active View Badge -->
           <div id="modal-fan-active-badge" class="absolute top-2.5 left-2.5 bg-navy/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 flex items-center gap-1.5 z-10 border border-white/20 pointer-events-none shadow-sm">
