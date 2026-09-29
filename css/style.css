@@ -3996,8 +3996,8 @@ a:hover .gch-quick-view-btn {
   }
 }
 
-/* Navigation Search Box Styles */
-.nav-search-input {
+/* Global Search Bar Styles */
+.global-search-input {
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
@@ -4005,12 +4005,12 @@ a:hover .gch-quick-view-btn {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.nav-search-input::placeholder {
+.global-search-input::placeholder {
   color: #6B7280;
   font-weight: 400;
 }
 
-.nav-search-input:focus {
+.global-search-input:focus {
   background: white;
   border-color: #10B981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -4018,13 +4018,13 @@ a:hover .gch-quick-view-btn {
   transform: translateY(-1px);
 }
 
-.nav-search-input:hover {
+.global-search-input:hover {
   border-color: #D1D5DB;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-#nav-clear-search {
+#global-clear-search {
   cursor: pointer;
   transition: all 0.2s ease;
   background: rgba(255, 255, 255, 0.8);
@@ -4033,21 +4033,28 @@ a:hover .gch-quick-view-btn {
   margin-right: 2px;
 }
 
-#nav-clear-search:hover {
+#global-clear-search:hover {
   color: #10B981;
   background: rgba(16, 185, 129, 0.1);
   transform: scale(1.1);
 }
 
-#nav-clear-search:active {
+#global-clear-search:active {
   transform: scale(0.95);
 }
 
-/* Search icon animation in nav */
-.nav-search-input:focus ~ .absolute svg {
+/* Search icon animation in global search */
+.global-search-input:focus ~ .absolute svg {
   color: #10B981;
   transform: scale(1.1);
   transition: all 0.3s ease;
+}
+
+/* Search focus enhancement */
+.search-focused .global-search-input {
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 /* Premium Search Bar Styles */

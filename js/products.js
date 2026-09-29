@@ -410,12 +410,24 @@ function resetAllFilters() {
 
 // Initialize Page
 document.addEventListener('DOMContentLoaded', async () => {
-  // Force reset all filters to default to ensure products display
+  // Check for search parameter in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchParam = urlParams.get('search');
+  
+  // Set default filter state
   activeCategory = 'All';
   activeBrand = 'All';
   activePriceRange = 'all';
   activeSort = 'default';
-  searchTerm = '';
+  
+  // Apply search parameter if present
+  if (searchParam) {
+    searchTerm = searchParam;
+    console.log('=== PAGE LOAD - SEARCH PARAMETER FOUND ===');
+    console.log('Search term:', searchTerm);
+  } else {
+    searchTerm = '';
+  }
   
   console.log('=== PAGE LOAD - FILTERS RESET ===');
   console.log('Default filter state:', {
@@ -426,18 +438,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     search: searchTerm
   });
   
-  // DO NOT read URL parameters - always start with clean state
-  // This ensures products always display on page load
-
-  // Sync Input Controls with clean state
+  // Sync Input Controls with state
   const searchInput = document.getElementById('search-input');
-  if (searchInput) searchInput.value = '';
+  if (searchInput) searchInput.value = searchTerm;
   
   const navSearchInput = document.getElementById('nav-search-input');
-  if (navSearchInput) navSearchInput.value = '';
+  if (navSearchInput) navSearchInput.value = searchTerm;
   
   const navClearSearch = document.getElementById('nav-clear-search');
-  if (navClearSearch) navClearSearch.classList.add('hidden');
+  if (navClearSearch) {
+    if (searchTerm) {
+      navClearSearch.classList.remove('hidden');
+    } else {
+      navClearSearch.classList.add('hidden');
+    }
+  }
 
   const priceSelect = document.getElementById('price-range-select');
   if (priceSelect) priceSelect.value = 'all';
@@ -477,6 +492,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderProductRail(allProducts);
   renderHorizontalProductTrack(allProducts);
   renderProducts();
+
+  // Auto-scroll to search results if search parameter was present
+  if (searchParam) {
+    setTimeout(function() {
+      const filterPanel = document.getElementById('filter-panel');
+      const productsGrid = document.getElementById('products-grid');
+      
+      if (filterPanel) {
+        filterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('Auto-scrolled to filter panel');
+      }
+    }, 300);
+  }
 
   // Attach Category Filter Listener
   const categoryContainer = document.getElementById('category-filter-buttons');
