@@ -1102,11 +1102,11 @@ function renderFanModalSpecs(item) {
   const rows = [
     { label: 'Brand / Make',      value: item.brand,      icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
     { label: 'Model Number',      value: item.model,      icon: 'M7 20l4-16m2 16l4-16M6 9h14M4 15h14',              mono: true },
+    { label: 'Part Number',       value: item.fanucPart,  icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', highlight: true },
     { label: 'Dimensions',        value: item.size ? `${item.size} mm` : null, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4' },
     { label: 'Electrical Rating', value: item.electrical, icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
     { label: 'Wire Count',        value: item.wires ? `${item.wires} Wire` : null, icon: 'M4 6h16M4 12h16M4 18h16' },
     { label: 'Connector Type',    value: item.connector,  icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-    { label: 'Fanuc Part No.',    value: item.fanucPart,  icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', highlight: true },
   ].filter(r => r.value);
 
   specsContainer.innerHTML = rows.map((row, idx) => `

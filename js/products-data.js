@@ -1731,7 +1731,7 @@ window.PRODUCTS_DATA = [
         "model": "FBK08T24H",
         "size": "80 x 80 x 15",
         "electrical": "DC 24V - 0.17A",
-        "connector": "DC BRUSHLESS",
+        "connector": "-",
         "fanucPart": "A90L-0001-0511",
         "image": "images/models/Driver-Cooling-Fan/fbk08t24h-51.jpg"
       },
