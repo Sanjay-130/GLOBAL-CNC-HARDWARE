@@ -326,19 +326,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (compatibleModelsContainer) {
     if (product.id === 'cnc-014' && product.modelCatalog && Array.isArray(product.modelCatalog)) {
       compatibleModelsContainer.innerHTML = renderCategorizedFanModels(product);
+      // Initialize model search after rendering
+      setTimeout(() => initializeModelSearch(), 100);
     } else if (product.compatibleModels && Array.isArray(product.compatibleModels)) {
       compatibleModelsContainer.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3" data-model-search-group>
           ${product.compatibleModels.map((model, i) => `
-            <div class="bg-paper rounded-lg p-3 border border-line hover:border-signal hover:bg-signal/5 transition-all duration-300 animate-slide-up cursor-pointer" style="animation-delay: ${i * 0.03}s;" onclick="openModelModal('${model.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', '${product.sku.replace(/'/g, "\\'")}')">
-              <div class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm font-medium text-navy">${model}</span>
-              </div>
+            <div class="bg-white border border-line hover:border-signal hover:shadow-md transition-all duration-300 animate-slide-up cursor-pointer p-3" style="animation-delay: ${i * 0.03}s;" onclick="openModelModal('${model.replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', '${product.sku.replace(/'/g, "\\'")}')" data-model-search-item data-model-name="${model.replace(/"/g, '&quot;')}">
+              <span class="text-xs font-medium text-navy text-center block break-words group-hover:text-signalDark transition-colors">${model}</span>
             </div>
           `).join('')}
         </div>
       `;
+      // Initialize model search after rendering
+      setTimeout(() => initializeModelSearch(), 100);
     } else {
       compatibleModelsContainer.innerHTML = '<p class="text-steel text-sm">No compatible models specified</p>';
     }
@@ -399,8 +400,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 let currentModel = '';
 let currentProduct = '';
 let currentProductSku = '';
+let lastFocusedElement = null;
+let focusTrapHandler = null;
 
 function openModelModal(modelName, productName, productSku, catalogItemId) {
+  // Store the element that opened the modal for focus return
+  lastFocusedElement = document.activeElement;
+
   currentModel = modelName;
   currentProduct = productName;
   currentProductSku = productSku;
@@ -595,6 +601,41 @@ function openModelModal(modelName, productName, productSku, catalogItemId) {
   }
 
   document.body.style.overflow = 'hidden';
+
+  // Trap focus within modal
+  trapFocus(modal);
+}
+
+// Focus trap for accessibility
+function trapFocus(element) {
+  const focusableElements = element.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const firstFocusable = focusableElements[0];
+  const lastFocusable = focusableElements[focusableElements.length - 1];
+
+  focusTrapHandler = function(e) {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          lastFocusable.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          firstFocusable.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  };
+
+  element.addEventListener('keydown', focusTrapHandler);
+
+  // Focus first element
+  if (firstFocusable) {
+    firstFocusable.focus();
+  }
 }
 
 function getFanModelImage(item) {
@@ -951,8 +992,8 @@ function renderFanImagePanel(item) {
       <!-- SINGLE DETAIL ZOOM VIEW (DEFAULT) -->
       <div id="fan-view-single-container" class="w-full p-3 flex flex-col">
         <!-- Main Zoom Stage -->
-        <div id="modal-fan-zoom-container" class="aspect-square w-full max-h-[350px] bg-white border-2 border-line relative flex items-center justify-center p-3 transition-colors hover:border-signal cursor-zoom-in product-zoom-container image-protected-container" style="overflow: visible;">
-          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="w-full h-full object-contain protected-image" onerror="console.error('Image load error:', this.src); this.src='${views[0].fallback}'; console.log('Fallback to:', this.src);" />
+        <div id="modal-fan-zoom-container" class="w-full h-[350px] bg-white border-2 border-line relative flex items-center justify-center p-3 transition-colors hover:border-signal cursor-zoom-in product-zoom-container image-protected-container" style="overflow: visible;">
+          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="max-w-full max-h-full object-contain protected-image" onerror="console.error('Image load error:', this.src); this.src='${views[0].fallback}'; console.log('Fallback to:', this.src);" />
 
           <!-- Top-Left Active View Badge -->
           <div id="modal-fan-active-badge" class="absolute top-2.5 left-2.5 bg-navy/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 flex items-center gap-1.5 z-10 border border-white/20 pointer-events-none shadow-sm">
@@ -988,8 +1029,8 @@ function renderFanImagePanel(item) {
                       onmouseenter="window.switchFanModalView(${idx})"
                       id="fan-thumb-btn-${idx}"
                       class="fan-thumb-btn ${idx === 0 ? 'active' : 'border-line bg-paper/40'} border flex flex-col items-center justify-between p-1.5 transition-all text-center group cursor-pointer">
-                <div class="w-full aspect-square bg-white flex items-center justify-center overflow-hidden mb-1 border border-line/40">
-                  <img src="${v.src}" alt="${v.label}" class="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform" onerror="this.src='${primaryFallback}';" />
+                <div class="w-full h-20 bg-white flex items-center justify-center overflow-hidden mb-1 border border-line/40">
+                  <img src="${v.src}" alt="${v.label}" class="max-w-full max-h-full object-contain p-1 group-hover:scale-105 transition-transform" onerror="this.src='${primaryFallback}';" />
                 </div>
                 <span class="text-[9px] font-bold uppercase tracking-wider truncate w-full group-hover:text-navy">
                   ${v.shortLabel}
@@ -1014,11 +1055,11 @@ function renderFanImagePanel(item) {
         <div id="modal-fan-grid-zoom-anchor" class="grid grid-cols-2 gap-2 w-full bg-paper/60 p-2 border border-line">
           ${views.map((v, idx) => `
             <div id="modal-fan-quad-${idx}"
-                 class="fan-quad-zoom-cell aspect-square bg-white border border-line hover:border-signal relative flex items-center justify-center p-2 cursor-zoom-in transition-all product-zoom-container image-protected-container group"
+                 class="fan-quad-zoom-cell h-48 bg-white border border-line hover:border-signal relative flex items-center justify-center p-2 cursor-zoom-in transition-all product-zoom-container image-protected-container group"
                  style="overflow: visible;"
                  onclick="window.switchFanModalView(${idx}); window.setFanModalGalleryMode('single');"
                  title="Hover to zoom &bull; Click to focus ${v.label}">
-              <img id="modal-fan-quad-img-${idx}" src="${v.src}" alt="${v.label}" class="w-full h-full object-contain p-1 protected-image group-hover:scale-102 transition-transform" onerror="this.src='${primaryFallback}';" />
+              <img id="modal-fan-quad-img-${idx}" src="${v.src}" alt="${v.label}" class="max-w-full max-h-full object-contain p-1 protected-image group-hover:scale-102 transition-transform" onerror="this.src='${primaryFallback}';" />
 
               <!-- Bottom Label Ribbon -->
               <div class="absolute bottom-0 left-0 right-0 bg-navy/85 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-wider py-1 px-2 flex items-center justify-between z-10 border-t border-white/10 pointer-events-none">
@@ -1202,16 +1243,35 @@ function populateModelSpecs(modelName) {
 
 function closeModelModal() {
   const modal = document.getElementById('model-modal');
+  if (!modal) return;
+
   modal.classList.add('hidden');
   document.body.style.overflow = '';
+
+  // Return focus to the element that opened the modal
+  if (lastFocusedElement) {
+    lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }
+
+  // Remove focus trap handler
+  if (focusTrapHandler) {
+    modal.removeEventListener('keydown', focusTrapHandler);
+    focusTrapHandler = null;
+  }
 
   destroyModalFanZooms();
 
   // Clear form fields
-  document.getElementById('model-enquiry-name').value = '';
-  document.getElementById('model-enquiry-email').value = '';
-  document.getElementById('model-enquiry-phone').value = '';
-  document.getElementById('model-enquiry-message').value = '';
+  const nameInput = document.getElementById('model-enquiry-name');
+  const emailInput = document.getElementById('model-enquiry-email');
+  const phoneInput = document.getElementById('model-enquiry-phone');
+  const messageInput = document.getElementById('model-enquiry-message');
+
+  if (nameInput) nameInput.value = '';
+  if (emailInput) emailInput.value = '';
+  if (phoneInput) phoneInput.value = '';
+  if (messageInput) messageInput.value = '';
 
   // Reset scroll position
   const scrollableBody = modal.querySelector('.overflow-y-auto');
@@ -1590,229 +1650,80 @@ function renderCategorizedFanModels(product) {
     .sort((a, b) => b - a);
 
   return `
-    <div class="fan-size-categorized-wrapper space-y-8">
-      <!-- Quick category summary & anchor navigation -->
-      <div class="bg-paper border border-line p-3 sm:p-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-line">
-          <span class="text-xs uppercase font-bold text-navy tracking-wider flex items-center gap-2">
-            <svg class="w-4 h-4 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-            Cooling Fan Categories (${catalog.length} Total Models – Descending by Size)
-          </span>
-          <span class="text-[11px] text-steel font-mono">Bigger Size First</span>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          ${sortedSizes.map(size => {
-            const spec = FAN_SIZE_SPECS[size] || { category: `${size}mm Cooling Fans` };
-            const count = sizeMap[size].length;
-            return `
-              <a href="#size-group-${size}mm" class="text-xs px-3 py-1.5 bg-white border border-line hover:border-signal hover:text-signalDark text-navy font-semibold transition-all flex items-center gap-1.5 shadow-sm">
-                <span class="w-1.5 h-1.5 bg-signal"></span>
-                <span>${spec.category}</span>
-                <span class="text-steel font-normal text-[11px]">(${count})</span>
-              </a>
-            `;
-          }).join('')}
-        </div>
-      </div>
-
+    <div class="fan-size-categorized-wrapper space-y-4">
       <!-- Categories Container (Descending Size Order) -->
       ${sortedSizes.map(size => {
         const models = sizeMap[size];
-        const spec = FAN_SIZE_SPECS[size] || {
-          category: `${size}mm Cooling Fans`,
-          badge: 'Standard',
-          subtitle: 'Industrial Cooling Series',
-          description: `Industrial cooling solution designed for CNC machine drive systems and control enclosures with ${size}mm mounting footprint.`,
-          voltage: '12V / 24V / 48V',
-          speed: '2,000 – 6,000 RPM',
-          airflow: 'Standard CFM',
-          noise: '25 – 45 dBA',
-          bearing: 'Dual Ball / Sleeve',
-          power: '1.0W – 10.0W',
-          insight: 'Engineered for continuous CNC electrical enclosure ventilation.',
-          tags: ['Industrial Grade', 'Dual Ball Bearing', 'Best for CNC Enclosures']
-        };
         const categoryId = `size-group-${size}mm`;
 
         return `
-          <div id="${categoryId}" class="fan-size-group bg-white border border-line">
-            <!-- 1. Section Header -->
-            <div class="fan-size-group-header px-4 sm:px-6 py-4 bg-paper border-b border-line">
-              <div class="flex flex-wrap items-center justify-between gap-3">
+          <div id="${categoryId}" class="fan-size-group bg-white border border-line" data-model-search-group>
+            <!-- Simplified Section Header -->
+            <div class="fan-size-group-header px-5 py-3 bg-navy border-b border-line">
+              <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-3 h-3 bg-signal"></div>
-                  <div>
-                    <div class="flex flex-wrap items-center gap-2">
-                      <h3 class="font-display font-bold text-lg md:text-xl text-navy tracking-tight uppercase">${spec.category}</h3>
-                      <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/15 px-2 py-0.5 border border-signal/30">
-                        ${spec.badge}
-                      </span>
-                    </div>
-                    <p class="text-xs text-steel font-medium mt-0.5">${spec.subtitle}</p>
-                  </div>
+                  <h3 class="font-display font-bold text-base text-white tracking-tight uppercase">${size}mm Cooling Fans</h3>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-mono font-bold px-2.5 py-1 bg-white border border-line text-navy shadow-sm">
-                    ${models.length} ${models.length === 1 ? 'Compatible Model' : 'Compatible Models'}
-                  </span>
-                </div>
+                <span class="text-xs font-mono font-semibold px-3 py-1 bg-white/10 border border-white/20 text-white">
+                  ${models.length}
+                </span>
               </div>
             </div>
 
-            <!-- Body: Specs, Description, Insights & Models -->
-            <div class="p-4 sm:p-6 space-y-5">
-              
-              <!-- 2. Short Description & 6. Smart Tags -->
-              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-line">
-                <p class="text-sm text-steel leading-relaxed max-w-3xl">
-                  ${spec.description}
-                </p>
-                <!-- Smart Tags -->
-                <div class="flex flex-wrap gap-1.5 shrink-0">
-                  ${spec.tags.map(tag => `
-                    <span class="text-[11px] font-semibold text-navy bg-paper border border-line px-2.5 py-1 uppercase tracking-wider">
-                      ${tag}
-                    </span>
-                  `).join('')}
-                </div>
-              </div>
-
-              <!-- 3. Technical Specification Table & 4. Performance Insight -->
-              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <!-- Technical Specification Table (Spans 2 columns on desktop) -->
-                <div class="lg:col-span-2 border border-line bg-white">
-                  <div class="bg-paper px-3 py-2 border-b border-line flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase text-navy tracking-wider flex items-center gap-1.5">
-                      <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                      Technical Specification Range (${size}mm Series)
-                    </span>
-                    <span class="text-[10px] text-steel font-mono uppercase">Industry Standard</span>
-                  </div>
-                  <div class="overflow-x-auto">
-                    <table class="w-full text-xs text-left">
-                      <tbody class="divide-y divide-line">
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel w-1/3 bg-paper/30">Operating Voltage</td>
-                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.voltage}</td>
-                        </tr>
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Rotational Speed</td>
-                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.speed}</td>
-                        </tr>
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Airflow Range</td>
-                          <td class="px-3.5 py-2 font-mono font-bold text-signalDark">${spec.airflow}</td>
-                        </tr>
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Noise Level</td>
-                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.noise}</td>
-                        </tr>
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Bearing System</td>
-                          <td class="px-3.5 py-2 font-medium text-navy">${spec.bearing}</td>
-                        </tr>
-                        <tr class="hover:bg-paper/50 transition-colors">
-                          <td class="px-3.5 py-2 font-semibold text-steel bg-paper/30">Power Consumption</td>
-                          <td class="px-3.5 py-2 font-mono font-medium text-navy">${spec.power}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!-- 4. Performance Insight Card -->
-                <div class="border border-line bg-paper/40 p-4 flex flex-col justify-between">
-                  <div>
-                    <div class="flex items-center gap-2 mb-2.5">
-                      <div class="w-2 h-2 bg-signal"></div>
-                      <span class="text-xs font-bold uppercase text-navy tracking-wider">Performance Insight</span>
-                    </div>
-                    <p class="text-xs text-steel leading-relaxed mb-3">
-                      ${spec.insight}
-                    </p>
-                    <div class="p-2.5 bg-white border border-line text-[11px] text-steel">
-                      <strong class="text-navy font-semibold block mb-0.5">Application Tip:</strong>
-                      ${size >= 80 
-                        ? 'High airflow series: ensure unimpeded exhaust vents and clean filter mats for optimal heat exchange.' 
-                        : 'Compact series: inspect heatsink fin clearance and wiring connector pin alignment during replacement.'}
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2.5 border-t border-line flex items-center justify-between text-[11px] text-steel">
-                    <span class="font-mono">Mounting: Standard ${size}mm</span>
-                    <span class="font-semibold text-signalDark">Ready Stock</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 5. Model Listing Section -->
-              <div class="pt-2">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-bold uppercase text-navy tracking-wider flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    Available ${spec.category} Models (${models.length})
-                  </span>
-                  <span class="text-[11px] text-steel">Click any model card to view specifications & request quote</span>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  ${models.map((item, idx) => {
-                    const safeModel = item.model.replace(/'/g, "\\'");
-                    const safeName = product.name.replace(/'/g, "\\'");
-                    const safeSku = product.sku.replace(/'/g, "\\'");
-                    const itemId = item.id;
-                    return `
-                      <div 
-                        class="fan-model-card group bg-white border border-line hover:border-signal p-3.5 flex flex-col justify-between transition-all duration-200 cursor-pointer animate-slide-up"
-                        style="animation-delay: ${idx * 0.02}s;"
-                        onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}', ${JSON.stringify(itemId)})"
-                        title="Click to view details for ${item.brand} ${item.model}"
-                      >
-                        <div>
-                          <!-- Top row: Brand & Size badge -->
-                          <div class="flex items-start justify-between gap-2 mb-2">
-                            <span class="text-xs font-bold uppercase tracking-wider text-signalDark bg-signal/10 px-2 py-0.5 border border-signal/20">
-                              ${item.brand}
-                            </span>
-                            <span class="text-[11px] font-mono text-steel bg-paper px-1.5 py-0.5 border border-line whitespace-nowrap">
-                              ${item.size} mm
-                            </span>
-                          </div>
-
-                          <!-- Model Image Thumbnail -->
-                          <div class="w-full h-36 sm:h-40 bg-paper/40 border border-line/60 my-2.5 flex items-center justify-center p-2.5 overflow-hidden image-protected-container">
-                            <img 
-                              src="${item.image || getFanModelImage(item)}" 
-                              alt="${item.brand} ${item.model}" 
-                              class="w-full h-full object-contain protected-image group-hover:scale-105 transition-transform duration-200" 
-                              onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';" 
-                              loading="lazy"
-                            />
-                          </div>
-
-                          <!-- Model Number -->
-                          <div class="flex items-center gap-2 mt-2">
-                            <svg class="w-4 h-4 text-signal flex-shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-sm font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight break-all">
-                              ${item.model}
-                            </span>
-                          </div>
+            <!-- Model Listing Section -->
+            <div class="p-5">
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+                ${models.map((item, idx) => {
+                  const safeModel = item.model.replace(/'/g, "\\'");
+                  const safeName = product.name.replace(/'/g, "\\'");
+                  const safeSku = product.sku.replace(/'/g, "\\'");
+                  const itemId = item.id;
+                  return `
+                    <div
+                      class="fan-model-card group bg-white border border-line hover:border-signal hover:shadow-md transition-all duration-200 cursor-pointer animate-slide-up"
+                      style="animation-delay: ${idx * 0.02}s;"
+                      onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}', ${JSON.stringify(itemId)})"
+                      title="Click to view details for ${item.brand} ${item.model}"
+                      data-model-search-item
+                      data-model-name="${item.model.replace(/"/g, '&quot;')}"
+                      data-model-brand="${item.brand.replace(/"/g, '&quot;')}"
+                      data-model-size="${item.size.replace(/"/g, '&quot;')}"
+                      data-model-connector="${(item.connector || '').replace(/"/g, '&quot;')}"
+                      data-model-fanuc="${(item.fanucPart || '').replace(/"/g, '&quot;')}"
+                    >
+                      <!-- Minimal Card Structure -->
+                      <div class="p-3 flex flex-col items-center text-center">
+                        <!-- Small Model Image -->
+                        <div class="w-full h-32 sm:h-36 bg-paper/40 border border-line/60 mb-2 flex items-center justify-center p-2 overflow-hidden image-protected-container">
+                          <img
+                            src="${item.image || getFanModelImage(item)}"
+                            alt="${item.brand} ${item.model}"
+                            class="w-full h-full object-contain protected-image group-hover:scale-105 transition-transform duration-200 max-w-full"
+                            onerror="this.onerror=null; this.src='images/models/fan-placeholder.jpg';"
+                            loading="lazy"
+                          />
                         </div>
 
-                        <!-- Footer CTA indicator -->
-                        <div class="mt-4 pt-2 border-t border-line/40 flex items-center justify-between text-[11px] text-steel group-hover:text-signalDark transition-colors">
-                          <span class="font-semibold uppercase tracking-wider text-[10px]">View Specs &amp; Inquire</span>
-                          <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                          </svg>
-                        </div>
+                        <!-- Model Name -->
+                        <span class="text-xs font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight break-all line-clamp-2 w-full">
+                          ${item.model}
+                        </span>
+
+                        <!-- Size -->
+                        <span class="text-[10px] text-steel font-medium mt-1">
+                          ${item.size}
+                        </span>
+
+                        <!-- Optional Small Tag (Brand) -->
+                        <span class="text-[10px] text-steel uppercase tracking-wider mt-0.5">
+                          ${item.brand}
+                        </span>
                       </div>
-                    `;
-                  }).join('')}
-                </div>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-
             </div>
           </div>
         `;
@@ -1820,3 +1731,254 @@ function renderCategorizedFanModels(product) {
     </div>
   `;
 }
+
+// ═══════════════════════════════════════════════════════════════
+// MODEL SEARCH FEATURE
+// ═══════════════════════════════════════════════════════════════
+
+(function() {
+  // Private scope for model search functionality
+  let modelSearchInitialized = false;
+  let modelItems = [];
+  let modelGroups = [];
+  let searchInput = null;
+  let clearButton = null;
+  let resultCount = null;
+  let noResultsMessage = null;
+  let totalCount = 0;
+
+  function normalizeSearchText(value) {
+    if (!value) return '';
+    return String(value)
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, ' ')
+      .replace(/[-_/]/g, ''); // Remove common separators for flexible matching
+  }
+
+  function initializeModelSearch() {
+    const container = document.getElementById('detail-compatible-models');
+    if (!container) return;
+
+    // Prevent duplicate initialization
+    if (document.querySelector('[data-model-search]')) {
+      return;
+    }
+
+    // Find all model items
+    modelItems = Array.from(container.querySelectorAll('[data-model-search-item]'));
+    if (modelItems.length === 0) return;
+
+    // Find model groups (for categorized display)
+    modelGroups = Array.from(container.querySelectorAll('[data-model-search-group]'));
+    if (modelGroups.length === 0) {
+      // If no explicit groups, treat the grid container as a single group
+      const gridContainer = container.querySelector('.grid');
+      if (gridContainer) {
+        modelGroups = [gridContainer];
+        gridContainer.setAttribute('data-model-search-group', '');
+      }
+    }
+
+    totalCount = modelItems.length;
+
+    // Create search UI
+    const searchHTML = `
+      <div data-model-search class="model-search-container">
+        <div class="p-4">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="w-6 h-6 text-signal flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <div class="flex-1 relative">
+              <input
+                type="search"
+                id="model-search-input"
+                class="model-search__input w-full text-base"
+                placeholder="Search compatible model..."
+                aria-label="Search compatible models"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button
+                type="button"
+                id="model-search-clear"
+                class="model-search__clear absolute right-0 top-1/2 -translate-y-1/2 text-steel hover:text-signal transition-colors hidden p-2"
+                aria-label="Clear model search"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="model-search-count" class="model-search__count text-sm" aria-live="polite">
+            ${totalCount} models
+          </div>
+        </div>
+        <div id="model-search-no-results" class="model-search__empty hidden text-center py-6 px-4" role="status">
+          <p class="text-navy text-sm font-semibold mb-1">No matching models found.</p>
+          <p class="text-steel text-xs">Try another model number.</p>
+        </div>
+      </div>
+    `;
+
+    // Insert search UI at the beginning of the container
+    container.insertAdjacentHTML('afterbegin', searchHTML);
+
+    // Cache DOM references
+    searchInput = document.getElementById('model-search-input');
+    clearButton = document.getElementById('model-search-clear');
+    resultCount = document.getElementById('model-search-count');
+    noResultsMessage = document.getElementById('model-search-no-results');
+
+    if (!searchInput || !clearButton || !resultCount) return;
+
+    // Add event listeners
+    searchInput.addEventListener('input', handleSearchInput);
+    searchInput.addEventListener('keydown', handleSearchKeydown);
+    clearButton.addEventListener('click', clearSearch);
+
+    // Optional: keyboard shortcut (/) to focus search
+    document.addEventListener('keydown', handleGlobalKeydown);
+
+    modelSearchInitialized = true;
+  }
+
+  function handleSearchInput(e) {
+    const query = e.target.value;
+    filterModels(query);
+  }
+
+  function handleSearchKeydown(e) {
+    if (e.key === 'Escape') {
+      clearSearch();
+    }
+  }
+
+  function handleGlobalKeydown(e) {
+    // Only trigger if not already in an input field
+    if (e.key === '/' && !isInInputElement()) {
+      e.preventDefault();
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }
+  }
+
+  function isInInputElement() {
+    const activeElement = document.activeElement;
+    if (!activeElement) return false;
+    const tagName = activeElement.tagName.toLowerCase();
+    return ['input', 'textarea', 'select'].includes(tagName) || activeElement.isContentEditable;
+  }
+
+  function filterModels(query) {
+    if (!searchInput || !clearButton || !resultCount) return;
+
+    const normalizedQuery = normalizeSearchText(query);
+
+    // Show/hide clear button
+    if (normalizedQuery) {
+      clearButton.classList.remove('hidden');
+    } else {
+      clearButton.classList.add('hidden');
+    }
+
+    // If empty query, restore all
+    if (!normalizedQuery) {
+      resetModelSearch();
+      return;
+    }
+
+    let visibleCount = 0;
+
+    // Filter individual model items
+    modelItems.forEach(item => {
+      const modelName = item.getAttribute('data-model-name') || '';
+      const modelBrand = item.getAttribute('data-model-brand') || '';
+      const modelSize = item.getAttribute('data-model-size') || '';
+      const modelConnector = item.getAttribute('data-model-connector') || '';
+      const modelFanuc = item.getAttribute('data-model-fanuc') || '';
+
+      // Build searchable string
+      const searchableText = `${modelName} ${modelBrand} ${modelSize} ${modelConnector} ${modelFanuc}`;
+      const normalizedText = normalizeSearchText(searchableText);
+
+      // Check if matches
+      const matches = normalizedText.includes(normalizedQuery);
+
+      if (matches) {
+        item.hidden = false;
+        item.classList.remove('model-search-hidden');
+        visibleCount++;
+      } else {
+        item.hidden = true;
+        item.classList.add('model-search-hidden');
+      }
+    });
+
+    // Filter groups - hide groups with no visible items
+    modelGroups.forEach(group => {
+      const visibleItemsInGroup = group.querySelectorAll('[data-model-search-item]:not(.model-search-hidden):not([hidden])');
+      if (visibleItemsInGroup.length === 0) {
+        group.hidden = true;
+        group.classList.add('model-search-hidden');
+      } else {
+        group.hidden = false;
+        group.classList.remove('model-search-hidden');
+      }
+    });
+
+    // Update result count
+    resultCount.textContent = `${visibleCount} model${visibleCount !== 1 ? 's' : ''} found`;
+
+    // Show/hide no results message
+    if (noResultsMessage) {
+      if (visibleCount === 0) {
+        noResultsMessage.classList.remove('hidden');
+      } else {
+        noResultsMessage.classList.add('hidden');
+      }
+    }
+  }
+
+  function clearSearch() {
+    if (!searchInput) return;
+    searchInput.value = '';
+    filterModels('');
+    searchInput.focus();
+  }
+
+  function resetModelSearch() {
+    // Restore all model items
+    modelItems.forEach(item => {
+      item.hidden = false;
+      item.classList.remove('model-search-hidden');
+    });
+
+    // Restore all groups
+    modelGroups.forEach(group => {
+      group.hidden = false;
+      group.classList.remove('model-search-hidden');
+    });
+
+    // Reset result count
+    if (resultCount) {
+      resultCount.textContent = `${totalCount} model${totalCount !== 1 ? 's' : ''}`;
+    }
+
+    // Hide no results message
+    if (noResultsMessage) {
+      noResultsMessage.classList.add('hidden');
+    }
+
+    // Hide clear button
+    if (clearButton) {
+      clearButton.classList.add('hidden');
+    }
+  }
+
+  // Expose initialization function globally
+  window.initializeModelSearch = initializeModelSearch;
+})();
