@@ -42,6 +42,7 @@
     }
   </script>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body class="min-h-screen flex flex-col text-navy font-body">
 
@@ -198,9 +199,9 @@
         <div class="grid md:grid-cols-3 gap-8">
           
           <!-- Risk 1 -->
-          <div class="bg-white p-8 border border-line border-t-4 border-t-red-500 shadow-sm space-y-4">
-            <div class="w-12 h-12 bg-red-50 text-red-600 flex items-center justify-center font-bold text-lg">
-                <img src="images/Battery-Discharge-Risk.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"/>
+          <div class="bg-white p-6 md:p-8 border border-line border-t-4 border-t-red-500 shadow-sm space-y-4">
+            <div class="w-14 h-14 bg-red-50 text-red-600 flex items-center justify-center font-bold text-lg overflow-hidden border border-red-100">
+              <img src="images/Battery-Discharge-Risk.jpg" alt="Battery Discharge Risk" class="w-full h-full object-cover" />
             </div>
             <h3 class="font-display font-bold text-navy text-xl">Battery Discharge Risk</h3>
             <p class="text-xs text-steel leading-relaxed">
@@ -212,9 +213,9 @@
           </div>
 
           <!-- Risk 2 -->
-          <div class="bg-white p-8 border border-line border-t-4 border-t-amber-500 shadow-sm space-y-4">
-            <div class="w-12 h-12 bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg">
-              <img src ="images/Lost-PLC-Ladder-Logic.jpg"/>
+          <div class="bg-white p-6 md:p-8 border border-line border-t-4 border-t-amber-500 shadow-sm space-y-4">
+            <div class="w-14 h-14 bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg overflow-hidden border border-amber-100">
+              <img src="images/Lost-PLC-Ladder-Logic.jpg" alt="Lost PLC Ladder Logic" class="w-full h-full object-cover" />
             </div>
             <h3 class="font-display font-bold text-navy text-xl">Lost PLC Ladder Logic</h3>
             <p class="text-xs text-steel leading-relaxed">
@@ -226,9 +227,9 @@
           </div>
 
           <!-- Risk 3 -->
-          <div class="bg-white p-8 border border-line border-t-4 border-t-navy shadow-sm space-y-4">
-            <div class="w-12 h-12 bg-navy/10 text-navy flex items-center justify-center font-bold text-lg">
-              <img src="images/Days-of-Lost-Production.jpg"/>
+          <div class="bg-white p-6 md:p-8 border border-line border-t-4 border-t-navy shadow-sm space-y-4">
+            <div class="w-14 h-14 bg-navy/10 text-navy flex items-center justify-center font-bold text-lg overflow-hidden border border-navy/20">
+              <img src="images/Days-of-Lost-Production.jpg" alt="Days of Lost Production" class="w-full h-full object-cover" />
             </div>
             <h3 class="font-display font-bold text-navy text-xl">Days of Lost Production</h3>
             <p class="text-xs text-steel leading-relaxed">

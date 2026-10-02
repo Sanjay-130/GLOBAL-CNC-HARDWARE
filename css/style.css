@@ -916,7 +916,18 @@ input, select, textarea {
 
 /* Modal fan image containers */
 #modal-fan-zoom-container {
-  min-height: 350px;
+  min-height: 220px;
+  max-height: 320px;
+  height: 300px;
+}
+
+@media (max-width: 640px) {
+  #modal-fan-zoom-container {
+    height: 200px !important;
+    min-height: 180px !important;
+    max-height: 220px !important;
+    padding: 0.5rem !important;
+  }
 }
 
 #modal-fan-active-image {
@@ -1331,20 +1342,14 @@ li {
 }
 
 /* ===== ACCESSIBLE TYPOGRAPHY ===== */
+/* NOTE: Removed broken rule that forced display:inline-flex on ALL a,button at ≤640px.
+   This was breaking paragraph links, footer links, nav items, and card layouts.
+   Touch targets are now handled more precisely via responsive.css. */
 
 @media (max-width: 640px) {
   /* Minimum font size for readability */
-  * {
+  body {
     font-size: max(14px, 1rem);
-  }
-  
-  /* Better tap targets */
-  a, button {
-    min-height: 44px;
-    min-width: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
   
   /* Focus states for accessibility */
@@ -2317,23 +2322,15 @@ li {
     padding: 0.75rem 1rem;
   }
 
-  /* Stack layout on mobile */
-  .grid {
+  /* NOTE: Removed broken generic .grid override — was forcing 1fr on ALL grids */
+  /* Stack layout on mobile — now only applies to product-details containers */
+  #product-details-container .grid:not(.grid-cols-2):not(.grid-cols-3):not(.grid-cols-4) {
     grid-template-columns: 1fr;
   }
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
+/* NOTE: Removed @media(min-width:768px) .grid { grid-template-columns: 1fr } — was breaking all grids */
+/* NOTE: Removed @media(min-width:1024px) .grid { repeat(2,1fr) } — was breaking all grids */
 
 @media (max-width: 768px) {
   /* Image gallery responsive */
@@ -2417,14 +2414,15 @@ li {
   padding: 0 1rem;
 }
 
-/* Fix grid gap issues */
-.grid {
-  gap: 2rem;
+/* NOTE: Removed generic .grid { gap: 2rem } — was overriding all Tailwind gap utilities */
+/* Gap values are now set per-component using Tailwind classes */
+#product-details-container .grid {
+  gap: 1.5rem;
 }
 
 @media (min-width: 1024px) {
-  .grid {
-    gap: 3rem;
+  #product-details-container .grid {
+    gap: 2rem;
   }
 }
 
@@ -4050,14 +4048,8 @@ a:hover .gch-quick-view-btn {
     font-size: 0.875rem;
   }
 
-  /* Grid Layouts */
-  .grid-cols-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-cols-4 {
-    grid-template-columns: 1fr;
-  }
+  /* NOTE: Removed generic .grid-cols-3 and .grid-cols-4 overrides
+     which broke 4-column galleries, angle selectors, and specs on mobile */
 
   /* Typography */
   h1 {
@@ -4083,14 +4075,7 @@ a:hover .gch-quick-view-btn {
     padding: 0 1.5rem;
   }
 
-  /* Grid Layouts */
-  .grid-cols-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* NOTE: Removed generic .grid-cols-3 and .grid-cols-4 overrides */
 
   /* Hero Section */
   .hero-title {
@@ -4119,10 +4104,7 @@ a:hover .gch-quick-view-btn {
     padding: 0 2rem;
   }
 
-  /* Grid Layouts */
-  .grid-cols-4 {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  /* NOTE: Removed generic .grid-cols-4 override */
 
   /* Hero Section */
   .hero-title {

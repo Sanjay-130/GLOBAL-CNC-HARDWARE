@@ -1,0 +1,583 @@
+/* ============================================================
+   GLOBAL CNC HARDWARE — PRODUCTION RESPONSIVE ENGINE v3.0
+   Loaded AFTER style.css — Guarantees flawless responsiveness
+   across Mobile (≤480px), Tablet (481-768px),
+   Small Laptop (769-1024px), Desktop (≥1025px), Large (≥1440px)
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. CRITICAL RESET & OVERFLOW DEFENSE
+   ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Revert generic .grid overrides from older stylesheet */
+.grid {
+  grid-template-columns: unset;
+  gap: unset;
+}
+@media (min-width: 481px)  { .grid { grid-template-columns: unset; gap: unset; } }
+@media (min-width: 769px)  { .grid { grid-template-columns: unset; gap: unset; } }
+@media (min-width: 1025px) { .grid { grid-template-columns: unset; gap: unset; } }
+
+/* Revert destructive universal a,button rules */
+@media (max-width: 640px) {
+  a, button {
+    display: revert;
+    align-items: revert;
+    justify-content: revert;
+    min-height: revert;
+    min-width: revert;
+  }
+}
+
+/* Prevent iOS auto-zoom on form inputs */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. HEADER & NAVIGATION SYSTEM
+   ───────────────────────────────────────────────────────────── */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50;
+  transition: box-shadow 0.25s ease;
+}
+
+/* Mobile: ≤ 480px */
+@media (max-width: 480px) {
+  header .h-24 {
+    height: 4.25rem !important; /* 68px */
+  }
+  main.pt-24 {
+    padding-top: 4.25rem !important;
+  }
+  header img.h-16,
+  header img.md\:h-20,
+  header img.lg\:h-22 {
+    height: 2.75rem !important;
+    width: auto;
+  }
+  #mobile-menu-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+}
+
+/* Tablet: 481px – 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  header .h-24 {
+    height: 4.75rem !important;
+  }
+  main.pt-24 {
+    padding-top: 4.75rem !important;
+  }
+  header img.h-16,
+  header img.md\:h-20 {
+    height: 3.25rem !important;
+    width: auto;
+  }
+}
+
+/* Small Laptop / Tablet Landscape: 769px – 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  header .h-24 {
+    height: 5rem !important;
+  }
+  main.pt-24 {
+    padding-top: 5rem !important;
+  }
+  header .desktop-nav-link {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+    font-size: 0.8125rem !important;
+    white-space: nowrap !important;
+  }
+  header img.h-16,
+  header img.md\:h-20 {
+    height: 3.25rem !important;
+    width: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. MOBILE DRAWER MENU & BACKDROP
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(85vw, 320px);
+    height: 100vh;
+    height: 100dvh;
+    background: #ffffff;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #mobile-menu.open {
+    right: 0;
+  }
+
+  #mobile-menu-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    z-index: 2;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #4B5563;
+    border-bottom: 1px solid #F3F4F6;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link:active {
+    background-color: #F0FDF4;
+    color: #10B981;
+  }
+}
+
+/* Backdrop Overlay */
+#mobile-menu-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 28, 45, 0.6);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+#mobile-menu-backdrop.active {
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. FLUID TYPOGRAPHY & HERO SYSTEM
+   ───────────────────────────────────────────────────────────── */
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: clamp(1.65rem, 6.5vw, 2.25rem) !important;
+    line-height: 1.25 !important;
+  }
+  h2 {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem) !important;
+    line-height: 1.3 !important;
+  }
+  h3 {
+    font-size: 1.125rem !important;
+    line-height: 1.35 !important;
+  }
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* Hero Section */
+  section.min-h-screen {
+    min-height: min(100vh, 650px);
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+  section.relative.pt-36 {
+    padding-top: 6.5rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* Hero CTA buttons */
+  section.min-h-screen .flex.flex-wrap,
+  section.relative.pt-36 .flex.flex-wrap {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  section.min-h-screen .flex.flex-wrap a,
+  section.relative.pt-36 .flex.flex-wrap a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Tablet (481px – 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem) !important;
+    line-height: 1.25 !important;
+  }
+  h2 {
+    font-size: clamp(1.65rem, 4vw, 2.25rem) !important;
+    line-height: 1.3 !important;
+  }
+  section.relative.pt-36 {
+    padding-top: 8rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. STATS BARS & COUNTERS
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  section.bg-signal .text-5xl,
+  .font-display.font-extrabold.text-5xl {
+    font-size: clamp(1.75rem, 8vw, 2.35rem) !important;
+    line-height: 1.2;
+  }
+  section.bg-signal.py-16 {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+  section.bg-signal .grid.grid-cols-2 {
+    gap: 0.75rem;
+  }
+  section.bg-signal .text-center {
+    padding: 0.5rem 0.25rem;
+  }
+  section.bg-signal .text-sm {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. CARDS & PRODUCT GRIDS
+   ───────────────────────────────────────────────────────────── */
+/* Mobile: single column */
+@media (max-width: 480px) {
+  #products-grid,
+  #machinery-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .product-details-section .spec-row,
+  .product-details-section .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 0.25rem !important;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 481px) and (max-width: 768px) {
+  #products-grid,
+  #machinery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.25rem !important;
+  }
+}
+
+/* Small Laptop: 3 columns */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1.25rem !important;
+  }
+  #machinery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 1025px) {
+  #products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+  #machinery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 2rem !important;
+  }
+}
+
+/* Product Card Images */
+.product-card img,
+.machine-card img,
+.homepage-product-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. ABOUT PAGE RESPONSIVE REFINEMENTS
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .absolute.-bottom-6.-right-4,
+  .absolute.-bottom-6.md\:bottom-4.md\:-right-6 {
+    display: none !important;
+  }
+  .bg-paper pb-20 pt-8 {
+    padding-top: 1rem;
+    padding-bottom: 2.5rem;
+  }
+  .rounded-\[2\.5rem\] {
+    border-radius: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid.sm\:grid-cols-2.gap-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. CONTACT & HEADQUARTERS MAP
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid.lg\:grid-cols-12 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .lg\:col-span-8,
+  .lg\:col-span-7,
+  .lg\:col-span-5,
+  .lg\:col-span-4 {
+    grid-column: span 1 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  iframe[title*="Map"],
+  .min-h-\[380px\],
+  .h-\[360px\] {
+    min-height: 250px !important;
+    height: 250px !important;
+  }
+  #contact-form .grid.sm\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. MODALS (ALL DIALOGS)
+   ───────────────────────────────────────────────────────────── */
+#inquiry-modal,
+#model-modal,
+#image-zoom-modal {
+  z-index: 1001 !important;
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+}
+
+#inquiry-modal.hidden,
+#model-modal.hidden,
+#image-zoom-modal.hidden {
+  display: none !important;
+}
+
+#inquiry-modal > div,
+#model-modal > div,
+#image-zoom-modal > div {
+  width: 100%;
+  max-width: min(95vw, 680px);
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+#model-modal > div {
+  max-width: min(95vw, 920px) !important;
+}
+
+#image-zoom-modal > div {
+  max-width: min(96vw, 1100px) !important;
+}
+
+@media (max-width: 640px) {
+  #modal-image-container {
+    min-height: 220px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10. FOOTER RESPONSIVE GRID
+   ───────────────────────────────────────────────────────────── */
+/* Mobile (≤ 640px) */
+@media (max-width: 640px) {
+  footer .grid.grid-cols-1.md\:grid-cols-12 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  footer [class*="md:col-span"] {
+    grid-column: span 1 !important;
+  }
+  footer .pt-16 {
+    padding-top: 2.5rem !important;
+  }
+  footer .pb-8 {
+    padding-bottom: 1.5rem !important;
+  }
+  footer .border-t.pt-6 {
+    text-align: center;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Tablet (641px – 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  footer .grid.grid-cols-1.md\:grid-cols-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 2rem !important;
+  }
+  footer .md\:col-span-3 {
+    grid-column: span 2 !important;
+  }
+  footer .md\:col-span-2 {
+    grid-column: span 1 !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. HORIZONTAL PRODUCT SCROLLER & ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+.horizontal-scroller-container,
+.horizontal-product-scroller {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100vw;
+}
+
+@media (max-width: 768px) {
+  body, body::before, body::after {
+    background-attachment: scroll !important;
+  }
+  .watermark-bg::before,
+  .watermark-bg::after {
+    animation: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   12. NOTCH & SAFE AREA INSETS
+   ───────────────────────────────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  footer {
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom)) !important;
+  }
+  #mobile-menu {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. LANDSCAPE PHONE COMPACT VIEW
+   ───────────────────────────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  #mobile-menu {
+    overflow-y: auto;
+  }
+  section.min-h-screen {
+    min-height: unset !important;
+    padding-top: 5rem !important;
+    padding-bottom: 2rem !important;
+  }
+  #inquiry-modal > div,
+  #model-modal > div {
+    max-height: 94vh !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. LARGE SCREEN EXPANSION (≥ 1440px)
+   ───────────────────────────────────────────────────────────── */
+@media (min-width: 1440px) {
+  .max-w-content {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  html {
+    font-size: 16.5px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   15. ACCESSIBILITY FOCUS RINGS
+   ───────────────────────────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #10B981 !important;
+  outline-offset: 2px !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   16. PRINT STYLES
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  header,
+  footer,
+  #mobile-menu,
+  #mobile-menu-backdrop,
+  #inquiry-modal,
+  #model-modal,
+  #image-zoom-modal {
+    display: none !important;
+  }
+  main {
+    padding-top: 0 !important;
+  }
+}

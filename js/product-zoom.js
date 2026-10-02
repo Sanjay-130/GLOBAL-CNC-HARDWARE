@@ -205,23 +205,12 @@ class ProductImageZoom {
   }
 
   onTouchStart(e) {
-    if (e.touches && e.touches.length > 0) {
-      this.isTouch = true;
-      this.clientX = e.touches[0].clientX;
-      this.clientY = e.touches[0].clientY;
-      this.show();
-      this._requestTick();
-    }
+    // Touch devices should use native viewing / tap, not floating desktop hover magnifier
+    return;
   }
 
   onTouchMove(e) {
-    if (e.touches && e.touches.length > 0) {
-      // Prevent screen scroll while zooming on mobile touch drag
-      e.preventDefault();
-      this.clientX = e.touches[0].clientX;
-      this.clientY = e.touches[0].clientY;
-      this._requestTick();
-    }
+    return;
   }
 
   onTouchEnd() {
@@ -237,6 +226,11 @@ class ProductImageZoom {
   }
 
   show() {
+    // Only activate on pointer/mouse devices and screens > 768px
+    if (window.innerWidth <= 768 || this.isTouch) return;
+    // Don't show floating preview if container is inside model-modal
+    if (this.container && this.container.closest('#model-modal')) return;
+
     // Only activate if image has loaded and has dimensions
     if (!this.img.complete || this.img.naturalWidth === 0) return;
 
