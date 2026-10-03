@@ -228,8 +228,6 @@ class ProductImageZoom {
   show() {
     // Only activate on pointer/mouse devices and screens > 768px
     if (window.innerWidth <= 768 || this.isTouch) return;
-    // Don't show floating preview if container is inside model-modal
-    if (this.container && this.container.closest('#model-modal')) return;
 
     // Only activate if image has loaded and has dimensions
     if (!this.img.complete || this.img.naturalWidth === 0) return;
@@ -266,8 +264,8 @@ class ProductImageZoom {
     const viewportH = window.innerHeight;
 
     // Desired preview dimensions:
-    const targetH = this.customPreviewHeight || Math.min(Math.max(340, Math.round(baseRect.height)), viewportH - 24);
-    let targetW = this.customPreviewWidth || Math.min(520, Math.max(340, Math.round(baseRect.width * 1.05)));
+    const targetH = this.customPreviewHeight || Math.min(Math.max(400, Math.round(baseRect.height)), viewportH - 24);
+    let targetW = this.customPreviewWidth || Math.min(580, Math.max(400, Math.round(baseRect.width * 1.05)));
 
     // Check space on right side
     const spaceRight = viewportW - baseRect.right - 20;

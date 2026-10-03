@@ -2748,6 +2748,11 @@ img.object-cover {
 /* Model Details Modal Styles */
 #model-modal {
   z-index: 1001;
+  overflow: visible;
+}
+
+#model-modal > div {
+  overflow: visible;
 }
 
 #model-modal .animate-modal-in {
