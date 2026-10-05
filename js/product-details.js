@@ -328,6 +328,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       compatibleModelsContainer.innerHTML = renderCategorizedFanModels(product);
       // Initialize model search after rendering
       setTimeout(() => initializeModelSearch(), 100);
+    } else if (product.id === 'cnc-001' && product.modelCatalog && Array.isArray(product.modelCatalog)) {
+      compatibleModelsContainer.innerHTML = renderPulseCoderModels(product);
+      // Initialize model search after rendering
+      setTimeout(() => initializeModelSearch(), 100);
     } else if (product.compatibleModels && Array.isArray(product.compatibleModels)) {
       compatibleModelsContainer.innerHTML = `
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3" data-model-search-group>
@@ -404,6 +408,8 @@ let lastFocusedElement = null;
 let focusTrapHandler = null;
 
 function openModelModal(modelName, productName, productSku, catalogItemId) {
+  console.log('openModelModal called:', { modelName, productName, productSku, catalogItemId });
+
   // Store the element that opened the modal for focus return
   lastFocusedElement = document.activeElement;
 
@@ -417,6 +423,13 @@ function openModelModal(modelName, productName, productSku, catalogItemId) {
   const productSkuEl = document.getElementById('modal-product-sku');
   const modalHeaderTitle = document.getElementById('modal-header-title');
 
+  console.log('Modal elements:', { modal, modelNameEl, productNameEl, productSkuEl, modalHeaderTitle });
+
+  if (!modal) {
+    console.error('Modal element not found!');
+    return;
+  }
+
   // Ensure modal is properly reset
   modal.classList.remove('hidden');
   modal.style.display = '';
@@ -426,98 +439,189 @@ function openModelModal(modelName, productName, productSku, catalogItemId) {
   if (productNameEl) productNameEl.textContent = productName;
   if (productSkuEl) productSkuEl.textContent = 'SKU: ' + productSku;
 
-  // Try to find catalog item for fan products (cnc-014)
+  // Try to find catalog item for fan products (cnc-014) and pulse coder products (cnc-001)
   let catalogItem = null;
   const allProducts = window.PRODUCTS_DATA || [];
-  const product = allProducts.find(p => p.sku === productSku || p.name === productName || p.id === 'cnc-014');
+  console.log('All products:', allProducts.length);
+
+  // Resolve the current page's product ID from URL as a reliable fallback
+  const urlPageProductId = new URLSearchParams(window.location.search).get('id') || '';
+
+  // Priority: match by SKU first, then name, then current page product ID from URL
+  const product = allProducts.find(p => p.sku === productSku) ||
+                  allProducts.find(p => p.name === productName) ||
+                  (urlPageProductId ? allProducts.find(p => p.id === urlPageProductId) : null);
+
+  console.log('Found product:', product ? product.id : 'not found');
+
   if (product && product.modelCatalog) {
+    console.log('Product has modelCatalog with', product.modelCatalog.length, 'items');
     if (catalogItemId !== undefined) {
-      catalogItem = product.modelCatalog.find(m => m.id === catalogItemId);
+      // Use loose equality to support both string IDs (e.g. 'pc-001') and numeric IDs (e.g. 1)
+      // eslint-disable-next-line eqeqeq
+      catalogItem = product.modelCatalog.find(m => m.id == catalogItemId);
+      console.log('Found catalogItem by ID:', catalogItem);
     }
     if (!catalogItem && modelName) {
-      catalogItem = product.modelCatalog.find(m => 
-        m.model === modelName || 
+      catalogItem = product.modelCatalog.find(m =>
+        m.model === modelName ||
         `${m.brand} ${m.model}` === modelName ||
         modelName.includes(m.model)
       );
+      console.log('Found catalogItem by model name:', catalogItem);
     }
   }
 
   const imageContainer = document.getElementById('modal-image-container');
 
   if (catalogItem) {
-    // === FAN PRODUCT MODAL ===
-    if (modalHeaderTitle) modalHeaderTitle.textContent = 'Fan Model Details';
+    // === FAN PRODUCT MODAL (cnc-014) ===
+    if (product.id === 'cnc-014') {
+      if (modalHeaderTitle) modalHeaderTitle.textContent = 'Fan Model Details';
 
-    // Update the model name in the header subtitle
-    if (modelNameEl) modelNameEl.textContent = `${catalogItem.brand} ${catalogItem.model}`;
+      // Update the model name in the header subtitle
+      if (modelNameEl) modelNameEl.textContent = `${catalogItem.brand} ${catalogItem.model}`;
 
-    // Replace image area with fan image panel
-    if (imageContainer) {
-      imageContainer.innerHTML = renderFanImagePanel(catalogItem);
+      // Replace image area with fan image panel
+      if (imageContainer) {
+        imageContainer.innerHTML = renderFanImagePanel(catalogItem);
 
-      // Initialize zoom for the fan model image in the modal
-      setTimeout(() => {
-        initModalFanSingleZoom();
-      }, 70);
-    }
+        // Initialize zoom for the fan model image in the modal
+        setTimeout(() => {
+          initModalFanSingleZoom();
+        }, 70);
+      }
 
-    // Render rich fan specification rows
-    renderFanModalSpecs(catalogItem);
+      // Render rich fan specification rows
+      renderFanModalSpecs(catalogItem);
 
-    // Populate "PRODUCT INFORMATION" section with high-level system & catalog info (no duplicate model specs)
-    const sizeNum = getFanSizeWidth(catalogItem.size);
-    const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
-    const productInfoContainer = document.getElementById('modal-product-info-container');
-    if (productInfoContainer) {
-      productInfoContainer.innerHTML = `
-        <div class="flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-          <span class="text-sm font-semibold text-steel uppercase tracking-wider">Product Information</span>
-        </div>
-        <div class="space-y-2">
-          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
-            <span class="text-steel text-xs">Product Line</span>
-            <span class="text-navy font-semibold text-xs">Drive Cooling Fan</span>
+      // Populate "PRODUCT INFORMATION" section with high-level system & catalog info (no duplicate model specs)
+      const sizeNum = getFanSizeWidth(catalogItem.size);
+      const sizeSpecs = FAN_SIZE_SPECS[sizeNum] || {};
+      const productInfoContainer = document.getElementById('modal-product-info-container');
+      if (productInfoContainer) {
+        productInfoContainer.innerHTML = `
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <span class="text-sm font-semibold text-steel uppercase tracking-wider">Product Information</span>
           </div>
-          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
-            <span class="text-steel text-xs">Series</span>
-            <span class="text-navy font-semibold text-xs">${sizeSpecs.category || (sizeNum + 'mm Series')}</span>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Product Line</span>
+              <span class="text-navy font-semibold text-xs">Drive Cooling Fan</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Series</span>
+              <span class="text-navy font-semibold text-xs">${sizeSpecs.category || (sizeNum + 'mm Series')}</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Target Drives</span>
+              <span class="text-navy font-medium text-xs">Servo & Spindle Amplifiers</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">CNC Compatibility</span>
+              <span class="text-navy text-xs font-medium">Fanuc / Siemens / Mitsubishi</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Catalog SKU</span>
+              <span class="text-steel font-mono text-xs">${productSku}</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5">
+              <span class="text-steel text-xs">Stock Status</span>
+              <span class="inline-flex items-center gap-1.5 text-signalDark font-bold text-xs">
+                <span class="w-2 h-2 bg-signal inline-block"></span> In Stock (Ready to Ship)
+              </span>
+            </div>
           </div>
-          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
-            <span class="text-steel text-xs">Target Drives</span>
-            <span class="text-navy font-medium text-xs">Servo & Spindle Amplifiers</span>
-          </div>
-          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
-            <span class="text-steel text-xs">CNC Compatibility</span>
-            <span class="text-navy text-xs font-medium">Fanuc / Siemens / Mitsubishi</span>
-          </div>
-          <div class="flex justify-between items-center py-1.5 border-b border-line/60">
-            <span class="text-steel text-xs">Catalog SKU</span>
-            <span class="text-steel font-mono text-xs">${productSku}</span>
-          </div>
-          <div class="flex justify-between items-center py-1.5">
-            <span class="text-steel text-xs">Stock Status</span>
-            <span class="inline-flex items-center gap-1.5 text-signalDark font-bold text-xs">
-              <span class="w-2 h-2 bg-signal inline-block"></span> In Stock (Ready to Ship)
-            </span>
-          </div>
-        </div>
       `;
-    }
+      }
 
-    // Concise, purposeful application description (no duplicate spec regurgitation)
-    const descEl = document.getElementById('modal-model-description');
-    if (descEl) {
-      descEl.innerHTML = `
-        High-efficiency thermal management fan engineered for CNC servo drive units, spindle amplifiers, and control cabinets. Designed for continuous industrial duty, low acoustic vibration, and reliable heat dissipation under heavy cutting cycles.
+      // Concise, purposeful application description (no duplicate spec regurgitation)
+      const descEl = document.getElementById('modal-model-description');
+      if (descEl) {
+        descEl.innerHTML = `
+          High-efficiency thermal management fan engineered for CNC servo drive units, spindle amplifiers, and control cabinets. Designed for continuous industrial duty, low acoustic vibration, and reliable heat dissipation under heavy cutting cycles.
+        `;
+      }
+
+      // Pre-fill enquiry message
+      const msgEl = document.getElementById('model-enquiry-message');
+      if (msgEl && !msgEl.value) {
+        msgEl.placeholder = `I am interested in ${catalogItem.brand} ${catalogItem.model} (${catalogItem.size}mm). Please share pricing and availability.`;
+      }
+    }
+    // === PULSE CODER PRODUCT MODAL (cnc-001) ===
+    else if (product.id === 'cnc-001') {
+      if (modalHeaderTitle) modalHeaderTitle.textContent = 'Pulse Coder Model Details';
+
+      // Update the model name in the header subtitle
+      if (modelNameEl) modelNameEl.textContent = `${catalogItem.brand} ${catalogItem.model}`;
+
+      // Replace image area with pulse coder image panel
+      if (imageContainer) {
+        imageContainer.innerHTML = renderPulseCoderImagePanel(catalogItem);
+
+        // Initialize zoom for the pulse coder model image in the modal
+        setTimeout(() => {
+          initModalFanSingleZoom();
+        }, 70);
+      }
+
+      // Render pulse coder specification rows
+      renderPulseCoderModalSpecs(catalogItem);
+
+      // Populate "PRODUCT INFORMATION" section
+      const productInfoContainer = document.getElementById('modal-product-info-container');
+      if (productInfoContainer) {
+        productInfoContainer.innerHTML = `
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <span class="text-sm font-semibold text-steel uppercase tracking-wider">Product Information</span>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Product Line</span>
+              <span class="text-navy font-semibold text-xs">Servo Motor Pulsecoder</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Brand</span>
+              <span class="text-navy font-semibold text-xs">${catalogItem.brand}</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Application</span>
+              <span class="text-navy font-medium text-xs">CNC Servo Motors</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">CNC Compatibility</span>
+              <span class="text-navy text-xs font-medium">Fanuc / Siemens / Mitsubishi</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5 border-b border-line/60">
+              <span class="text-steel text-xs">Catalog SKU</span>
+              <span class="text-steel font-mono text-xs">${productSku}</span>
+            </div>
+            <div class="flex justify-between items-center py-1.5">
+              <span class="text-steel text-xs">Stock Status</span>
+              <span class="inline-flex items-center gap-1.5 text-signalDark font-bold text-xs">
+                <span class="w-2 h-2 bg-signal inline-block"></span> In Stock (Ready to Ship)
+              </span>
+            </div>
+          </div>
       `;
-    }
+      }
 
-    // Pre-fill enquiry message
-    const msgEl = document.getElementById('model-enquiry-message');
-    if (msgEl && !msgEl.value) {
-      msgEl.placeholder = `I am interested in ${catalogItem.brand} ${catalogItem.model} (${catalogItem.size}mm). Please share pricing and availability.`;
+      // Concise application description
+      const descEl = document.getElementById('modal-model-description');
+      if (descEl) {
+        descEl.innerHTML = `
+          High-precision pulsecoder for accurate position and speed feedback in CNC servo motor systems. Designed for durability in industrial environments with low signal noise and wide compatibility range.
+        `;
+      }
+
+      // Pre-fill enquiry message
+      const msgEl = document.getElementById('model-enquiry-message');
+      if (msgEl && !msgEl.value) {
+        msgEl.placeholder = `I am interested in ${catalogItem.brand} ${catalogItem.model}. Please share pricing and availability.`;
+      }
     }
 
   } else {
@@ -1092,6 +1196,41 @@ function renderFanImagePanel(item) {
   `;
 }
 
+
+function renderPulseCoderModalSpecs(item) {
+  const specsContainer = document.getElementById('modal-model-specs');
+  const specsLabel = document.getElementById('modal-specs-label');
+  if (!specsContainer) return;
+  if (specsLabel) specsLabel.textContent = 'Technical Specifications';
+
+  const rows = [
+    { label: 'Brand / Make',     value: item.brand,        icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
+    { label: 'Series',           value: item.series,       icon: 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z' },
+    { label: 'Type / Model',     value: item.model,        icon: 'M7 20l4-16m2 16l4-16M6 9h14M4 15h14', mono: true },
+    { label: 'Serial No.',       value: item.serialNo,     icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4', mono: true },
+    { label: 'Encoder Type',     value: item.type || 'Incremental Encoder', icon: 'M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18' },
+    { label: 'Output',           value: item.output || 'Line Driver',       icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+    { label: 'Resolution',       value: item.resolution,   icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4' },
+    { label: 'Voltage',          value: item.voltage,      icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+    { label: 'Cable Length',     value: item.cableLength,  icon: 'M4 6h16M4 12h16M4 18h16' },
+    { label: 'Mounting',         value: item.mounting,     icon: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4' },
+    { label: 'Compatibility',    value: item.compatibility || 'Standard Servo Motors', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { label: 'Protection',       value: item.protection,   icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+    { label: 'Weight',           value: item.weight,       icon: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' },
+  ].filter(r => r.value);
+
+  specsContainer.innerHTML = rows.map((row, idx) => `
+    <div class="fan-spec-row flex items-center gap-3 py-2.5 ${idx < rows.length - 1 ? 'border-b border-line/70' : ''}">
+      <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center bg-signal/10 border border-signal/20">
+        <svg class="w-3.5 h-3.5 text-signalDark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${row.icon}"/>
+        </svg>
+      </div>
+      <span class="text-steel text-xs w-28 flex-shrink-0">${row.label}</span>
+      <span class="text-navy font-semibold text-sm ${row.mono ? 'font-mono' : ''} ml-auto text-right leading-snug">${row.value}</span>
+    </div>
+  `).join('');
+}
 
 function renderFanModalSpecs(item) {
   const specsContainer = document.getElementById('modal-model-specs');
@@ -1732,6 +1871,260 @@ function renderCategorizedFanModels(product) {
   `;
 }
 
+function renderPulseCoderModels(product) {
+  const catalog = product.modelCatalog || [];
+  if (!catalog.length) {
+    return '<p class="text-steel text-sm p-4">No model catalog available.</p>';
+  }
+
+  // Sort models by model number (series + numeric value)
+  const sortedCatalog = [...catalog].sort((a, b) => {
+    const modelA = a.model || '';
+    const modelB = b.model || '';
+    return modelA.localeCompare(modelB, undefined, { numeric: true, sensitivity: 'base' });
+  });
+
+  return `
+    <div class="pulse-coder-models-wrapper">
+      <div class="bg-white border border-line p-5" data-model-search-group>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          ${sortedCatalog.map((item, idx) => {
+            const safeModel = item.model.replace(/'/g, "\\'");
+            const safeName = product.name.replace(/'/g, "\\'");
+            const safeSku = product.sku.replace(/'/g, "\\'");
+            const itemId = item.id;
+            const imageUrl = item.image || generatePulseCoderImagePath(item.model);
+            return `
+              <div
+                class="pulse-coder-card group bg-white border border-line hover:border-signal hover:shadow-md transition-all duration-200 cursor-pointer animate-slide-up"
+                style="animation-delay: ${idx * 0.02}s;"
+                onclick="openModelModal('${safeModel}', '${safeName}', '${safeSku}', '${itemId}')"
+                title="Click to view details for ${item.brand} ${item.model}"
+                data-model-search-item
+                data-model-name="${item.model.replace(/"/g, '&quot;')}"
+                data-model-brand="${item.brand.replace(/"/g, '&quot;')}"
+                data-model-series="${(item.series || '').replace(/"/g, '&quot;')}"
+                data-model-serial="${(item.serialNo || '').replace(/"/g, '&quot;')}"
+              >
+                <div class="p-3 flex flex-col items-center text-center">
+                  <!-- Card Image -->
+                  <div class="w-full aspect-square bg-paper/40 border border-line/60 mb-3 flex items-center justify-center p-3 overflow-hidden image-protected-container">
+                    <img
+                      src="${imageUrl}"
+                      alt="${item.brand} ${item.model}"
+                      class="w-full h-full object-contain protected-image group-hover:scale-105 transition-transform duration-200 max-w-full"
+                      onerror="this.onerror=null; this.src='images/no-image.png';"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <!-- Series -->
+                  ${item.series ? `<span class="text-[10px] font-bold text-signal mb-1 truncate w-full uppercase tracking-wider">${item.series}</span>` : ''}
+
+                  <!-- Model Name -->
+                  <span class="text-sm font-bold text-navy group-hover:text-signalDark transition-colors font-mono tracking-tight overflow-wrap-anywhere w-full">
+                    ${item.model}
+                  </span>
+
+                  <!-- Brand -->
+                  <span class="text-xs text-steel font-medium mt-1 uppercase tracking-wider">
+                    ${item.brand}
+                  </span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generatePulseCoderImagePath(modelName) {
+  if (!modelName) return 'images/no-image.png';
+  const cleanName = modelName
+    .replace(/\s+/g, '')
+    .replace(/[^a-zA-Z0-9-]/g, '-');
+  return `images/pulse-coders/${cleanName}.jpg`;
+}
+
+function resolvePulseCoderModelViews(item) {
+  const cleanModel = (item.model || '').replace(/\s+/g, '').replace(/[^a-zA-Z0-9-]/g, '-');
+  const basePath = `images/pulse-coders/${cleanModel}`;
+  const primaryFallback = item.image || generatePulseCoderImagePath(item.model);
+
+  return [
+    {
+      id: 'front',
+      label: 'Front View',
+      shortLabel: 'Front',
+      icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+      src: `${basePath}-front.jpg`,
+      fallback: primaryFallback
+    },
+    {
+      id: 'back',
+      label: 'Back View',
+      shortLabel: 'Back',
+      icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+      src: `${basePath}-back.jpg`,
+      fallback: primaryFallback
+    },
+    {
+      id: 'side',
+      label: 'Side View',
+      shortLabel: 'Side',
+      icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+      src: `${basePath}-side.jpg`,
+      fallback: primaryFallback
+    },
+    {
+      id: 'connector',
+      label: 'Connector View',
+      shortLabel: 'Connector',
+      icon: 'M7 16V4m0 0L3 8m4-4l4 4M17 8v8m0 0l4-4m-4 4l-4-4M3 12h18',
+      src: `${basePath}-connector.jpg`,
+      fallback: primaryFallback
+    }
+  ];
+}
+
+function renderPulseCoderImagePanel(item) {
+  currentFanModalViews = resolvePulseCoderModelViews(item);
+  currentFanActiveViewIndex = 0;
+  currentFanGalleryMode = 'single';
+
+  const views = currentFanModalViews;
+  const primaryFallback = item.image || generatePulseCoderImagePath(item.model);
+
+  return `
+    <div class="fan-modal-gallery-container w-full bg-white flex flex-col">
+
+      <!-- Header: Model + Mode Switcher Tabs -->
+      <div class="flex items-center justify-between px-3 py-2 bg-paper border-b border-line">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-navy bg-white px-2.5 py-1 border border-line shadow-xs">
+            PULSE CODER
+          </span>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="flex items-center bg-white border border-line p-0.5 shadow-2xs">
+          <button type="button" id="fan-mode-btn-single" onclick="window.setFanModalGalleryMode('single')"
+                  class="fan-mode-tab active px-2.5 py-1 text-xs font-bold flex items-center gap-1.5 text-navy bg-paper border border-line" title="Single Focus View with Magnifier Zoom">
+            <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            <span>Detail Zoom</span>
+          </button>
+          <button type="button" id="fan-mode-btn-grid" onclick="window.setFanModalGalleryMode('grid')"
+                  class="fan-mode-tab px-2.5 py-1 text-xs font-semibold flex items-center gap-1.5 text-steel hover:text-navy" title="4-Picture Grid View with Zoom">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span>4-Picture Mode</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SINGLE DETAIL ZOOM VIEW (DEFAULT) -->
+      <div id="fan-view-single-container" class="w-full p-3 flex flex-col">
+        <!-- Main Zoom Stage -->
+        <div id="modal-fan-zoom-container" class="w-full h-[350px] bg-white border-2 border-line relative flex items-center justify-center p-3 transition-colors hover:border-signal cursor-zoom-in product-zoom-container image-protected-container" style="overflow: visible;">
+          <img id="modal-fan-active-image" src="${views[0].src}" alt="${item.brand} ${item.model} - ${views[0].label}" class="max-w-full max-h-full object-contain protected-image" onerror="console.error('Image load error:', this.src); this.src='${views[0].fallback}'; console.log('Fallback to:', this.src);" />
+
+          <!-- Top-Left Active View Badge -->
+          <div id="modal-fan-active-badge" class="absolute top-2.5 left-2.5 bg-navy/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 flex items-center gap-1.5 z-10 border border-white/20 pointer-events-none shadow-sm">
+            <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${views[0].icon}"/></svg>
+            <span id="modal-fan-active-label">${views[0].label}</span>
+          </div>
+
+          <!-- Top-Right Zoom Hint Badge -->
+          <div class="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-xs text-navy text-[10px] font-bold px-2 py-1 border border-line shadow-xs flex items-center gap-1 z-10 pointer-events-none uppercase tracking-wide">
+            <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            <span>Hover to Zoom &bull; 2.5X</span>
+          </div>
+
+          <!-- Bottom-Right Watermark -->
+          <div class="absolute bottom-2.5 right-2.5 text-[9px] font-bold uppercase tracking-widest text-steel/50 pointer-events-none z-10 font-mono">
+            GCH &bull; Global CNC
+          </div>
+        </div>
+
+        <!-- 4-Angle Thumbnail Selector Bar -->
+        <div class="mt-3">
+          <div class="flex items-center justify-between mb-1.5 px-0.5">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-navy flex items-center gap-1">
+              <svg class="w-3 h-3 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Angle Selector (4 Views)
+            </span>
+            <span class="text-[10px] text-steel font-mono">Click or hover to switch</span>
+          </div>
+          <div class="grid grid-cols-4 gap-2">
+            ${views.map((v, idx) => `
+              <button type="button"
+                      onclick="window.switchFanModalView(${idx})"
+                      onmouseenter="window.switchFanModalView(${idx})"
+                      id="fan-thumb-btn-${idx}"
+                      class="fan-thumb-btn ${idx === 0 ? 'active' : 'border-line bg-paper/40'} border flex flex-col items-center justify-between p-1.5 transition-all text-center group cursor-pointer">
+                <div class="w-full h-20 bg-white flex items-center justify-center overflow-hidden mb-1 border border-line/40">
+                  <img src="${v.src}" alt="${v.label}" class="max-w-full max-h-full object-contain p-1 group-hover:scale-105 transition-transform" onerror="this.src='${primaryFallback}';" />
+                </div>
+                <span class="text-[9px] font-bold uppercase tracking-wider truncate w-full group-hover:text-navy">
+                  ${v.shortLabel}
+                </span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-PICTURE GRID VIEW (2x2) -->
+      <div id="fan-view-grid-container" class="w-full p-3 hidden flex-col">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-navy flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            4-Angle Photos (2&times;2 Grid)
+          </span>
+          <span class="text-[10px] text-steel font-mono">Hover to magnify &bull; Click to focus</span>
+        </div>
+
+        <!-- 2x2 Grid Anchor Container -->
+        <div id="modal-fan-grid-zoom-anchor" class="grid grid-cols-2 gap-2 w-full bg-paper/60 p-2 border border-line">
+          ${views.map((v, idx) => `
+            <div id="modal-fan-quad-${idx}"
+                 class="fan-quad-zoom-cell h-48 bg-white border border-line hover:border-signal relative flex items-center justify-center p-2 cursor-zoom-in transition-all product-zoom-container image-protected-container group"
+                 style="overflow: visible;"
+                 onclick="window.switchFanModalView(${idx}); window.setFanModalGalleryMode('single');"
+                 title="Hover to zoom &bull; Click to focus ${v.label}">
+              <img id="modal-fan-quad-img-${idx}" src="${v.src}" alt="${v.label}" class="max-w-full max-h-full object-contain p-1 protected-image group-hover:scale-102 transition-transform" onerror="this.src='${primaryFallback}';" />
+
+              <!-- Bottom Label Ribbon -->
+              <div class="absolute bottom-0 left-0 right-0 bg-navy/85 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-wider py-1 px-2 flex items-center justify-between z-10 border-t border-white/10 pointer-events-none">
+                <span class="flex items-center gap-1 truncate">
+                  <svg class="w-2.5 h-2.5 text-signal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${v.icon}"/></svg>
+                  <span class="truncate">${v.label}</span>
+                </span>
+                <span class="text-[8px] text-signal font-mono ml-1 shrink-0">2.5X</span>
+              </div>
+
+              <!-- Top corner zoom icon -->
+              <div class="absolute top-1.5 right-1.5 bg-white/90 p-1 rounded-xs opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none border border-line shadow-xs">
+                <svg class="w-3 h-3 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Footer Model Info Bar -->
+      <div class="px-3 py-2 bg-paper/50 border-t border-line flex items-center justify-between text-xs">
+        <div class="flex items-center gap-2 truncate">
+          <span class="text-steel text-[10px] font-bold uppercase tracking-wider">Model:</span>
+          <span class="font-bold text-navy truncate font-mono">${item.brand} &mdash; ${item.model}</span>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // MODEL SEARCH FEATURE
 // ═══════════════════════════════════════════════════════════════
@@ -1742,7 +2135,6 @@ function renderCategorizedFanModels(product) {
   let modelItems = [];
   let modelGroups = [];
   let searchInput = null;
-  let clearButton = null;
   let resultCount = null;
   let noResultsMessage = null;
   let totalCount = 0;
@@ -1800,16 +2192,6 @@ function renderCategorizedFanModels(product) {
                 autocomplete="off"
                 spellcheck="false"
               />
-              <button
-                type="button"
-                id="model-search-clear"
-                class="model-search__clear absolute right-0 top-1/2 -translate-y-1/2 text-steel hover:text-signal transition-colors hidden p-2"
-                aria-label="Clear model search"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-              </button>
             </div>
           </div>
           <div id="model-search-count" class="model-search__count text-sm" aria-live="polite">
@@ -1828,16 +2210,14 @@ function renderCategorizedFanModels(product) {
 
     // Cache DOM references
     searchInput = document.getElementById('model-search-input');
-    clearButton = document.getElementById('model-search-clear');
     resultCount = document.getElementById('model-search-count');
     noResultsMessage = document.getElementById('model-search-no-results');
 
-    if (!searchInput || !clearButton || !resultCount) return;
+    if (!searchInput || !resultCount) return;
 
     // Add event listeners
     searchInput.addEventListener('input', handleSearchInput);
     searchInput.addEventListener('keydown', handleSearchKeydown);
-    clearButton.addEventListener('click', clearSearch);
 
     // Optional: keyboard shortcut (/) to focus search
     document.addEventListener('keydown', handleGlobalKeydown);
@@ -1852,7 +2232,10 @@ function renderCategorizedFanModels(product) {
 
   function handleSearchKeydown(e) {
     if (e.key === 'Escape') {
-      clearSearch();
+      if (searchInput) {
+        searchInput.value = '';
+        filterModels('');
+      }
     }
   }
 
@@ -1874,16 +2257,9 @@ function renderCategorizedFanModels(product) {
   }
 
   function filterModels(query) {
-    if (!searchInput || !clearButton || !resultCount) return;
+    if (!searchInput || !resultCount) return;
 
     const normalizedQuery = normalizeSearchText(query);
-
-    // Show/hide clear button
-    if (normalizedQuery) {
-      clearButton.classList.remove('hidden');
-    } else {
-      clearButton.classList.add('hidden');
-    }
 
     // If empty query, restore all
     if (!normalizedQuery) {
@@ -1900,9 +2276,11 @@ function renderCategorizedFanModels(product) {
       const modelSize = item.getAttribute('data-model-size') || '';
       const modelConnector = item.getAttribute('data-model-connector') || '';
       const modelFanuc = item.getAttribute('data-model-fanuc') || '';
+      const modelSeries = item.getAttribute('data-model-series') || '';
+      const modelSerial = item.getAttribute('data-model-serial') || '';
 
       // Build searchable string
-      const searchableText = `${modelName} ${modelBrand} ${modelSize} ${modelConnector} ${modelFanuc}`;
+      const searchableText = `${modelName} ${modelBrand} ${modelSize} ${modelConnector} ${modelFanuc} ${modelSeries} ${modelSerial}`;
       const normalizedText = normalizeSearchText(searchableText);
 
       // Check if matches
@@ -1943,13 +2321,6 @@ function renderCategorizedFanModels(product) {
     }
   }
 
-  function clearSearch() {
-    if (!searchInput) return;
-    searchInput.value = '';
-    filterModels('');
-    searchInput.focus();
-  }
-
   function resetModelSearch() {
     // Restore all model items
     modelItems.forEach(item => {
@@ -1971,11 +2342,6 @@ function renderCategorizedFanModels(product) {
     // Hide no results message
     if (noResultsMessage) {
       noResultsMessage.classList.add('hidden');
-    }
-
-    // Hide clear button
-    if (clearButton) {
-      clearButton.classList.add('hidden');
     }
   }
 

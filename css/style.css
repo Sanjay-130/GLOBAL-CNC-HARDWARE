@@ -914,6 +914,35 @@ input, select, textarea {
   padding: 4px;
 }
 
+/* ===== PULSE CODER MODEL CARDS ===== */
+.pulse-coder-card {
+  border-radius: 0 !important;
+  transition: all 0.2s ease;
+  min-height: 0;
+}
+
+.pulse-coder-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #10B981;
+}
+
+.pulse-coder-card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.pulse-coder-models-wrapper {
+  overflow: hidden;
+}
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* Modal fan image containers */
 #modal-fan-zoom-container {
   min-height: 220px;
@@ -960,6 +989,7 @@ input, select, textarea {
   border-radius: 0;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  overflow: hidden;
 }
 
 .model-search__input {
@@ -970,6 +1000,7 @@ input, select, textarea {
   background: #ffffff;
   padding: 8px 0;
   border: none;
+  width: 100%;
 }
 
 .model-search__input::placeholder {

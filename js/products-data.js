@@ -1,4 +1,4 @@
-window.PRODUCTS_DATA = [
+﻿window.PRODUCTS_DATA = [
   {
     "id": "cnc-001",
     "name": "Servo Motor Pulsecoder",
@@ -38,6 +38,208 @@ window.PRODUCTS_DATA = [
       "mounting": "Flange mount",
       "weight": "250g"
     },
+    "modelCatalog": [
+      {
+        "id": "pc-001",
+        "brand": "FANUC",
+        "series": "α A64i",
+        "model": "A860-2014-T301",
+        "serialNo": "AE-3013256 261659",
+        "image": "images/pulse-coders/A860-2014-T301.jpg"
+      },
+      {
+        "id": "pc-002",
+        "brand": "FANUC",
+        "model": "A860-2000-T301",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2000-T301.jpg"
+      },
+      {
+        "id": "pc-003",
+        "brand": "FANUC",
+        "model": "A860-0370-V502",
+        "series": "α A1000",
+        "serialNo": "ZH-107823 194782",
+        "image": "images/pulse-coders/A860-0370-V502.jpg"
+      },
+      {
+        "id": "pc-004",
+        "brand": "FANUC",
+        "model": "A860-0365-T101",
+        "series": "α I64",
+        "serialNo": "YC-365457 9719207",
+        "image": "images/pulse-coders/A860-0365-T101.jpg"
+      },
+      {
+        "id": "pc-005",
+        "brand": "FANUC",
+        "model": "A860-2010-T341",
+        "series": "α iAR 128",
+        "serialNo": "1023576 110509",
+        "image": "images/pulse-coders/A860-2010-T341.jpg"
+      },
+      {
+        "id": "pc-006",
+        "brand": "FANUC",
+        "model": "A860-0365-V501",
+        "series": "αI64",
+        "serialNo": "YC-396357 980318",
+        "image": "images/pulse-coders/A860-0365-V501.jpg"
+      },
+      {
+        "id": "pc-007",
+        "brand": "FANUC",
+        "model": "A860-2050-T321",
+        "series": "αiA4000",
+        "serialNo": "1023576 110509",
+        "image": "images/pulse-coders/A860-2050-T321.jpg"
+      },
+      {
+        "id": "pc-008",
+        "brand": "FANUC",
+        "model": "A860-2060-T321",
+        "series": "αiAR128",
+        "serialNo": "0389573 190324",
+        "image": "images/pulse-coders/A860-2060-T321.jpg"
+      },
+      {
+        "id": "pc-009",
+        "brand": "FANUC",
+        "model": "A860-2020-T321",
+        "series": "βiA128",
+        "serialNo": "1023576 110509",
+        "image": "images/pulse-coders/A860-2020-T321.jpg"
+      },
+      {
+        "id": "pc-010",
+        "brand": "FANUC",
+        "model": "A860-2000-T321",
+        "series": "βiA128",
+        "serialNo": "1023576 110509",
+        "image": "images/pulse-coders/A860-2000-T321.jpg"
+      },
+      {
+        "id": "pc-011",
+        "brand": "FANUC",
+        "model": "A860-2005-T321",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2005-T321.jpg"
+      },
+      {
+        "id": "pc-012",
+        "brand": "FANUC",
+        "model": "A860-0360-V511",
+        "series": "αA64",
+        "serialNo": "TT-396526 060707",
+        "image": "images/pulse-coders/A860-0360-V511.jpg"
+      },
+      {
+        "id": "pc-013",
+        "brand": "FANUC",
+        "model": "A860-0360-T211",
+        "series": "αA64",
+        "serialNo": "TT-302440 970416",
+        "image": "images/pulse-coders/A860-0360-T211.jpg"
+      },
+      {
+        "id": "pc-014",
+        "brand": "FANUC",
+        "model": "A860-2070-T321",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2070-T321.jpg"
+      },
+      {
+        "id": "pc-015",
+        "brand": "FANUC",
+        "model": "A860-2001-T301",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2001-T301.jpg"
+      },
+      {
+        "id": "pc-016",
+        "brand": "FANUC",
+        "model": "A860-2001-T321",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2001-T321.jpg"
+      },
+      {
+        "id": "pc-017",
+        "brand": "FANUC",
+        "model": "A860-0360-T201",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-0360-T201.jpg"
+      },
+      {
+        "id": "pc-018",
+        "brand": "FANUC",
+        "model": "A860-0320-T113",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-0320-T113.jpg"
+      },
+      {
+        "id": "pc-019",
+        "brand": "FANUC",
+        "model": "A860-0320-T112",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-0320-T112.jpg"
+      },
+      {
+        "id": "pc-020",
+        "brand": "FANUC",
+        "model": "A860-2020-T301",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2020-T301.jpg"
+      },
+      {
+        "id": "pc-021",
+        "brand": "FANUC",
+        "model": "A860-2020-T361",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2020-T361.jpg"
+      },
+      {
+        "id": "pc-022",
+        "brand": "FANUC",
+        "model": "A860-2000-X021",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2000-X021.jpg"
+      },
+      {
+        "id": "pc-023",
+        "brand": "FANUC",
+        "model": "A860-2000-X011",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-2000-X011.jpg"
+      },
+      {
+        "id": "pc-024",
+        "brand": "FANUC",
+        "model": "A860-0360-T021",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-0360-T021.jpg"
+      },
+      {
+        "id": "pc-025",
+        "brand": "FANUC",
+        "model": "A860-0360-T001",
+        "series": "",
+        "serialNo": "",
+        "image": "images/pulse-coders/A860-0360-T001.jpg"
+      }
+    ],
     "compatibleModels": [
       "FANUC A860-2014-T301",
       "FANUC A860-2000-T301",
